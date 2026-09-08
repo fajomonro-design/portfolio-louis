@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Omnitrix Activation</title>
+    <style>
+        /* --- 1. CONFIGURATION DE BASE --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #121212; /* Fond sombre du portfolio */
+            color: white;
+            overflow: hidden; /* Empêche le scroll pendant l'intro */
+        }
+
+        /* --- 2. L'OVERLAY (L'écran de démarrage) --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-out;
+        }
+
+        /* --- 3. LE CONTENEUR DE L'OMNITRIX --- */
+        .omnitrix-container {
+            position: relative;
+            width: 300px; /* Ajuster la taille selon tes images */
+            height: 300px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+        }
+
+        .omnitrix-container:hover {
+            transform: scale(1.05);
+        }
+
+        /* L'image de l'Omnitrix */
+        #omnitrix-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* Optionnel : une petite ombre pour le volume */
+            filter: drop-shadow(0 0 15px rgba(0,255,0,0.2));
+            transition: filter 0.3s ease;
+        }
+        
+        /* Effet lumineux quand c'est activé (correspond à l'allumage dans le GIF) */
+        .omnitrix-container.active #omnitrix-img {
+             /* Grosse lueur verte et jaune autour de l'image allumée */
+             filter: drop-shadow(0 0 40px #00ff00) brightness(1.1);
+        }
+
+
+        /* --- 4. LE FLASH LUMINEUX (Le flash blanc/vert intense) --- */
+        .flash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* Dégradé radial du centre blanc vers du vert fluo, très lumineux */
+            background: radial-gradient(circle at center, #ffffff 10%, #adff2f 60%, #00ff00 100%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10000;
+            /* Transition ultra-rapide pour l'apparition du flash */
+            transition: opacity 0.1s ease-in; 
+        }
+
+        .flash-screen.flash {
+            opacity: 1;
+        }
+
+        /* --- 5. TEXTE D'INVITATION --- */
+        .cta-text {
+            color: #888;
+            margin-top: 30px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: pulse 2s infinite;
+        }
+         @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+
+        /* --- 6. CONTENU FINAL DU PORTFOLIO --- */
+        .portfolio-content {
+            padding: 50px;
+            text-align: center;
+            opacity: 0; /* Caché initialement */
+            transition: opacity 1s ease-in;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro-overlay">
+        <div class="omnitrix-container" id="omnitrix-btn">
+            <img id="omnitrix-img" src="images/omnitrix-off.png" alt="Omnitrix OFF">
+        </div>
+        <div class="cta-text">Cliquer pour activer</div>
+    </div>
+
+    <div class="flash-screen" id="flash"></div>
+
+    <main class="portfolio-content" id="main-content">
+        <h1>Portfolio Activé</h1>
+        <p>Bienvenue dans mon univers. Développeur & Créatif.</p>
+        </main>
+
+    <script>
+        // --- CONFIGURATION DES IMAGES ---
+        // Remplace ces chemins par les tiens !
+        const imageOff = "images/omnitrix-off.png";
+        const imageOn = "images/omnitrix-on.png";
+
+        // --- ÉLÉMENTS DU DOM ---
+        const omnitrixBtn = document.getElementById('omnitrix-btn');
+        const omnitrixImg = document.getElementById('omnitrix-img');
+        const overlay = document.getElementById('intro-overlay');
+        const flash = document.getElementById('flash');
+        const mainContent = document.getElementById('main-content');
+        const body = document.body;
+
+        // Préchargement de l'image "allumée" pour éviter un délai au clic
+        const preloadImg = new Image();
+        preloadImg.src = imageOn;
+
+
+        // --- LOGIQUE D'ACTIVATION ---
+        omnitrixBtn.addEventListener('click', () => {
+            // 1. Activation visuelle : on ajoute la lueur CSS et on change l'image
+            omnitrixBtn.classList.add('active');
+            omnitrixImg.src = imageOn;
+
+            // 2. Juste après le changement d'image, on lance le flash intense
+            setTimeout(() => {
+                flash.classList.add('flash'); // Le flash apparaît très vite
+
+                // 3. Pendant le flash, on cache l'overlay et on montre le site
+                setTimeout(() => {
+                    overlay.style.display = 'none'; // Cache l'écran noir
+                    body.style.overflow = 'auto';   // Réactive le scroll
+                    mainContent.style.opacity = '1'; // Montre le portfolio
+                    
+                    // 4. Le flash disparaît doucement pour révéler le site
+                    flash.style.transition = "opacity 1s ease-out";
+                    flash.style.opacity = '0';
+                    
+                    // Nettoyage du DOM après la fin de la transition
+                    setTimeout(() => { flash.remove(); }, 1000);
+
+                }, 400); // Durée pendant laquelle le flash reste intense avant de s'estomper
+
+            }, 200); // Petit délai pour voir l'image changer avant d'être ébloui
+        });
+    </script>
+</body>
+</html>
