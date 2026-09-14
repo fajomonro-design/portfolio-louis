@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Louis Monrose | Portfolio BTS SIO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <title>Louis Monrose | Portfolio BTS SIO SLAM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --bg: #0a0a0a;
-            --card-bg: #111111;
+            --card-bg: #121212;
+            --card-hover: #181818;
             --border: #222222;
-            --text-main: #eeeeee;
-            --text-muted: #888888;
+            --text-main: #f0f0f0;
+            --text-muted: #8c8c8c;
             --ben10-green: #39FF14;
+            --ben10-glow: rgba(57, 255, 20, 0.35);
             --font-sans: 'Inter', sans-serif;
+            --font-mono: 'Fira Code', monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -26,426 +29,640 @@
             color: var(--text-main);
             font-family: var(--font-sans);
             line-height: 1.6;
-            overflow: hidden; 
+            overflow: hidden;
         }
 
-        /* --- OMNITRIX OVERLAY --- */
+        /* --- OMNITRIX LAUNCHER OVERLAY --- */
         #omnitrix-launcher {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
+            background: #050505;
             z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+        }
+
+        .omni-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .omni-btn {
-            width: 200px;
-            height: 200px;
-            background: #1a1a1a;
-            border: 10px solid #333;
+            width: 190px;
+            height: 190px;
+            background: #151515;
+            border: 8px solid #2d2d2d;
             border-radius: 50%;
             position: relative;
             cursor: pointer;
-            box-shadow: 0 0 30px rgba(0,0,0,1), inset 0 0 20px rgba(57, 255, 20, 0.1);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 35px rgba(0,0,0,0.9), inset 0 0 25px rgba(57, 255, 20, 0.15);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
 
-        .omni-btn:hover { transform: scale(1.1); border-color: #444; }
+        .omni-btn:hover {
+            transform: scale(1.08);
+            border-color: #3d3d3d;
+            box-shadow: 0 0 45px var(--ben10-glow);
+        }
 
         .omni-face-top, .omni-face-bottom {
             position: absolute;
             width: 0; height: 0;
-            border-left: 70px solid transparent;
-            border-right: 70px solid transparent;
-            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            border-left: 65px solid transparent;
+            border-right: 65px solid transparent;
+            transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
         .omni-face-top {
-            border-bottom: 100px solid var(--ben10-green);
+            border-bottom: 95px solid var(--ben10-green);
             top: 15px;
-            filter: drop-shadow(0 0 10px var(--ben10-green));
+            filter: drop-shadow(0 0 12px var(--ben10-green));
         }
 
         .omni-face-bottom {
-            border-top: 100px solid var(--ben10-green);
+            border-top: 95px solid var(--ben10-green);
             bottom: 15px;
-            filter: drop-shadow(0 0 10px var(--ben10-green));
+            filter: drop-shadow(0 0 12px var(--ben10-green));
         }
 
-        .launching .omni-face-top { transform: translateY(-150px); }
-        .launching .omni-face-bottom { transform: translateY(150px); }
-        .launching .omni-btn { background: var(--ben10-green); border-color: white; box-shadow: 0 0 100px var(--ben10-green); }
+        .launching .omni-face-top { transform: translateY(-160px); }
+        .launching .omni-face-bottom { transform: translateY(160px); }
+        .launching .omni-btn {
+            background: var(--ben10-green);
+            border-color: #ffffff;
+            box-shadow: 0 0 120px var(--ben10-green);
+        }
         
-        .fade-out { opacity: 0; pointer-events: none; }
+        .fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
 
-        /* --- STYLE PORTFOLIO --- */
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+        .skip-btn {
+            margin-top: 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .skip-btn:hover { color: var(--ben10-green); }
+
+        /* --- NAVIGATION --- */
+        .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
 
         nav {
             position: fixed;
             top: 0; width: 100%;
-            background: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(14px);
             z-index: 100;
-            padding: 1.2rem 0;
+            padding: 1.1rem 0;
             border-bottom: 1px solid var(--border);
         }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .nav-links { display: flex; gap: 2rem; align-items: center;}
-        .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; font-weight: 500; }
+        .logo { font-weight: 700; font-size: 1.4rem; letter-spacing: -0.5px; text-decoration: none; color: #fff; }
+        .logo span { color: var(--ben10-green); }
+
+        .nav-links { display: flex; gap: 1.8rem; align-items: center; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: color 0.25s;
+            font-weight: 500;
+        }
         .nav-links a:hover { color: var(--ben10-green); }
 
-        /* --- BOUTONS CONTACT --- */
-        .btn-contact {
-            padding: 0.6rem 1.5rem;
-            border: 2px solid var(--ben10-green); 
+        .btn-contact-nav {
+            padding: 0.55rem 1.25rem;
+            border: 1.5px solid var(--ben10-green);
             color: var(--ben10-green) !important;
             background: transparent;
-            font-weight: bold;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 4px;
+            letter-spacing: 0.8px;
+            font-size: 0.82rem;
+            border-radius: 6px;
             transition: all 0.3s ease;
-            box-shadow: 0 0 5px rgba(57, 255, 20, 0.2);
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
-        
-        .btn-contact:hover {
-            background: var(--ben10-green); 
-            color: black !important; 
-            box-shadow: 0 0 20px rgba(57, 255, 20, 0.6); 
+        .btn-contact-nav:hover {
+            background: var(--ben10-green);
+            color: #000 !important;
+            box-shadow: 0 0 20px var(--ben10-glow);
             transform: translateY(-2px);
         }
 
-        .accueil {
-            height: 100vh;
+        /* --- HERO --- */
+        .hero {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
-            background: radial-gradient(circle at 10% 20%, rgba(57, 255, 20, 0.05) 0%, transparent 50%);
+            padding-top: 5rem;
+            background: radial-gradient(circle at 15% 30%, rgba(57, 255, 20, 0.08) 0%, transparent 60%);
         }
-        .accueil h1 { font-size: clamp(3rem, 8vw, 5rem); line-height: 1; font-weight: 600; }
-        .accueil span { color: var(--ben10-green); text-shadow: 0 0 20px rgba(57, 255, 20, 0.3); }
-
-        .about-wrapper { display: grid; grid-template-columns: 1fr; gap: 4rem; align-items: center; }
-        .parcours-item { background: var(--card-bg); padding: 1.5rem; border-left: 3px solid var(--ben10-green); margin-top: 15px; border-radius: 0 8px 8px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .parcours-title { font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; color: var(--ben10-green); }
-        .parcours-date { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem; }
-
-        section { padding: 120px 0; border-bottom: 1px solid var(--border); }
-        .section-title { font-size: 2.5rem; margin-bottom: 3.5rem; position: relative; display: inline-block; }
-        .section-title::after { content: ""; position: absolute; bottom: -10px; left: 0; width: 60%; height: 4px; background: var(--ben10-green); }
-
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
-        .skill-card { background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 1px solid var(--border); transition: 0.4s; }
-        .skill-card:hover { border-color: var(--ben10-green); transform: translateY(-5px); }
-
-        /* --- GRILLE DES PROJETS --- */
-        .projects-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 2rem; 
-        }
-        
-        .project-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 2.5rem;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-        .project-card:hover { border-color: var(--ben10-green); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        
-        .project-icon { font-size: 2.5rem; color: var(--ben10-green); margin-bottom: 1.5rem; }
-        .project-card h3 { margin-bottom: 1rem; font-size: 1.4rem; }
-        .project-card p { color: var(--text-muted); margin-bottom: 1.5rem; flex-grow: 1; font-size: 0.95rem; }
-        
-        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-        .tags span { 
-            background: rgba(57, 255, 20, 0.05); 
-            color: var(--ben10-green); 
-            padding: 0.3rem 0.8rem; 
-            border-radius: 50px; 
-            font-size: 0.8rem; 
-            border: 1px solid rgba(57, 255, 20, 0.3);
-        }
-
-        /* --- BOUTONS TÉLÉCHARGEMENT --- */
-        .btn-download {
-            padding: 0.6rem 1.2rem;
-            background: rgba(57, 255, 20, 0.1);
-            border: 1px dashed var(--ben10-green);
-            color: var(--ben10-green);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 4px;
-            transition: all 0.3s ease;
+        .badge-status {
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            background: rgba(57, 255, 20, 0.1);
+            color: var(--ben10-green);
+            border: 1px solid rgba(57, 255, 20, 0.3);
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .badge-status i { font-size: 0.6rem; animation: pulse 1.8s infinite; }
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+
+        .hero h1 { font-size: clamp(2.8rem, 7vw, 4.8rem); line-height: 1.08; font-weight: 700; letter-spacing: -1px; }
+        .hero h1 span { color: var(--ben10-green); text-shadow: 0 0 25px var(--ben10-glow); }
+        .hero-desc { font-size: 1.15rem; color: var(--text-muted); margin-top: 1.5rem; max-width: 680px; }
+
+        .hero-actions { margin-top: 2.2rem; display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
+        .btn-primary {
+            background: var(--ben10-green);
+            color: #000;
+            padding: 0.75rem 1.8rem;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--ben10-glow);
+            background: #fff;
+        }
+
+        .btn-outline {
+            padding: 0.75rem 1.8rem;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--card-bg);
+        }
+        .btn-outline:hover {
+            border-color: var(--ben10-green);
+            color: var(--ben10-green);
+            transform: translateY(-2px);
+        }
+
+        /* --- SECTIONS --- */
+        section { padding: 100px 0; border-bottom: 1px solid var(--border); }
+        .section-header { margin-bottom: 3.5rem; }
+        .section-title { font-size: 2.2rem; font-weight: 700; position: relative; display: inline-block; }
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -8px; left: 0;
+            width: 45px; height: 3px;
+            background: var(--ben10-green);
+            box-shadow: 0 0 10px var(--ben10-green);
+        }
+        .section-subtitle { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.8rem; }
+
+        /* --- À PROPOS --- */
+        .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; }
+        .parcours-box {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-left: 3px solid var(--ben10-green);
+            border-radius: 0 10px 10px 0;
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.2rem;
+        }
+        .parcours-box h4 { font-size: 1.15rem; color: #fff; }
+        .parcours-box p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        /* --- COMPÉTENCES --- */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+        .skill-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .skill-card:hover {
+            border-color: var(--ben10-green);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .skill-icon { font-size: 2rem; color: var(--ben10-green); margin-bottom: 1rem; }
+        .skill-card h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
+        .skill-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; }
+
+        /* --- PROJETS & FILTRES --- */
+        .project-filters {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.45rem 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(57, 255, 20, 0.12);
+            color: var(--ben10-green);
+            border-color: var(--ben10-green);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.8rem;
+        }
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .project-card:hover {
+            background: var(--card-hover);
+            border-color: var(--ben10-green);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+        }
+        .project-category {
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            color: var(--ben10-green);
             text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
         }
-
-        .btn-download:hover {
-            background: rgba(57, 255, 20, 0.2);
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
-            transform: scale(1.05);
-            border-style: solid;
-        }
-
-        /* --- FORMULAIRE DE CONTACT --- */
-        .contact-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 1px solid var(--border); }
-        input, textarea { width: 100%; padding: 1rem; background: #0a0a0a; border: 1px solid var(--border); color: white; border-radius: 8px; margin-bottom: 1rem; outline: none; transition: 0.3s; font-family: var(--font-sans);}
-        input:focus, textarea:focus { border-color: var(--ben10-green); box-shadow: 0 0 10px rgba(57, 255, 20, 0.2); }
+        .project-card h3 { font-size: 1.35rem; margin-bottom: 0.8rem; color: #fff; }
+        .project-card p { color: var(--text-muted); font-size: 0.92rem; flex-grow: 1; margin-bottom: 1.4rem; line-height: 1.6; }
         
-        .btn-submit { background: var(--ben10-green); color: black; border: none; padding: 1rem 2rem; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; text-transform: uppercase; font-size: 1rem;}
-        .btn-submit:hover { background: white; box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+        .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .tags span {
+            background: rgba(255, 255, 255, 0.04);
+            color: #d0d0d0;
+            padding: 0.25rem 0.65rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-family: var(--font-mono);
+        }
+        .project-card:hover .tags span {
+            border-color: rgba(57, 255, 20, 0.25);
+            color: #fff;
+        }
 
-        @media (max-width: 950px) { .about-wrapper, .contact-container { grid-template-columns: 1fr; } .nav-links { display: none; } }
+        /* --- CONTACT --- */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 3rem;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+        .contact-info h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--ben10-green); }
+        .contact-info p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
+        .contact-details { display: flex; flex-direction: column; gap: 1rem; }
+        .contact-item { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; font-size: 0.95rem; }
+        .contact-item i { color: var(--ben10-green); font-size: 1.2rem; width: 25px; }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.9rem 1.1rem;
+            background: #090909;
+            border: 1px solid var(--border);
+            color: #fff;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--ben10-green);
+            box-shadow: 0 0 12px var(--ben10-glow);
+        }
+
+        footer {
+            padding: 2.5rem 0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 960px) {
+            .about-grid, .contact-wrapper { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- OMNITRIX LAUNCHER -->
     <div id="omnitrix-launcher">
-        <div style="text-align: center;">
-            <div class="omni-btn" onclick="launchPortfolio()">
+        <div class="omni-container">
+            <div class="omni-btn" onclick="launchPortfolio()" title="Activer l'Omnitrix">
                 <div class="omni-face-top"></div>
                 <div class="omni-face-bottom"></div>
             </div>
-            <p style="margin-top: 2rem; color: var(--ben10-green); letter-spacing: 5px; font-size: 0.8rem; font-weight: bold;">C'est l'heure</p>
+            <p style="margin-top: 2rem; color: var(--ben10-green); letter-spacing: 5px; font-size: 0.85rem; font-weight: 700;">INITIALISATION DU SYSTÈME</p>
+            <button class="skip-btn" onclick="launchPortfolio()">Passer l'animation</button>
         </div>
     </div>
 
+    <!-- NAVIGATION -->
     <nav>
         <div class="container nav-content">
-            <div style="font-weight: bold; font-size: 1.5rem; letter-spacing: -1px;">LOUIS<span>.</span>M</div>
+            <a href="#accueil" class="logo">LOUIS<span>.</span>MONROSE</a>
             <div class="nav-links">
                 <a href="#accueil">Accueil</a>
-                <a href="#apropos">À Propos</a>
+                <a href="#apropos">Profil</a>
                 <a href="#competences">Compétences</a>
-                <a href="#projets">Projets Réalisés</a>
-                <a href="#mini-projets">Mini-Projets</a>
-                <a href="#projets-en-cours">En Cours</a>
-                <a href="#contact" class="btn-contact"><i class="fas fa-envelope"></i> Me Contacter</a>
+                <a href="#projets">Réalisations</a>
+                <a href="#contact" class="btn-contact-nav"><i class="fas fa-envelope"></i> Me contacter</a>
             </div>
         </div>
     </nav>
 
     <main class="container">
         
-        <section id="accueil" class="accueil">
+        <!-- HERO -->
+        <section id="accueil" class="hero">
             <div data-aos="fade-up">
-                <h1>Louis Monrose<br><span> Développeur Web</span></h1>
-                <p style="font-size: 1.2rem; color: var(--text-muted); margin-top: 1.5rem; max-width: 600px;">
-                    Étudiant en BTS SIO option SLAM à Ynov Campus, passionné par le développement d'applications web, l'ingénierie logicielle et le design d'interfaces interactives.
+                <div class="badge-status">
+                    <i class="fas fa-circle"></i> Recherche de stage : Juillet & Août 2026 (5 sem.)
+                </div>
+                <h1>Louis Monrose<br><span>Développeur & Admin Système</span></h1>
+                <p class="hero-desc">
+                    Étudiant en <strong>BTS SIO option SLAM</strong> à Ynov Campus. Je conçois des applications web structurées et déploie des environnements systèmes et réseaux fiables, sécurisés et automatisés.
                 </p>
-                <div style="margin-top: 2.5rem; display: flex; gap: 1.5rem; align-items: center;">
-                    <a href="#projets" style="background: var(--ben10-green); color: black; padding: 0.8rem 2rem; text-decoration: none; border-radius: 5px; font-weight: bold; transition: 0.3s;">Voir mes projets</a>
-                    <a href="#contact" class="btn-contact">Me contacter</a>
+                <div class="hero-actions">
+                    <a href="#projets" class="btn-primary"><i class="fas fa-code-branch"></i> Découvrir mes projets</a>
+                    <a href="chemin/vers/ton-cv.pdf" target="_blank" class="btn-outline"><i class="fas fa-file-pdf"></i> Télécharger mon CV</a>
                 </div>
-            </div>
-            <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="chemin/vers/ton-cv.pdf" target="_blank" class="btn-download">
-                    <i class="fas fa-file-pdf"></i> Télécharger mon CV
-                </a>
             </div>
         </section>
 
+        <!-- A PROPOS -->
         <section id="apropos">
-            <h2 class="section-title" data-aos="fade-right">Mon Profil</h2>
-            <div class="about-wrapper">
-                <div class="about-text" data-aos="fade-up">
-                    <h3 class="parcours-title">
-                        <i class="fas fa-graduation-cap"></i> Formation
-                    </h3>
-                    
-                    <div class="parcours-item">
-                        <h4>BTS SIO Option SLAM (Solutions Logicielles et Applications Métiers)</h4>
-                        <p class="parcours-date">Ynov Campus (2025 à ce jour)</p>
+            <div class="section-header" data-aos="fade-right">
+                <h2 class="section-title">Parcours & Formation</h2>
+                <p class="section-subtitle">Mon cadre d'apprentissage et mes objectifs professionnels</p>
+            </div>
+            <div class="about-grid">
+                <div data-aos="fade-up">
+                    <div class="parcours-box">
+                        <h4>BTS SIO — Option SLAM</h4>
+                        <p><strong>Ynov Campus Val d'Europe</strong> | 2025 - Présent</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.88rem;">Solutions Logicielles et Applications Métiers. Conception full-stack, intégration logicielle, sécurisation des flux et administration système sous Linux.</p>
                     </div>
-                    
-                    <div class="parcours-item">
+                    <div class="parcours-box">
                         <h4>Baccalauréat Général</h4>
-                        <p class="parcours-date">Lycée Jean Vilar (2021 - 2024)</p>
+                        <p><strong>Lycée Jean Vilar</strong> | 2021 - 2024</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.88rem;">Spécialités scientifiques et numériques, socle en raisonnement logique et algorithmique.</p>
+                    </div>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="150">
+                    <div style="background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+                        <h3 style="color: var(--ben10-green); margin-bottom: 1rem;"><i class="fas fa-bullseye"></i> Objectifs & Méthode</h3>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+                            Curieux et pragmatique, j'accorde une importance égale à la rigueur du code applicatif et à la résilience de l'infrastructure sous-jacente. Mes travaux couvrent le développement orienté objet, la modélisation relationnelle Merise/SQL et la sécurisation d'environnements virtualisés.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- COMPETENCES -->
         <section id="competences">
-            <h2 class="section-title" data-aos="fade-right">Compétences</h2>
+            <div class="section-header" data-aos="fade-right">
+                <h2 class="section-title">Domaines d'Expertise</h2>
+                <p class="section-subtitle">Technologies et environnements maîtrisés en formation et projets</p>
+            </div>
             <div class="skills-grid">
                 <div class="skill-card" data-aos="fade-up">
-                    <h3>Développement Full-Stack</h3>
-                    <p style="color: var(--text-muted); margin-top: 0.5rem;">HTML5, CSS3, JavaScript, PHP (Laravel), C#</p>
+                    <div class="skill-icon"><i class="fas fa-code"></i></div>
+                    <h3>Développement Web & Objet</h3>
+                    <p>Développement full-stack : PHP (Laravel), C#, JavaScript ES6, HTML5 / CSS3. Intégration d'architectures MVC et d'APIs REST.</p>
                 </div>
                 <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
-                    <h3>Gestion de Données</h3>
-                    <p style="color: var(--text-muted); margin-top: 0.5rem;">Conception de bases de données, requêtes SQL, modélisation Merise</p>
+                    <div class="skill-icon"><i class="fas fa-server"></i></div>
+                    <h3>Administration Système Linux</h3>
+                    <p>Gestion fine des permissions (ACL, SetGID, Sticky Bit), gestion utilisateurs/groupes, traçabilité sudo et audit système sous Ubuntu/Debian.</p>
                 </div>
                 <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
-                    <h3>UI / UX & Intégration</h3>
-                    <p style="color: var(--text-muted); margin-top: 0.5rem;">Création d'interfaces utilisateur responsives, animations CSS/JS, intégration d'esthétiques thématiques</p>
+                    <div class="skill-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3>Réseaux & Haute Disponibilité</h3>
+                    <p>Mise en place de reverse proxies & Load Balancers (HAProxy), serveurs web Apache2, serveurs DNS Bind9 et segmentation par pare-feu (UFW).</p>
+                </div>
+                <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <h3>Données & Scripting Bash</h3>
+                    <p>Modélisation relationnelle Merise, SQL (MariaDB/MySQL). Scripts shell automatisés (set -euo pipefail, regex, awk, sed, cron).</p>
                 </div>
             </div>
         </section>
 
+        <!-- PROJETS -->
         <section id="projets">
-            <h2 class="section-title" data-aos="fade-right">Projets Réalisés</h2>
+            <div class="section-header" data-aos="fade-right">
+                <h2 class="section-title">Travaux & Réalisations</h2>
+                <p class="section-subtitle">Projets de développement, ateliers techniques et travaux pratiques documentés</p>
+            </div>
+
+            <!-- Filtres -->
+            <div class="project-filters" data-aos="fade-up">
+                <button class="filter-btn active" onclick="filterProjects('all')">Tous les projets</button>
+                <button class="filter-btn" onclick="filterProjects('system')">Systèmes & Réseaux</button>
+                <button class="filter-btn" onclick="filterProjects('web')">Développement Web</button>
+                <button class="filter-btn" onclick="filterProjects('scripting')">Scripting & Outils</button>
+            </div>
+
             <div class="projects-grid">
                 
-                <div class="project-card" data-aos="fade-up">
-                    <div class="project-icon"><i class="fas fa-brain"></i></div>
-                    <h3>Jeu du Memory</h3>
-                    <p>Création d'un jeu de cartes interactif. J'ai programmé les règles du jeu en JavaScript, ajouté des animations pour retourner les cartes et mis en place un système de score[cite: 1].</p>
+                <!-- HAProxy Load Balancer -->
+                <div class="project-card" data-category="system" data-aos="fade-up">
+                    <span class="project-category"><i class="fas fa-shield-alt"></i> Haute Disponibilité</span>
+                    <h3>Cluster Web & Répartiteur HAProxy</h3>
+                    <p>Déploiement d'une architecture résiliente sous Linux. Configuration d'un répartiteur de charge HAProxy avec équilibrage Round-Robin vers deux serveurs Apache2, détection automatique de panne (sondes de santé check) et filtrage réseau strict par pare-feu UFW.</p>
                     <div class="tags">
-                        <span>JavaScript</span><span>CSS3 Animations</span><span>Logique</span>
+                        <span>HAProxy</span><span>Apache2</span><span>Load Balancing</span><span>UFW</span><span>Failover</span>
                     </div>
                 </div>
 
-                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="project-icon"><i class="fas fa-store"></i></div>
-                    <h3>ShopGen</h3>
-                    <p>Création d'un site vitrine pour une fausse startup. Le site s'adapte automatiquement à tous les écrans (téléphone, tablette, PC) et contient un diaporama d'images dynamique[cite: 1].</p>
+                <!-- Gestion Sécurité Linux -->
+                <div class="project-card" data-category="system" data-aos="fade-up" data-aos-delay="100">
+                    <span class="project-category"><i class="fas fa-lock"></i> Sécurité & Droits</span>
+                    <h3>Administration & Droits Avancés Linux</h3>
+                    <p>Mise en place d'un cloisonnement multi-équipes (TechSolutions). Gestion fine des privilèges avec SetGID pour le partage collaboratif, Sticky Bit sur les répertoires d'échange, ACLs spécifiques (r-x) pour la direction et traçabilité des commandes sudo via /var/log/auth.log.</p>
                     <div class="tags">
-                        <span>JavaScript</span><span>HTML/CSS</span><span>Responsive</span>
+                        <span>Linux</span><span>ACL</span><span>SetGID</span><span>Sticky Bit</span><span>Audit Sudo</span>
                     </div>
                 </div>
 
-                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="project-icon"><i class="fas fa-ticket-alt"></i></div>
-                    <h3>Déploiement GLPI (ITSM)</h3>
-                    <p>Mise en place d'un outil pour gérer le matériel informatique et les demandes d'assistance des utilisateurs[cite: 2]. J'ai configuré la base de données et automatisé l'inventaire des ordinateurs[cite: 2].</p>
+                <!-- Scripting Bash & Cron -->
+                <div class="project-card" data-category="scripting" data-aos="fade-up" data-aos-delay="200">
+                    <span class="project-category"><i class="fas fa-terminal"></i> Automatisation</span>
+                    <h3>Sauvegardes & Traitement Bash</h3>
+                    <p>Développement de scripts shell robustes (set -euo pipefail) avec arguments dynamiques, horodatage, compression tar.gz et rotation automatique des 7 dernières archives. Traitement de données et extraction de métriques via pipelines (awk, sed, cut, sort).</p>
                     <div class="tags">
-                        <span>GLPI</span><span>MariaDB</span><span>ITSM / ITAM</span>
+                        <span>Bash</span><span>Cron</span><span>Tar / Gzip</span><span>Awk / Sed</span><span>Automatisation</span>
                     </div>
                 </div>
 
-                <div class="project-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="project-icon"><i class="fas fa-network-wired"></i></div>
-                    <h3>Infrastructure Web & DNS</h3>
-                    <p>Création d'un annuaire réseau (serveur DNS) pour une entreprise locale[cite: 1, 3]. En parallèle, j'ai installé un serveur web pour héberger et rendre accessible un site Internet[cite: 1, 3].</p>
+                <!-- E-Commerce Cinéma -->
+                <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="300">
+                    <span class="project-category"><i class="fas fa-film"></i> Full-Stack En Cours</span>
+                    <h3>Plateforme E-Commerce Cinéma</h3>
+                    <p>Conception d'une boutique en ligne dédiée à l'achat de films. Implémentation d'une architecture MVC avec gestion des sessions, authentification sécurisée, catalogue filtrable, panier persistant et base de données relationnelle sous SQL/MariaDB.</p>
                     <div class="tags">
-                        <span>Bind9</span><span>Apache2</span><span>DNS</span><span>Ubuntu</span>
+                        <span>PHP</span><span>Laravel</span><span>SQL / MariaDB</span><span>MVC</span><span>E-Commerce</span>
                     </div>
                 </div>
 
-                <div class="project-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="project-icon"><i class="fas fa-users-cog"></i></div>
-                    <h3>Administration & Sécurité Linux</h3>
-                    <p>Sécurisation d'un serveur pour séparer le travail de plusieurs équipes[cite: 4, 5]. J'ai configuré les droits d'accès, protégé les dossiers partagés et surveillé les historiques de connexion[cite: 4, 5].</p>
+                <!-- DNS & Apache -->
+                <div class="project-card" data-category="system" data-aos="fade-up" data-aos-delay="400">
+                    <span class="project-category"><i class="fas fa-globe"></i> Services Réseau</span>
+                    <h3>Serveur DNS Bind9 & Serveur Web</h3>
+                    <p>Installation et configuration d'un serveur DNS autoritaire avec Bind9 pour la résolution du domaine d'entreprise local (zone directe SOA et enregistrements A). Hébergement et déploiement des pages de test sous Apache2 (/var/www/html).</p>
                     <div class="tags">
-                        <span>Linux</span><span>ACL</span><span>Permissions</span><span>Sudo</span>
+                        <span>Bind9</span><span>DNS</span><span>Apache2</span><span>Ubuntu Server</span>
                     </div>
                 </div>
 
-                <div class="project-card" data-aos="fade-up" data-aos-delay="500">
-                    <div class="project-icon"><i class="fas fa-terminal"></i></div>
-                    <h3>Automatisation & Sauvegardes</h3>
-                    <p>Création d'un programme qui sauvegarde automatiquement les fichiers[cite: 6]. Il compresse les données, supprime les vieilles sauvegardes et s'exécute tout seul à heure fixe[cite: 6].</p>
+                <!-- ShopGen -->
+                <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="500">
+                    <span class="project-category"><i class="fas fa-laptop-code"></i> Front-End</span>
+                    <h3>ShopGen — E-Commerce IA</h3>
+                    <p>Intégration d'un site vitrine complet et ergonomique pour une solution innovante. Interface entièrement responsive conçue en HTML5/CSS3 natif avec interactions dynamiques en JavaScript et mise en page adaptée mobile-first.</p>
                     <div class="tags">
-                        <span>Bash</span><span>Cron</span><span>Tar/Gzip</span><span>Scripting</span>
-                    </div>
-                </div>
-
-                <div class="project-card" data-aos="fade-up" data-aos-delay="600">
-                    <div class="project-icon"><i class="fas fa-project-diagram"></i></div>
-                    <h3>Réseau d'Entreprise</h3>
-                    <p>Mise en place du réseau complet d'une entreprise. J'ai séparé le trafic en plusieurs sous-réseaux et configuré un pare-feu pour protéger les échanges d'informations.</p>
-                    <div class="tags">
-                        <span>VLAN</span><span>Subnetting</span><span>Firewall</span>
-                    </div>
-                </div>
-
-                <div class="project-card" data-aos="fade-up" data-aos-delay="700">
-                    <div class="project-icon"><i class="fas fa-user-shield"></i></div>
-                    <h3>Sécurisation Linux</h3>
-                    <p>Configuration d'un serveur pour plusieurs utilisateurs. J'ai défini des droits d'accès très précis pour que chaque personne ne puisse modifier que ses propres fichiers, tout en protégeant le travail des autres[cite: 1, 4].</p>
-                    <div class="tags">
-                        <span>Linux</span><span>ACL</span><span>Sticky Bit</span>
+                        <span>HTML5</span><span>CSS3 Flex/Grid</span><span>JavaScript</span><span>Responsive UI</span>
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <section id="mini-projets">
-            <h2 class="section-title" data-aos="fade-right">Mini-Projets & Outils</h2>
-            <div class="projects-grid">
-                
-                <div class="project-card" data-aos="fade-up">
-                    <div class="project-icon"><i class="fas fa-tasks"></i></div>
-                    <h3>Application To-Do List</h3>
-                    <p>Développement d'un gestionnaire de tâches interactif. L'application permet d'ajouter de nouvelles tâches, de les marquer comme terminées et de les supprimer, avec une interface claire et dynamique.</p>
-                    <div class="tags">
-                        <span>JavaScript</span><span>DOM</span><span>HTML/CSS</span>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <section id="projets-en-cours">
-            <h2 class="section-title" data-aos="fade-right">Projets en Cours</h2>
-            <div class="projects-grid">
-                
-                <div class="project-card" data-aos="fade-up">
-                    <div class="project-icon"><i class="fas fa-film"></i></div>
-                    <h3>E-commerce Cinéma</h3>
-                    <p>Développement d'une plateforme web complète de commerce électronique dédiée à la vente de médias cinématographiques, mêlant gestion des utilisateurs, catalogue de films et esthétique visuelle soignée.</p>
-                    <div class="tags">
-                        <span>PHP (Laravel)</span><span>SQL</span><span>Full-Stack</span><span>Cinéma</span>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
+        <!-- CONTACT -->
         <section id="contact">
-            <h2 class="section-title" data-aos="fade-right">Me Contacter</h2>
-            <div class="contact-container" data-aos="fade-up">
-                <div>
-                    <h3 style="color: var(--ben10-green); margin-bottom: 1rem; font-size: 1.8rem;">Prêt pour une nouvelle mission ?</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 2rem;">
-                        Je suis actuellement à la recherche d'un stage en informatique d'une durée de <strong>5 semaines pour la période de juillet et août 2026</strong>. N'hésitez pas à me joindre via ce formulaire ou directement par e-mail : <br><br>
-                        <strong style="color: white;">louis.monrose@ynov.com</strong>
+            <div class="section-header" data-aos="fade-right">
+                <h2 class="section-title">Contact Professionnel</h2>
+                <p class="section-subtitle">Ouvert aux échanges concernant un stage ou une opportunité technique</p>
+            </div>
+            <div class="contact-wrapper" data-aos="fade-up">
+                <div class="contact-info">
+                    <h3>Discutons de votre projet</h3>
+                    <p>
+                        Actuellement disponible pour mon stage conventionné de BTS SIO (<strong>5 semaines en juillet et août 2026</strong>), je reste joignable par e-mail ou via ce formulaire.
                     </p>
+                    <div class="contact-details">
+                        <a href="mailto:louis.monrose@ynov.com" class="contact-item">
+                            <i class="fas fa-envelope"></i> louis.monrose@ynov.com
+                        </a>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i> Île-de-France, France
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-graduation-cap"></i> Ynov Campus Val d'Europe
+                        </div>
+                    </div>
                 </div>
-                <form action="mailto:louis.monrose@ynov.com" method="post" enctype="text/plain">
-                    <input type="text" name="Nom" placeholder="Votre Nom" required>
-                    <input type="email" name="Email" placeholder="Votre Email" required>
-                    <textarea name="Message" rows="5" placeholder="Votre Message" required></textarea>
-                    <button type="submit" class="btn-submit">Envoyer le message</button>
+                <form class="contact-form" action="mailto:louis.monrose@ynov.com" method="post" enctype="text/plain">
+                    <input type="text" name="Nom" placeholder="Votre Nom & Entreprise" required>
+                    <input type="email" name="Email" placeholder="Votre Adresse E-mail" required>
+                    <textarea name="Message" rows="5" placeholder="Votre message ou proposition de mission..." required></textarea>
+                    <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; cursor: pointer; border: none;">
+                        <i class="fas fa-paper-plane"></i> Transmettre le message
+                    </button>
                 </form>
             </div>
         </section>
 
     </main>
 
+    <footer>
+        <div class="container">
+            <p>© 2026 Louis Monrose — Portfolio BTS SIO SLAM. Conçu avec rigueur et passion.</p>
+        </div>
+    </footer>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         function launchPortfolio() {
             const launcher = document.getElementById('omnitrix-launcher');
+            if (!launcher || launcher.classList.contains('launching')) return;
+
             launcher.classList.add('launching');
-            
             setTimeout(() => {
                 launcher.classList.add('fade-out');
                 document.body.style.overflow = 'auto';
-                AOS.init({ duration: 900, once: true });
-            }, 700);
+                AOS.init({ duration: 800, once: true });
+            }, 600);
+        }
+
+        // Permet de passer l'animation avec la touche Échap
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') launchPortfolio();
+        });
+
+        // Filtrage dynamique des projets
+        function filterProjects(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
     </script>
 </body>
