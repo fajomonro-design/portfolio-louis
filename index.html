@@ -186,8 +186,7 @@
             font-weight: 600;
             margin-bottom: 1.5rem;
         }
-        .badge-status i { font-size: 0.6rem; animation: pulse 1.8s infinite; }
-        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+        .badge-status i { font-size: 0.6rem; }
 
         .hero h1 { font-size: clamp(2.8rem, 7vw, 4.8rem); line-height: 1.08; font-weight: 700; letter-spacing: -1px; }
         .hero h1 span { color: var(--ben10-green); text-shadow: 0 0 25px var(--ben10-glow); }
@@ -247,7 +246,7 @@
         }
         .section-subtitle { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.8rem; }
 
-        /* --- À PROPOS --- */
+        /* --- A PROPOS --- */
         .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; }
         .parcours-box {
             background: var(--card-bg);
@@ -261,6 +260,60 @@
         }
         .parcours-box h4 { font-size: 1.15rem; color: #fff; }
         .parcours-box p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.3rem; }
+
+        /* --- EXPÉRIENCES PROFESSIONNELLES --- */
+        .exp-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2.2rem;
+            position: relative;
+            transition: 0.3s ease;
+        }
+        .exp-card:hover {
+            border-color: var(--ben10-green);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .exp-header h3 { font-size: 1.35rem; color: #fff; }
+        .exp-header .company { color: var(--ben10-green); font-weight: 600; font-size: 1.05rem; }
+        .exp-date {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.05);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+        .exp-tasks {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .exp-tasks li {
+            position: relative;
+            padding-left: 1.5rem;
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+        .exp-tasks li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--ben10-green);
+            font-size: 1.1rem;
+            line-height: 1;
+        }
 
         /* --- COMPÉTENCES --- */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
@@ -346,7 +399,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             font-family: var(--font-mono);
         }
-        .project-card:hover .tags span {
+        .project-card:hover .tags span, .exp-card .tags span {
             border-color: rgba(57, 255, 20, 0.25);
             color: #fff;
         }
@@ -421,6 +474,7 @@
             <div class="nav-links">
                 <a href="#accueil">Accueil</a>
                 <a href="#apropos">Profil</a>
+                <a href="#experiences">Expérience</a>
                 <a href="#competences">Compétences</a>
                 <a href="#projets">Réalisations</a>
                 <a href="#contact" class="btn-contact-nav"><i class="fas fa-envelope"></i> Me contacter</a>
@@ -434,15 +488,15 @@
         <section id="accueil" class="hero">
             <div data-aos="fade-up">
                 <div class="badge-status">
-                    <i class="fas fa-circle"></i> Recherche de stage : Juillet & Août 2026 (5 sem.)
+                    <i class="fas fa-check-circle"></i> BTS SIO SLAM — Disponible pour alternance / projets
                 </div>
                 <h1>Louis Monrose<br><span>Développeur & Admin Système</span></h1>
                 <p class="hero-desc">
-                    Étudiant en <strong>BTS SIO option SLAM</strong> à Ynov Campus. Je conçois des applications web structurées et déploie des environnements systèmes et réseaux fiables, sécurisés et automatisés.
+                    Étudiant en <strong>BTS SIO option SLAM</strong> à Ynov Campus. Fort d'une expérience en développement d'applications web en entreprise, je conçois des solutions logicielles et sécurise des environnements serveurs sous Linux.
                 </p>
                 <div class="hero-actions">
-                    <a href="#projets" class="btn-primary"><i class="fas fa-code-branch"></i> Découvrir mes projets</a>
-                    <a href="chemin/vers/ton-cv.pdf" target="_blank" class="btn-outline"><i class="fas fa-file-pdf"></i> Télécharger mon CV</a>
+                    <a href="#experiences" class="btn-primary"><i class="fas fa-briefcase"></i> Découvrir mes expériences</a>
+                    <a href="#projets" class="btn-outline"><i class="fas fa-code-branch"></i> Voir les projets</a>
                 </div>
             </div>
         </section>
@@ -458,21 +512,47 @@
                     <div class="parcours-box">
                         <h4>BTS SIO — Option SLAM</h4>
                         <p><strong>Ynov Campus Val d'Europe</strong> | 2025 - Présent</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.88rem;">Solutions Logicielles et Applications Métiers. Conception full-stack, intégration logicielle, sécurisation des flux et administration système sous Linux.</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.88rem;">Solutions Logicielles et Applications Métiers. Conception d'architectures web complètes, modélisation relationnelle, sécurisation des flux et administration système Linux.</p>
                     </div>
                     <div class="parcours-box">
                         <h4>Baccalauréat Général</h4>
                         <p><strong>Lycée Jean Vilar</strong> | 2021 - 2024</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.88rem;">Spécialités scientifiques et numériques, socle en raisonnement logique et algorithmique.</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.88rem;">Socle en raisonnement logique, sciences et modélisation algorithmique.</p>
                     </div>
                 </div>
                 <div data-aos="fade-up" data-aos-delay="150">
                     <div style="background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
-                        <h3 style="color: var(--ben10-green); margin-bottom: 1rem;"><i class="fas fa-bullseye"></i> Objectifs & Méthode</h3>
+                        <h3 style="color: var(--ben10-green); margin-bottom: 1rem;"><i class="fas fa-bullseye"></i> Profil & Méthode</h3>
                         <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                            Curieux et pragmatique, j'accorde une importance égale à la rigueur du code applicatif et à la résilience de l'infrastructure sous-jacente. Mes travaux couvrent le développement orienté objet, la modélisation relationnelle Merise/SQL et la sécurisation d'environnements virtualisés.
+                            Pragmatique et passionné par le code bien structuré, j'articule mes compétences autour du cycle complet de développement : de la conception de bases de données relationnelles jusqu'à l'hébergement sécurisé sous serveurs Linux.
                         </p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOUVELLE SECTION : EXPÉRIENCES -->
+        <section id="experiences">
+            <div class="section-header" data-aos="fade-right">
+                <h2 class="section-title">Expérience Professionnelle</h2>
+                <p class="section-subtitle">Mise en pratique en entreprise et contributions techniques concrètes</p>
+            </div>
+            <div class="exp-card" data-aos="fade-up">
+                <div class="exp-header">
+                    <div>
+                        <h3>Développeur Web Full-Stack (Stage)</h3>
+                        <div class="company"><i class="fas fa-building"></i> Club de Tennis & Gestion Sportive</div>
+                    </div>
+                    <span class="exp-date"><i class="fas fa-calendar-alt"></i> Juillet 2026 – Août 2026 (5 semaines)</span>
+                </div>
+                <ul class="exp-tasks">
+                    <li><strong>Refonte de l'application web :</strong> Modernisation complète de l'interface et du backend du club pour optimiser la navigation des adhérents et du personnel administratif.</li>
+                    <li><strong>Gestion des adhérents & réservations :</strong> Développement d'un espace back-office sécurisé pour la gestion des membres et intégration des flux de réservation avec la plateforme officielle <strong>Ten'Up</strong>.</li>
+                    <li><strong>Gestion dynamique des tournois :</strong> Mise en place de scripts backend pour l'automatisation des tableaux de rencontres et la publication en temps réel des résultats.</li>
+                    <li><strong>Base de données & Architecture :</strong> Modélisation et requêtage de bases relationnelles (PHP / SQL & SQLite) garantissant intégrité des données et rapidité d'affichage.</li>
+                </ul>
+                <div class="tags">
+                    <span>PHP</span><span>SQL / SQLite</span><span>Intégration Ten'Up</span><span>Architecture MVC</span><span>HTML5 / CSS3</span><span>Sécurisation Web</span>
                 </div>
             </div>
         </section>
@@ -481,28 +561,28 @@
         <section id="competences">
             <div class="section-header" data-aos="fade-right">
                 <h2 class="section-title">Domaines d'Expertise</h2>
-                <p class="section-subtitle">Technologies et environnements maîtrisés en formation et projets</p>
+                <p class="section-subtitle">Technologies et environnements maîtrisés</p>
             </div>
             <div class="skills-grid">
                 <div class="skill-card" data-aos="fade-up">
                     <div class="skill-icon"><i class="fas fa-code"></i></div>
-                    <h3>Développement Web & Objet</h3>
-                    <p>Développement full-stack : PHP (Laravel), C#, JavaScript ES6, HTML5 / CSS3. Intégration d'architectures MVC et d'APIs REST.</p>
+                    <h3>Développement Web & Backend</h3>
+                    <p>Développement dynamique en PHP (Laravel), C#, JavaScript ES6, HTML5 / CSS3. Conception MVC et intégration d'APIs tierces.</p>
                 </div>
                 <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="skill-icon"><i class="fas fa-server"></i></div>
                     <h3>Administration Système Linux</h3>
-                    <p>Gestion fine des permissions (ACL, SetGID, Sticky Bit), gestion utilisateurs/groupes, traçabilité sudo et audit système sous Ubuntu/Debian.</p>
+                    <p>Gestion des privilèges (ACL, SetGID, Sticky Bit), gestion utilisateurs/groupes, traçabilité sudo et audit sous Ubuntu Server.</p>
                 </div>
                 <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="skill-icon"><i class="fas fa-network-wired"></i></div>
                     <h3>Réseaux & Haute Disponibilité</h3>
-                    <p>Mise en place de reverse proxies & Load Balancers (HAProxy), serveurs web Apache2, serveurs DNS Bind9 et segmentation par pare-feu (UFW).</p>
+                    <p>Load balancing & reverse proxy HAProxy, serveurs HTTP Apache2, serveur DNS autoritaire Bind9 et sécurisation pare-feu UFW.</p>
                 </div>
                 <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="skill-icon"><i class="fas fa-database"></i></div>
                     <h3>Données & Scripting Bash</h3>
-                    <p>Modélisation relationnelle Merise, SQL (MariaDB/MySQL). Scripts shell automatisés (set -euo pipefail, regex, awk, sed, cron).</p>
+                    <p>Conception Merise, SQL (MariaDB, SQLite). Scripts Bash de sauvegarde avec vérification d'erreurs (set -euo pipefail) et cron.</p>
                 </div>
             </div>
         </section>
@@ -511,10 +591,9 @@
         <section id="projets">
             <div class="section-header" data-aos="fade-right">
                 <h2 class="section-title">Travaux & Réalisations</h2>
-                <p class="section-subtitle">Projets de développement, ateliers techniques et travaux pratiques documentés</p>
+                <p class="section-subtitle">Projets académiques et ateliers techniques</p>
             </div>
 
-            <!-- Filtres -->
             <div class="project-filters" data-aos="fade-up">
                 <button class="filter-btn active" onclick="filterProjects('all')">Tous les projets</button>
                 <button class="filter-btn" onclick="filterProjects('system')">Systèmes & Réseaux</button>
@@ -528,9 +607,9 @@
                 <div class="project-card" data-category="system" data-aos="fade-up">
                     <span class="project-category"><i class="fas fa-shield-alt"></i> Haute Disponibilité</span>
                     <h3>Cluster Web & Répartiteur HAProxy</h3>
-                    <p>Déploiement d'une architecture résiliente sous Linux. Configuration d'un répartiteur de charge HAProxy avec équilibrage Round-Robin vers deux serveurs Apache2, détection automatique de panne (sondes de santé check) et filtrage réseau strict par pare-feu UFW.</p>
+                    <p>Déploiement d'une architecture résiliente sous Linux. Configuration d'un répartiteur HAProxy avec équilibrage Round-Robin vers deux serveurs Apache2, détection automatique de panne (sondes check) et filtrage réseau via pare-feu UFW.</p>
                     <div class="tags">
-                        <span>HAProxy</span><span>Apache2</span><span>Load Balancing</span><span>UFW</span><span>Failover</span>
+                        <span>HAProxy</span><span>Apache2</span><span>Load Balancing</span><span>UFW</span>
                     </div>
                 </div>
 
@@ -538,7 +617,7 @@
                 <div class="project-card" data-category="system" data-aos="fade-up" data-aos-delay="100">
                     <span class="project-category"><i class="fas fa-lock"></i> Sécurité & Droits</span>
                     <h3>Administration & Droits Avancés Linux</h3>
-                    <p>Mise en place d'un cloisonnement multi-équipes (TechSolutions). Gestion fine des privilèges avec SetGID pour le partage collaboratif, Sticky Bit sur les répertoires d'échange, ACLs spécifiques (r-x) pour la direction et traçabilité des commandes sudo via /var/log/auth.log.</p>
+                    <p>Mise en place d'un cloisonnement multi-équipes. Gestion fine des permissions avec SetGID pour les répertoires d'équipe, Sticky Bit, listes de contrôle d'accès (ACL r-x) pour la direction et traçabilité via /var/log/auth.log.</p>
                     <div class="tags">
                         <span>Linux</span><span>ACL</span><span>SetGID</span><span>Sticky Bit</span><span>Audit Sudo</span>
                     </div>
@@ -548,19 +627,19 @@
                 <div class="project-card" data-category="scripting" data-aos="fade-up" data-aos-delay="200">
                     <span class="project-category"><i class="fas fa-terminal"></i> Automatisation</span>
                     <h3>Sauvegardes & Traitement Bash</h3>
-                    <p>Développement de scripts shell robustes (set -euo pipefail) avec arguments dynamiques, horodatage, compression tar.gz et rotation automatique des 7 dernières archives. Traitement de données et extraction de métriques via pipelines (awk, sed, cut, sort).</p>
+                    <p>Scripts shell robustes (set -euo pipefail) avec arguments dynamiques, horodatage, compression tar.gz et rotation automatique des 7 dernières archives. Traitement de données et métriques via pipelines (awk, sed, cut, sort).</p>
                     <div class="tags">
-                        <span>Bash</span><span>Cron</span><span>Tar / Gzip</span><span>Awk / Sed</span><span>Automatisation</span>
+                        <span>Bash</span><span>Cron</span><span>Tar / Gzip</span><span>Awk / Sed</span>
                     </div>
                 </div>
 
                 <!-- E-Commerce Cinéma -->
                 <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="300">
-                    <span class="project-category"><i class="fas fa-film"></i> Full-Stack En Cours</span>
+                    <span class="project-category"><i class="fas fa-film"></i> Web Full-Stack</span>
                     <h3>Plateforme E-Commerce Cinéma</h3>
-                    <p>Conception d'une boutique en ligne dédiée à l'achat de films. Implémentation d'une architecture MVC avec gestion des sessions, authentification sécurisée, catalogue filtrable, panier persistant et base de données relationnelle sous SQL/MariaDB.</p>
+                    <p>Boutique en ligne complète dédiée aux films. Architecture MVC avec gestion des comptes clients, catalogue avec filtres dynamiques, panier persistant et base de données relationnelle sous MariaDB/SQL.</p>
                     <div class="tags">
-                        <span>PHP</span><span>Laravel</span><span>SQL / MariaDB</span><span>MVC</span><span>E-Commerce</span>
+                        <span>PHP</span><span>Laravel</span><span>SQL / MariaDB</span><span>MVC</span>
                     </div>
                 </div>
 
@@ -568,7 +647,7 @@
                 <div class="project-card" data-category="system" data-aos="fade-up" data-aos-delay="400">
                     <span class="project-category"><i class="fas fa-globe"></i> Services Réseau</span>
                     <h3>Serveur DNS Bind9 & Serveur Web</h3>
-                    <p>Installation et configuration d'un serveur DNS autoritaire avec Bind9 pour la résolution du domaine d'entreprise local (zone directe SOA et enregistrements A). Hébergement et déploiement des pages de test sous Apache2 (/var/www/html).</p>
+                    <p>Installation d'un serveur DNS autoritaire avec Bind9 pour la résolution de domaine d'entreprise local (zone directe SOA et enregistrements A). Hébergement et déploiement sous Apache2.</p>
                     <div class="tags">
                         <span>Bind9</span><span>DNS</span><span>Apache2</span><span>Ubuntu Server</span>
                     </div>
@@ -577,10 +656,10 @@
                 <!-- ShopGen -->
                 <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="500">
                     <span class="project-category"><i class="fas fa-laptop-code"></i> Front-End</span>
-                    <h3>ShopGen — E-Commerce IA</h3>
-                    <p>Intégration d'un site vitrine complet et ergonomique pour une solution innovante. Interface entièrement responsive conçue en HTML5/CSS3 natif avec interactions dynamiques en JavaScript et mise en page adaptée mobile-first.</p>
+                    <h3>ShopGen — E-Commerce Vitrine</h3>
+                    <p>Intégration d'un site vitrine complet avec interface responsive en HTML5/CSS3 natif, manipulation dynamique du DOM en JavaScript et affichage adapté multi-écrans.</p>
                     <div class="tags">
-                        <span>HTML5</span><span>CSS3 Flex/Grid</span><span>JavaScript</span><span>Responsive UI</span>
+                        <span>HTML5</span><span>CSS3 Flex/Grid</span><span>JavaScript</span><span>Responsive</span>
                     </div>
                 </div>
 
@@ -590,14 +669,14 @@
         <!-- CONTACT -->
         <section id="contact">
             <div class="section-header" data-aos="fade-right">
-                <h2 class="section-title">Contact Professionnel</h2>
-                <p class="section-subtitle">Ouvert aux échanges concernant un stage ou une opportunité technique</p>
+                <h2 class="section-title">Contact</h2>
+                <p class="section-subtitle">Échangeons au sujet d'une opportunité ou d'un projet technique</p>
             </div>
             <div class="contact-wrapper" data-aos="fade-up">
                 <div class="contact-info">
-                    <h3>Discutons de votre projet</h3>
+                    <h3>Prenons contact</h3>
                     <p>
-                        Actuellement disponible pour mon stage conventionné de BTS SIO (<strong>5 semaines en juillet et août 2026</strong>), je reste joignable par e-mail ou via ce formulaire.
+                        Disponible pour échanger autour de projets de développement applicatif ou d'administration de systèmes.
                     </p>
                     <div class="contact-details">
                         <a href="mailto:louis.monrose@ynov.com" class="contact-item">
@@ -614,7 +693,7 @@
                 <form class="contact-form" action="mailto:louis.monrose@ynov.com" method="post" enctype="text/plain">
                     <input type="text" name="Nom" placeholder="Votre Nom & Entreprise" required>
                     <input type="email" name="Email" placeholder="Votre Adresse E-mail" required>
-                    <textarea name="Message" rows="5" placeholder="Votre message ou proposition de mission..." required></textarea>
+                    <textarea name="Message" rows="5" placeholder="Votre message..." required></textarea>
                     <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; cursor: pointer; border: none;">
                         <i class="fas fa-paper-plane"></i> Transmettre le message
                     </button>
@@ -626,7 +705,7 @@
 
     <footer>
         <div class="container">
-            <p>© 2026 Louis Monrose — Portfolio BTS SIO SLAM. Conçu avec rigueur et passion.</p>
+            <p>© 2026 Louis Monrose — Portfolio BTS SIO SLAM.</p>
         </div>
     </footer>
 
@@ -644,12 +723,10 @@
             }, 600);
         }
 
-        // Permet de passer l'animation avec la touche Échap
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') launchPortfolio();
         });
 
-        // Filtrage dynamique des projets
         function filterProjects(category) {
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
