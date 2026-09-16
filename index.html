@@ -246,8 +246,8 @@
         }
         .section-subtitle { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.8rem; }
 
-        /* --- A PROPOS --- */
-        .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; }
+        /* --- MON PROFIL --- */
+        .about-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 2.5rem; }
         .parcours-box {
             background: var(--card-bg);
             padding: 1.5rem;
@@ -257,62 +257,24 @@
             border-right: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
             margin-bottom: 1.2rem;
+            transition: 0.3s;
+        }
+        .parcours-box:hover {
+            border-color: var(--ben10-green);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
         .parcours-box h4 { font-size: 1.15rem; color: #fff; }
         .parcours-box p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.3rem; }
 
-        /* --- EXPÉRIENCES PROFESSIONNELLES --- */
-        .exp-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 2.2rem;
-            position: relative;
-            transition: 0.3s ease;
-        }
-        .exp-card:hover {
-            border-color: var(--ben10-green);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .exp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.2rem;
-        }
-        .exp-header h3 { font-size: 1.35rem; color: #fff; }
-        .exp-header .company { color: var(--ben10-green); font-weight: 600; font-size: 1.05rem; }
-        .exp-date {
+        .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .tags span {
+            background: rgba(255, 255, 255, 0.04);
+            color: #d0d0d0;
+            padding: 0.25rem 0.65rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             font-family: var(--font-mono);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            background: rgba(255,255,255,0.05);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-        }
-        .exp-tasks {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-        .exp-tasks li {
-            position: relative;
-            padding-left: 1.5rem;
-            color: #ccc;
-            font-size: 0.95rem;
-        }
-        .exp-tasks li::before {
-            content: "▹";
-            position: absolute;
-            left: 0;
-            color: var(--ben10-green);
-            font-size: 1.1rem;
-            line-height: 1;
         }
 
         /* --- COMPÉTENCES --- */
@@ -333,7 +295,7 @@
         .skill-card h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
         .skill-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; }
 
-        /* --- PROJETS & FILTRES --- */
+        /* --- RÉALISATIONS SLAM (STYLE CARTES CAPTURE) --- */
         .project-filters {
             display: flex;
             gap: 0.8rem;
@@ -360,48 +322,108 @@
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.8rem;
+            gap: 2rem;
         }
         .project-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
+            background: #111111;
+            border: 1px solid #222222;
             border-radius: 14px;
-            padding: 2rem;
-            transition: all 0.3s ease;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            position: relative;
+            transition: all 0.3s ease;
         }
         .project-card:hover {
-            background: var(--card-hover);
             border-color: var(--ben10-green);
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
-        .project-category {
-            font-size: 0.75rem;
-            font-family: var(--font-mono);
+
+        .card-thumb {
+            height: 140px;
+            background: #181818;
+            border-bottom: 1px solid #222222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .card-thumb i {
+            font-size: 3.5rem;
             color: var(--ben10-green);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 0 10px rgba(57, 255, 20, 0.3));
         }
-        .project-card h3 { font-size: 1.35rem; margin-bottom: 0.8rem; color: #fff; }
-        .project-card p { color: var(--text-muted); font-size: 0.92rem; flex-grow: 1; margin-bottom: 1.4rem; line-height: 1.6; }
-        
-        .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-        .tags span {
-            background: rgba(255, 255, 255, 0.04);
-            color: #d0d0d0;
-            padding: 0.25rem 0.65rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+
+        .card-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+        }
+        .card-meta {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 0.9rem;
             font-family: var(--font-mono);
         }
-        .project-card:hover .tags span, .exp-card .tags span {
-            border-color: rgba(57, 255, 20, 0.25);
-            color: #fff;
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+        .badge-context {
+            background: rgba(57, 255, 20, 0.15) !important;
+            color: var(--ben10-green) !important;
+            font-weight: 600;
+            border-color: rgba(57, 255, 20, 0.4) !important;
+        }
+        .card-tags span {
+            background: #1c1c1c;
+            color: #cccccc;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid #2a2a2a;
+            font-family: var(--font-mono);
+        }
+
+        .card-desc {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-details {
+            width: 100%;
+            padding: 0.65rem;
+            background: transparent;
+            border: 1px solid #333333;
+            border-radius: 8px;
+            color: #eeeeee;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            display: block;
+        }
+        .btn-details:hover {
+            border-color: var(--ben10-green);
+            color: var(--ben10-green);
+            background: rgba(57, 255, 20, 0.05);
         }
 
         /* --- CONTACT --- */
@@ -446,7 +468,6 @@
             border-top: 1px solid var(--border);
         }
 
-        /* --- RESPONSIVE --- */
         @media (max-width: 960px) {
             .about-grid, .contact-wrapper { grid-template-columns: 1fr; }
             .nav-links { display: none; }
@@ -473,10 +494,9 @@
             <a href="#accueil" class="logo">LOUIS<span>.</span>MONROSE</a>
             <div class="nav-links">
                 <a href="#accueil">Accueil</a>
-                <a href="#apropos">Profil</a>
-                <a href="#experiences">Expérience</a>
+                <a href="#apropos">Mon Profil</a>
                 <a href="#competences">Compétences</a>
-                <a href="#projets">Réalisations</a>
+                <a href="#projets">Réalisations SLAM</a>
                 <a href="#contact" class="btn-contact-nav"><i class="fas fa-envelope"></i> Me contacter</a>
             </div>
         </div>
@@ -488,178 +508,271 @@
         <section id="accueil" class="hero">
             <div data-aos="fade-up">
                 <div class="badge-status">
-                    <i class="fas fa-check-circle"></i> BTS SIO SLAM — Disponible pour alternance / projets
+                    <i class="fas fa-check-circle"></i> BTS SIO SLAM — Développement Web & Logiciel
                 </div>
-                <h1>Louis Monrose<br><span>Développeur & Admin Système</span></h1>
+                <h1>Louis Monrose<br><span>Développeur Full-Stack</span></h1>
                 <p class="hero-desc">
-                    Étudiant en <strong>BTS SIO option SLAM</strong> à Ynov Campus. Fort d'une expérience en développement d'applications web en entreprise, je conçois des solutions logicielles et sécurise des environnements serveurs sous Linux.
+                    Étudiant en <strong>BTS SIO option SLAM</strong> à Ynov Campus. Je conçois et développe des solutions logicielles métiers, des applications web complètes et des architectures de bases de données sécurisées.
                 </p>
                 <div class="hero-actions">
-                    <a href="#experiences" class="btn-primary"><i class="fas fa-briefcase"></i> Découvrir mes expériences</a>
-                    <a href="#projets" class="btn-outline"><i class="fas fa-code-branch"></i> Voir les projets</a>
+                    <a href="#projets" class="btn-primary"><i class="fas fa-laptop-code"></i> Découvrir mes réalisations</a>
+                    <a href="chemin/vers/ton-cv.pdf" target="_blank" class="btn-outline"><i class="fas fa-file-pdf"></i> Télécharger mon CV</a>
                 </div>
             </div>
         </section>
 
-        <!-- A PROPOS -->
+        <!-- MON PROFIL (FORMATION + EXPÉRIENCE DU STAGE) -->
         <section id="apropos">
             <div class="section-header" data-aos="fade-right">
-                <h2 class="section-title">Parcours & Formation</h2>
-                <p class="section-subtitle">Mon cadre d'apprentissage et mes objectifs professionnels</p>
+                <h2 class="section-title">Mon Profil</h2>
+                <p class="section-subtitle">Formation académique et immersion professionnelle</p>
             </div>
             <div class="about-grid">
+                <!-- Colonne Formation -->
                 <div data-aos="fade-up">
+                    <h3 style="margin-bottom: 1.2rem; color: var(--ben10-green); font-size: 1.25rem;">
+                        <i class="fas fa-graduation-cap"></i> Formation
+                    </h3>
+                    
                     <div class="parcours-box">
-                        <h4>BTS SIO — Option SLAM</h4>
-                        <p><strong>Ynov Campus Val d'Europe</strong> | 2025 - Présent</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.88rem;">Solutions Logicielles et Applications Métiers. Conception d'architectures web complètes, modélisation relationnelle, sécurisation des flux et administration système Linux.</p>
+                        <h4>BTS SIO Option SLAM</h4>
+                        <p><strong>Ynov Campus Val d'Europe</strong> | 2025 – Présent</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.88rem; color: #bbb;">
+                            Solutions Logicielles et Applications Métiers. Modélisation de données Merise, architectures MVC, développement orienté objet et intégration d'APIs.
+                        </p>
                     </div>
+                    
                     <div class="parcours-box">
                         <h4>Baccalauréat Général</h4>
-                        <p><strong>Lycée Jean Vilar</strong> | 2021 - 2024</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.88rem;">Socle en raisonnement logique, sciences et modélisation algorithmique.</p>
-                    </div>
-                </div>
-                <div data-aos="fade-up" data-aos-delay="150">
-                    <div style="background: var(--card-bg); padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
-                        <h3 style="color: var(--ben10-green); margin-bottom: 1rem;"><i class="fas fa-bullseye"></i> Profil & Méthode</h3>
-                        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-                            Pragmatique et passionné par le code bien structuré, j'articule mes compétences autour du cycle complet de développement : de la conception de bases de données relationnelles jusqu'à l'hébergement sécurisé sous serveurs Linux.
+                        <p><strong>Lycée Jean Vilar</strong> | 2021 – 2024[cite: 1]</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.88rem; color: #bbb;">
+                            Parcours axé sur les sciences et les technologies numériques, logique et algorithmique.
                         </p>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- NOUVELLE SECTION : EXPÉRIENCES -->
-        <section id="experiences">
-            <div class="section-header" data-aos="fade-right">
-                <h2 class="section-title">Expérience Professionnelle</h2>
-                <p class="section-subtitle">Mise en pratique en entreprise et contributions techniques concrètes</p>
-            </div>
-            <div class="exp-card" data-aos="fade-up">
-                <div class="exp-header">
-                    <div>
-                        <h3>Développeur Web Full-Stack (Stage)</h3>
-                        <div class="company"><i class="fas fa-building"></i> Club de Tennis de Saint Souppplets</div>
+                <!-- Colonne Expérience Professionnelle (Stage) -->
+                <div data-aos="fade-up" data-aos-delay="150">
+                    <h3 style="margin-bottom: 1.2rem; color: var(--ben10-green); font-size: 1.25rem;">
+                        <i class="fas fa-briefcase"></i> Expérience Professionnelle
+                    </h3>
+
+                    <div class="parcours-box">
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                            <h4>Développeur Web Full-Stack — Stage</h4>
+                            <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--ben10-green); background: rgba(57, 255, 20, 0.1); padding: 0.2rem 0.6rem; border-radius: 4px;">5 semaines</span>
+                        </div>
+                        <p><strong>Club de Tennis</strong> | Juillet – Août 2026</p>
+                        
+                        <ul style="list-style: none; margin-top: 0.8rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                            <li style="position: relative; padding-left: 1.2rem; color: #ccc; font-size: 0.88rem;">
+                                <span style="position: absolute; left: 0; color: var(--ben10-green);">▹</span>
+                                Refonte et modernisation de la plateforme web du club (interface responsive et fluide).
+                            </li>
+                            <li style="position: relative; padding-left: 1.2rem; color: #ccc; font-size: 0.88rem;">
+                                <span style="position: absolute; left: 0; color: var(--ben10-green);">▹</span>
+                                Développement d'un espace back-office pour la gestion des adhérents et redirection vers <strong>Ten'Up</strong> pour les réservations de courts.
+                            </li>
+                            <li style="position: relative; padding-left: 1.2rem; color: #ccc; font-size: 0.88rem;">
+                                <span style="position: absolute; left: 0; color: var(--ben10-green);">▹</span>
+                                Génération et affichage dynamique des tableaux de tournois et des résultats (PHP / SQL).
+                            </li>
+                        </ul>
+
+                        <div class="tags" style="margin-top: 1rem;">
+                            <span>PHP</span><span>SQL</span><span>Ten'Up</span><span>Back-Office</span><span>Responsive</span>
+                        </div>
                     </div>
-                    <span class="exp-date"><i class="fas fa-calendar-alt"></i> Juillet 2026 – Août 2026 (5 semaines)</span>
-                </div>
-                <ul class="exp-tasks">
-                    <li><strong>Refonte de l'application web :</strong> Modernisation complète de l'interface et du backend du club pour optimiser la navigation des adhérents et du personnel administratif.</li>
-                    <li><strong>Gestion des adhérents & réservations :</strong> Développement d'un espace back-office sécurisé pour la gestion des membres et intégration des flux de réservation avec la plateforme officielle <strong>Ten'Up</strong>.</li>
-                    <li><strong>Gestion dynamique des tournois :</strong> Mise en place de scripts backend pour l'automatisation des tableaux de rencontres et la publication en temps réel des résultats.</li>
-                    <li><strong>Base de données & Architecture :</strong> Modélisation et requêtage de bases relationnelles (PHP / SQL & SQLite) garantissant intégrité des données et rapidité d'affichage.</li>
-                </ul>
-                <div class="tags">
-                    <span>PHP</span><span>SQL / SQLite</span><span>Intégration Ten'Up</span><span>Architecture MVC</span><span>HTML5 / CSS3</span><span>Sécurisation Web</span>
                 </div>
             </div>
         </section>
 
-        <!-- COMPETENCES -->
+        <!-- COMPÉTENCES -->
         <section id="competences">
             <div class="section-header" data-aos="fade-right">
-                <h2 class="section-title">Domaines d'Expertise</h2>
-                <p class="section-subtitle">Technologies et environnements maîtrisés</p>
+                <h2 class="section-title">Compétences Techniques</h2>
+                <p class="section-subtitle">Langages, environnements et outils maîtrisés</p>
             </div>
             <div class="skills-grid">
                 <div class="skill-card" data-aos="fade-up">
                     <div class="skill-icon"><i class="fas fa-code"></i></div>
-                    <h3>Développement Web & Backend</h3>
-                    <p>Développement dynamique en PHP (Laravel), C#, JavaScript ES6, HTML5 / CSS3. Conception MVC et intégration d'APIs tierces.</p>
+                    <h3>Développement Web Full-Stack</h3>
+                    <p>PHP (Laravel), JavaScript ES6, HTML5 / CSS3 natif. Implémentation d'architectures MVC et intégration d'APIs REST[cite: 1].</p>
                 </div>
                 <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="skill-icon"><i class="fas fa-server"></i></div>
-                    <h3>Administration Système Linux</h3>
-                    <p>Gestion des privilèges (ACL, SetGID, Sticky Bit), gestion utilisateurs/groupes, traçabilité sudo et audit sous Ubuntu Server.</p>
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <h3>Conception & Données</h3>
+                    <p>Modélisation relationnelle Merise (MCD, MLD, MPD) et requêtage SQL sous MariaDB, MySQL et SQLite[cite: 1].</p>
                 </div>
                 <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="skill-icon"><i class="fas fa-network-wired"></i></div>
-                    <h3>Réseaux & Haute Disponibilité</h3>
-                    <p>Load balancing & reverse proxy HAProxy, serveurs HTTP Apache2, serveur DNS autoritaire Bind9 et sécurisation pare-feu UFW.</p>
+                    <div class="skill-icon"><i class="fas fa-terminal"></i></div>
+                    <h3>Scripting & Algorithmique</h3>
+                    <p>Développement de scripts utilitaires en Bash et JavaScript pour le parsing, le traitement de données et l'automatisation[cite: 1, 5].</p>
                 </div>
                 <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="skill-icon"><i class="fas fa-database"></i></div>
-                    <h3>Données & Scripting Bash</h3>
-                    <p>Conception Merise, SQL (MariaDB, SQLite). Scripts Bash de sauvegarde avec vérification d'erreurs (set -euo pipefail) et cron.</p>
+                    <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
+                    <h3>Gestion & Qualité</h3>
+                    <p>Versionnement Git/GitHub, tests unitaires, validation de formulaires et sécurisation contre les failles courantes (injections SQL, XSS).</p>
                 </div>
             </div>
         </section>
 
-        <!-- PROJETS -->
+        <!-- RÉALISATIONS SLAM (STYLE IDENTIQUE À LA CAPTURE) -->
         <section id="projets">
             <div class="section-header" data-aos="fade-right">
-                <h2 class="section-title">Travaux & Réalisations</h2>
-                <p class="section-subtitle">Projets académiques et ateliers techniques</p>
+                <h2 class="section-title">Réalisations SLAM</h2>
+                <p class="section-subtitle">Développement d'applications, modélisation de données et solutions logicielles métiers</p>
             </div>
 
+            <!-- Filtres SLAM -->
             <div class="project-filters" data-aos="fade-up">
-                <button class="filter-btn active" onclick="filterProjects('all')">Tous les projets</button>
-                <button class="filter-btn" onclick="filterProjects('system')">Systèmes & Réseaux</button>
-                <button class="filter-btn" onclick="filterProjects('web')">Développement Web</button>
-                <button class="filter-btn" onclick="filterProjects('scripting')">Scripting & Outils</button>
+                <button class="filter-btn active" onclick="filterProjects('all')">Toutes les réalisations</button>
+                <button class="filter-btn" onclick="filterProjects('pro')">En Entreprise</button>
+                <button class="filter-btn" onclick="filterProjects('web')">Web & Full-Stack</button>
+                <button class="filter-btn" onclick="filterProjects('app')">Applications & Algorithmique</button>
             </div>
 
             <div class="projects-grid">
-                
-                <!-- HAProxy Load Balancer -->
-                <div class="project-card" data-category="system" data-aos="fade-up">
-                    <span class="project-category"><i class="fas fa-shield-alt"></i> Haute Disponibilité</span>
-                    <h3>Cluster Web & Répartiteur HAProxy</h3>
-                    <p>Déploiement d'une architecture résiliente sous Linux. Configuration d'un répartiteur HAProxy avec équilibrage Round-Robin vers deux serveurs Apache2, détection automatique de panne (sondes check) et filtrage réseau via pare-feu UFW.</p>
-                    <div class="tags">
-                        <span>HAProxy</span><span>Apache2</span><span>Load Balancing</span><span>UFW</span>
+
+                <!-- 1. Stage Tennis Club -->
+                <div class="project-card" data-category="pro" data-aos="fade-up">
+                    <div class="card-thumb">
+                        <i class="fas fa-table-tennis-paddle-ball"></i>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Application Web de Gestion Sportive</h3>
+                        <div class="card-meta">
+                            <i class="far fa-calendar-alt"></i> Période : 07/2026 – 08/2026
+                        </div>
+                        <div class="card-tags">
+                            <span class="badge-context">Stage</span>
+                            <span>PHP</span>
+                            <span>SQL</span>
+                            <span>Ten'Up API</span>
+                            <span>Back-Office</span>
+                        </div>
+                        <p class="card-desc">
+                            Refonte intégrale de la plateforme du club : espace d'administration pour la gestion des adhérents, génération automatisée des tableaux de tournois et passerelle de réservation vers Ten'Up.
+                        </p>
+                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
                     </div>
                 </div>
 
-                <!-- Gestion Sécurité Linux -->
-                <div class="project-card" data-category="system" data-aos="fade-up" data-aos-delay="100">
-                    <span class="project-category"><i class="fas fa-lock"></i> Sécurité & Droits</span>
-                    <h3>Administration & Droits Avancés Linux</h3>
-                    <p>Mise en place d'un cloisonnement multi-équipes. Gestion fine des permissions avec SetGID pour les répertoires d'équipe, Sticky Bit, listes de contrôle d'accès (ACL r-x) pour la direction et traçabilité via /var/log/auth.log.</p>
-                    <div class="tags">
-                        <span>Linux</span><span>ACL</span><span>SetGID</span><span>Sticky Bit</span><span>Audit Sudo</span>
+                <!-- 2. E-Commerce Cinéma -->
+                <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-thumb">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Plateforme E-Commerce Cinéma</h3>
+                        <div class="card-meta">
+                            <i class="far fa-calendar-alt"></i> Période : 05/2026 – En cours
+                        </div>
+                        <div class="card-tags">
+                            <span class="badge-context">Projet</span>
+                            <span>PHP (Laravel)</span>
+                            <span>MariaDB</span>
+                            <span>Architecture MVC</span>
+                            <span>Auth / Session</span>
+                        </div>
+                        <p class="card-desc">
+                            Boutique en ligne complète : modélisation relationnelle Merise, gestion des sessions, authentification, catalogue avec filtres multicritères et persistance du panier d'achat[cite: 1].
+                        </p>
+                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
                     </div>
                 </div>
 
-                <!-- Scripting Bash & Cron -->
-                <div class="project-card" data-category="scripting" data-aos="fade-up" data-aos-delay="200">
-                    <span class="project-category"><i class="fas fa-terminal"></i> Automatisation</span>
-                    <h3>Sauvegardes & Traitement Bash</h3>
-                    <p>Scripts shell robustes (set -euo pipefail) avec arguments dynamiques, horodatage, compression tar.gz et rotation automatique des 7 dernières archives. Traitement de données et métriques via pipelines (awk, sed, cut, sort).</p>
-                    <div class="tags">
-                        <span>Bash</span><span>Cron</span><span>Tar / Gzip</span><span>Awk / Sed</span>
+                <!-- 3. ShopGen -->
+                <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-thumb">
+                        <i class="fas fa-cart-shopping"></i>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">ShopGen — Interface E-Commerce</h3>
+                        <div class="card-meta">
+                            <i class="far fa-calendar-alt"></i> Période : 12/2025
+                        </div>
+                        <div class="card-tags">
+                            <span class="badge-context">École</span>
+                            <span>JavaScript</span>
+                            <span>DOM</span>
+                            <span>HTML5 / CSS3</span>
+                            <span>Responsive</span>
+                        </div>
+                        <p class="card-desc">
+                            Intégration d'une interface utilisateur dynamique : manipulation du DOM, carrousel d'articles interactif et adaptabilité multi-écrans sans framework externe[cite: 1].
+                        </p>
+                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
                     </div>
                 </div>
 
-                <!-- E-Commerce Cinéma -->
-                <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="300">
-                    <span class="project-category"><i class="fas fa-film"></i> Web Full-Stack</span>
-                    <h3>Plateforme E-Commerce Cinéma</h3>
-                    <p>Boutique en ligne complète dédiée aux films. Architecture MVC avec gestion des comptes clients, catalogue avec filtres dynamiques, panier persistant et base de données relationnelle sous MariaDB/SQL.</p>
-                    <div class="tags">
-                        <span>PHP</span><span>Laravel</span><span>SQL / MariaDB</span><span>MVC</span>
+                <!-- 4. Jeu du Memory -->
+                <div class="project-card" data-category="app" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-thumb">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Application Interactive « Memory »</h3>
+                        <div class="card-meta">
+                            <i class="far fa-calendar-alt"></i> Période : 10/2025
+                        </div>
+                        <div class="card-tags">
+                            <span class="badge-context">École</span>
+                            <span>JavaScript ES6</span>
+                            <span>Algorithmique</span>
+                            <span>CSS3 3D</span>
+                        </div>
+                        <p class="card-desc">
+                            Implémentation de la logique métier d'un jeu de mémoire : gestion des états de cartes, timer, calcul dynamique du score et animations de retournement 3D[cite: 1].
+                        </p>
+                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
                     </div>
                 </div>
 
-                <!-- DNS & Apache -->
-                <div class="project-card" data-category="system" data-aos="fade-up" data-aos-delay="400">
-                    <span class="project-category"><i class="fas fa-globe"></i> Services Réseau</span>
-                    <h3>Serveur DNS Bind9 & Serveur Web</h3>
-                    <p>Installation d'un serveur DNS autoritaire avec Bind9 pour la résolution de domaine d'entreprise local (zone directe SOA et enregistrements A). Hébergement et déploiement sous Apache2.</p>
-                    <div class="tags">
-                        <span>Bind9</span><span>DNS</span><span>Apache2</span><span>Ubuntu Server</span>
+                <!-- 5. To-Do List -->
+                <div class="project-card" data-category="app" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-thumb">
+                        <i class="fas fa-list-check"></i>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Gestionnaire de Tâches Interactif</h3>
+                        <div class="card-meta">
+                            <i class="far fa-calendar-alt"></i> Période : 11/2025
+                        </div>
+                        <div class="card-tags">
+                            <span class="badge-context">Personnel</span>
+                            <span>JavaScript</span>
+                            <span>CRUD</span>
+                            <span>LocalStorage</span>
+                        </div>
+                        <p class="card-desc">
+                            Outil de productivité implémentant les opérations CRUD complètes : ajout, filtrage dynamique par statut, suppression et persistance locale des données.
+                        </p>
+                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
                     </div>
                 </div>
 
-                <!-- ShopGen -->
-                <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="500">
-                    <span class="project-category"><i class="fas fa-laptop-code"></i> Front-End</span>
-                    <h3>ShopGen — E-Commerce Vitrine</h3>
-                    <p>Intégration d'un site vitrine complet avec interface responsive en HTML5/CSS3 natif, manipulation dynamique du DOM en JavaScript et affichage adapté multi-écrans.</p>
-                    <div class="tags">
-                        <span>HTML5</span><span>CSS3 Flex/Grid</span><span>JavaScript</span><span>Responsive</span>
+                <!-- 6. Scripts de Parsing & Données -->
+                <div class="project-card" data-category="app" data-aos="fade-up" data-aos-delay="500">
+                    <div class="card-thumb">
+                        <i class="fas fa-file-code"></i>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Traitement de Fichiers & Parsing</h3>
+                        <div class="card-meta">
+                            <i class="far fa-calendar-alt"></i> Période : 11/2025
+                        </div>
+                        <div class="card-tags">
+                            <span class="badge-context">École</span>
+                            <span>Bash</span>
+                            <span>Awk / Sed</span>
+                            <span>Regex</span>
+                            <span>Automatisation</span>
+                        </div>
+                        <p class="card-desc">
+                            Développement de scripts de parsing de flux textuels : extraction de métriques, tri multicritère, calcul de moyennes et génération automatique de rapports[cite: 5].
+                        </p>
+                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
                     </div>
                 </div>
 
@@ -669,18 +782,18 @@
         <!-- CONTACT -->
         <section id="contact">
             <div class="section-header" data-aos="fade-right">
-                <h2 class="section-title">Contact</h2>
-                <p class="section-subtitle">Échangeons au sujet d'une opportunité ou d'un projet technique</p>
+                <h2 class="section-title">Contact Professionnel</h2>
+                <p class="section-subtitle">Disponible pour échanger autour de projets ou d'opportunités techniques</p>
             </div>
             <div class="contact-wrapper" data-aos="fade-up">
                 <div class="contact-info">
-                    <h3>Prenons contact</h3>
+                    <h3>Discutons de votre projet</h3>
                     <p>
-                        Disponible pour échanger autour de projets de développement applicatif ou d'administration de systèmes.
+                        À l'écoute d'opportunités en développement d'applications ou en ingénierie logicielle. Vous pouvez me joindre directement par e-mail ou via ce formulaire :
                     </p>
                     <div class="contact-details">
                         <a href="mailto:louis.monrose@ynov.com" class="contact-item">
-                            <i class="fas fa-envelope"></i> louis.monrose@ynov.com
+                            <i class="fas fa-envelope"></i> louis.monrose@ynov.com[cite: 1]
                         </a>
                         <div class="contact-item">
                             <i class="fas fa-map-marker-alt"></i> Île-de-France, France
@@ -691,11 +804,11 @@
                     </div>
                 </div>
                 <form class="contact-form" action="mailto:louis.monrose@ynov.com" method="post" enctype="text/plain">
-                    <input type="text" name="Nom" placeholder="Votre Nom & Entreprise" required>
+                    <input type="text" name="Nom" placeholder="Votre Nom & Organisation" required>
                     <input type="email" name="Email" placeholder="Votre Adresse E-mail" required>
                     <textarea name="Message" rows="5" placeholder="Votre message..." required></textarea>
                     <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; cursor: pointer; border: none;">
-                        <i class="fas fa-paper-plane"></i> Transmettre le message
+                        <i class="fas fa-paper-plane"></i> Envoyer le message
                     </button>
                 </form>
             </div>
@@ -705,7 +818,7 @@
 
     <footer>
         <div class="container">
-            <p>© 2026 Louis Monrose — Portfolio BTS SIO SLAM.</p>
+            <p>© 2026 Louis Monrose — Portfolio BTS SIO SLAM. Conçu avec rigueur et passion.</p>
         </div>
     </footer>
 
