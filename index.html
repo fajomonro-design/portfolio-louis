@@ -41,7 +41,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+            transition: opacity 0.35s ease-in-out, visibility 0.35s ease-in-out;
         }
 
         .omni-container {
@@ -52,43 +52,36 @@
         }
 
         .omni-btn {
-            width: 190px;
-            height: 190px;
+            width: 170px;
+            height: 170px;
             background: #151515;
             border: 8px solid #2d2d2d;
             border-radius: 50%;
             position: relative;
-            cursor: pointer;
             box-shadow: 0 0 35px rgba(0,0,0,0.9), inset 0 0 25px rgba(57, 255, 20, 0.15);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-        }
-
-        .omni-btn:hover {
-            transform: scale(1.08);
-            border-color: #3d3d3d;
-            box-shadow: 0 0 45px var(--ben10-glow);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .omni-face-top, .omni-face-bottom {
             position: absolute;
             width: 0; height: 0;
-            border-left: 65px solid transparent;
-            border-right: 65px solid transparent;
-            transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            transition: transform 0.35s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
         .omni-face-top {
-            border-bottom: 95px solid var(--ben10-green);
+            border-bottom: 85px solid var(--ben10-green);
             top: 15px;
             filter: drop-shadow(0 0 12px var(--ben10-green));
         }
 
         .omni-face-bottom {
-            border-top: 95px solid var(--ben10-green);
+            border-top: 85px solid var(--ben10-green);
             bottom: 15px;
             filter: drop-shadow(0 0 12px var(--ben10-green));
         }
@@ -102,18 +95,6 @@
         }
         
         .fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
-
-        .skip-btn {
-            margin-top: 1.5rem;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-decoration: underline;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .skip-btn:hover { color: var(--ben10-green); }
 
         /* --- NAVIGATION --- */
         .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
@@ -295,7 +276,7 @@
         .skill-card h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
         .skill-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; }
 
-        /* --- RÉALISATIONS SLAM (STYLE CARTES CAPTURE) --- */
+        /* --- RÉALISATIONS SLAM --- */
         .project-filters {
             display: flex;
             gap: 0.8rem;
@@ -346,7 +327,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
         .card-thumb i {
             font-size: 3.5rem;
@@ -479,12 +459,11 @@
     <!-- OMNITRIX LAUNCHER -->
     <div id="omnitrix-launcher">
         <div class="omni-container">
-            <div class="omni-btn" onclick="launchPortfolio()" title="Activer l'Omnitrix">
+            <div class="omni-btn" id="omni-core" title="Omnitrix Initialisation">
                 <div class="omni-face-top"></div>
                 <div class="omni-face-bottom"></div>
             </div>
             <p style="margin-top: 2rem; color: var(--ben10-green); letter-spacing: 5px; font-size: 0.85rem; font-weight: 700;">INITIALISATION DU SYSTÈME</p>
-            <button class="skip-btn" onclick="launchPortfolio()">Passer l'animation</button>
         </div>
     </div>
 
@@ -607,7 +586,7 @@
                 <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="skill-icon"><i class="fas fa-terminal"></i></div>
                     <h3>Scripting & Algorithmique</h3>
-                    <p>Développement de scripts utilitaires en Bash et JavaScript pour le parsing, le traitement de données et l'automatisation[cite: 1, 5].</p>
+                    <p>Développement de scripts utilitaires en Bash et JavaScript pour le parsing, le traitement de données et l'automatisation[cite: 1].</p>
                 </div>
                 <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
@@ -617,7 +596,7 @@
             </div>
         </section>
 
-        <!-- RÉALISATIONS SLAM (STYLE IDENTIQUE À LA CAPTURE) -->
+        <!-- RÉALISATIONS SLAM -->
         <section id="projets">
             <div class="section-header" data-aos="fade-right">
                 <h2 class="section-title">Réalisations SLAM</h2>
@@ -626,10 +605,10 @@
 
             <!-- Filtres SLAM -->
             <div class="project-filters" data-aos="fade-up">
-                <button class="filter-btn active" onclick="filterProjects('all')">Toutes les réalisations</button>
-                <button class="filter-btn" onclick="filterProjects('pro')">En Entreprise</button>
-                <button class="filter-btn" onclick="filterProjects('web')">Web & Full-Stack</button>
-                <button class="filter-btn" onclick="filterProjects('app')">Applications & Algorithmique</button>
+                <button class="filter-btn active" onclick="filterProjects('all', this)">Toutes les réalisations</button>
+                <button class="filter-btn" onclick="filterProjects('pro', this)">En Entreprise</button>
+                <button class="filter-btn" onclick="filterProjects('web', this)">Web & Full-Stack</button>
+                <button class="filter-btn" onclick="filterProjects('app', this)">Applications & Algorithmique</button>
             </div>
 
             <div class="projects-grid">
@@ -770,7 +749,7 @@
                             <span>Automatisation</span>
                         </div>
                         <p class="card-desc">
-                            Développement de scripts de parsing de flux textuels : extraction de métriques, tri multicritère, calcul de moyennes et génération automatique de rapports[cite: 5].
+                            Développement de scripts de parsing de flux textuels : extraction de métriques, tri multicritère, calcul de moyennes et génération automatique de rapports.
                         </p>
                         <a href="#contact" class="btn-details">Détails de la réalisation</a>
                     </div>
@@ -832,18 +811,20 @@
             setTimeout(() => {
                 launcher.classList.add('fade-out');
                 document.body.style.overflow = 'auto';
-                AOS.init({ duration: 800, once: true });
-            }, 600);
+                AOS.init({ duration: 600, once: true });
+            }, 350);
         }
 
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') launchPortfolio();
+        // Lancement automatique dès le chargement du DOM avec court flash vert
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(launchPortfolio, 250);
         });
 
-        function filterProjects(category) {
+        // Filtrage dynamique sans dépendre de l'objet global 'event'
+        function filterProjects(category, buttonElement) {
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if (buttonElement) buttonElement.classList.add('active');
 
             const cards = document.querySelectorAll('.project-card');
             cards.forEach(card => {
