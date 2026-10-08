@@ -4,48 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Louis Monrose | Portfolio BTS SIO SLAM</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <meta name="description" content="Portfolio BTS SIO option SLAM de Louis Monrose - Projets U5 & U6, parcours académique et professionnel, veille technologique et certifications.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         :root {
             --bg: #0a0a0a;
             --card-bg: #121212;
-            --card-hover: #181818;
+            --card-hover: #171717;
             --border: #222222;
             --text-main: #f0f0f0;
-            --text-muted: #8c8c8c;
+            --text-muted: #959595;
             --ben10-green: #39FF14;
             --ben10-glow: rgba(57, 255, 20, 0.35);
             --font-sans: 'Inter', sans-serif;
             --font-mono: 'Fira Code', monospace;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--bg);
             color: var(--text-main);
             font-family: var(--font-sans);
             line-height: 1.6;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        /* --- OMNITRIX LAUNCHER OVERLAY --- */
+        /* --- OMNITRIX LAUNCHER (100% CSS PUR SANS BLOCAGE JS) --- */
         #omnitrix-launcher {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            inset: 0;
             background: #050505;
             z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.35s ease-in-out, visibility 0.35s ease-in-out;
+            display: grid;
+            place-content: center;
+            text-align: center;
+            pointer-events: none;
+            animation: omniFadeOut 0.4s ease-out forwards 0.8s;
         }
 
         .omni-container {
-            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -58,12 +63,12 @@
             border: 8px solid #2d2d2d;
             border-radius: 50%;
             position: relative;
-            box-shadow: 0 0 35px rgba(0,0,0,0.9), inset 0 0 25px rgba(57, 255, 20, 0.15);
+            box-shadow: 0 0 35px rgba(0,0,0,0.9), inset 0 0 20px rgba(57, 255, 20, 0.15);
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            animation: flashOmni 0.4s ease forwards 0.4s;
         }
 
         .omni-face-top, .omni-face-bottom {
@@ -71,88 +76,95 @@
             width: 0; height: 0;
             border-left: 60px solid transparent;
             border-right: 60px solid transparent;
-            transition: transform 0.35s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
         .omni-face-top {
             border-bottom: 85px solid var(--ben10-green);
             top: 15px;
-            filter: drop-shadow(0 0 12px var(--ben10-green));
+            filter: drop-shadow(0 0 10px var(--ben10-green));
+            animation: openTop 0.4s cubic-bezier(0.7, 0, 0.3, 1) forwards 0.4s;
         }
 
         .omni-face-bottom {
             border-top: 85px solid var(--ben10-green);
             bottom: 15px;
-            filter: drop-shadow(0 0 12px var(--ben10-green));
+            filter: drop-shadow(0 0 10px var(--ben10-green));
+            animation: openBottom 0.4s cubic-bezier(0.7, 0, 0.3, 1) forwards 0.4s;
         }
 
-        .launching .omni-face-top { transform: translateY(-160px); }
-        .launching .omni-face-bottom { transform: translateY(160px); }
-        .launching .omni-btn {
-            background: var(--ben10-green);
-            border-color: #ffffff;
-            box-shadow: 0 0 120px var(--ben10-green);
+        @keyframes openTop {
+            to { transform: translateY(-160px); }
         }
-        
-        .fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+        @keyframes openBottom {
+            to { transform: translateY(160px); }
+        }
+        @keyframes flashOmni {
+            to {
+                background: var(--ben10-green);
+                border-color: #fff;
+                box-shadow: 0 0 120px var(--ben10-green);
+            }
+        }
+        @keyframes omniFadeOut {
+            0% { opacity: 1; visibility: visible; }
+            99% { opacity: 0; visibility: visible; }
+            100% { opacity: 0; visibility: hidden; display: none; }
+        }
 
         /* --- NAVIGATION --- */
-        .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
 
         nav {
             position: fixed;
-            top: 0; width: 100%;
-            background: rgba(10, 10, 10, 0.92);
-            backdrop-filter: blur(14px);
+            top: 0; left: 0; width: 100%;
+            background: rgba(10, 10, 10, 0.94);
+            backdrop-filter: blur(12px);
             z-index: 100;
-            padding: 1.1rem 0;
+            padding: 0.9rem 0;
             border-bottom: 1px solid var(--border);
         }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 700; font-size: 1.4rem; letter-spacing: -0.5px; text-decoration: none; color: #fff; }
+        .logo { font-weight: 700; font-size: 1.3rem; letter-spacing: -0.5px; text-decoration: none; color: #fff; }
         .logo span { color: var(--ben10-green); }
 
-        .nav-links { display: flex; gap: 1.8rem; align-items: center; }
+        .nav-links { display: flex; gap: 1.3rem; align-items: center; list-style: none; }
         .nav-links a {
             text-decoration: none;
             color: var(--text-muted);
-            font-size: 0.9rem;
-            transition: color 0.25s;
+            font-size: 0.88rem;
+            transition: color 0.2s ease;
             font-weight: 500;
         }
         .nav-links a:hover { color: var(--ben10-green); }
 
         .btn-contact-nav {
-            padding: 0.55rem 1.25rem;
+            padding: 0.45rem 1rem;
             border: 1.5px solid var(--ben10-green);
             color: var(--ben10-green) !important;
-            background: transparent;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             border-radius: 6px;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .btn-contact-nav:hover {
             background: var(--ben10-green);
             color: #000 !important;
-            box-shadow: 0 0 20px var(--ben10-glow);
-            transform: translateY(-2px);
+            box-shadow: 0 0 16px var(--ben10-glow);
         }
 
         /* --- HERO --- */
         .hero {
-            min-height: 100vh;
+            min-height: 85vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
-            padding-top: 5rem;
-            background: radial-gradient(circle at 15% 30%, rgba(57, 255, 20, 0.08) 0%, transparent 60%);
+            padding-top: 5.5rem;
+            background: radial-gradient(circle at 10% 25%, rgba(57, 255, 20, 0.08) 0%, transparent 55%);
         }
         .badge-status {
             display: inline-flex;
@@ -165,47 +177,42 @@
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.4rem;
         }
-        .badge-status i { font-size: 0.6rem; }
+        .badge-status i { font-size: 0.65rem; }
 
-        .hero h1 { font-size: clamp(2.8rem, 7vw, 4.8rem); line-height: 1.08; font-weight: 700; letter-spacing: -1px; }
+        .hero h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 1.1; font-weight: 700; letter-spacing: -1px; }
         .hero h1 span { color: var(--ben10-green); text-shadow: 0 0 25px var(--ben10-glow); }
-        .hero-desc { font-size: 1.15rem; color: var(--text-muted); margin-top: 1.5rem; max-width: 680px; }
+        .hero-desc { font-size: 1.1rem; color: var(--text-muted); margin-top: 1.2rem; max-width: 720px; }
 
-        .hero-actions { margin-top: 2.2rem; display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
+        .hero-actions { margin-top: 1.8rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .btn-primary, .btn-outline {
+            padding: 0.7rem 1.6rem;
+            border-radius: 6px;
+            font-size: 0.92rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
         .btn-primary {
             background: var(--ben10-green);
             color: #000;
-            padding: 0.75rem 1.8rem;
-            text-decoration: none;
-            border-radius: 6px;
             font-weight: 700;
-            font-size: 0.95rem;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            border: none;
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 25px var(--ben10-glow);
+            box-shadow: 0 0 20px var(--ben10-glow);
             background: #fff;
         }
-
         .btn-outline {
-            padding: 0.75rem 1.8rem;
+            background: var(--card-bg);
             border: 1px solid var(--border);
             color: var(--text-main);
-            text-decoration: none;
-            border-radius: 6px;
             font-weight: 600;
-            font-size: 0.95rem;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--card-bg);
         }
         .btn-outline:hover {
             border-color: var(--ben10-green);
@@ -214,270 +221,364 @@
         }
 
         /* --- SECTIONS --- */
-        section { padding: 100px 0; border-bottom: 1px solid var(--border); }
-        .section-header { margin-bottom: 3.5rem; }
-        .section-title { font-size: 2.2rem; font-weight: 700; position: relative; display: inline-block; }
+        section { padding: 85px 0; border-bottom: 1px solid var(--border); }
+        .section-header { margin-bottom: 3rem; }
+        .section-title { font-size: 2rem; font-weight: 700; position: relative; display: inline-block; }
         .section-title::after {
             content: "";
             position: absolute;
             bottom: -8px; left: 0;
-            width: 45px; height: 3px;
+            width: 40px; height: 3px;
             background: var(--ben10-green);
             box-shadow: 0 0 10px var(--ben10-green);
         }
-        .section-subtitle { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.8rem; }
+        .section-subtitle { color: var(--text-muted); font-size: 0.92rem; margin-top: 0.75rem; }
 
-        /* --- MON PROFIL --- */
-        .about-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 2.5rem; }
-        .parcours-box {
+        /* --- BTS SIO & SPÉCIALITÉS --- */
+        .bts-intro-box {
             background: var(--card-bg);
-            padding: 1.5rem;
-            border-left: 3px solid var(--ben10-green);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+        }
+        .bts-comparative {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+            margin-top: 1.5rem;
+        }
+        .specialite-card {
+            background: #0f0f0f;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.8rem;
+            position: relative;
+        }
+        .specialite-card.highlight {
+            border-color: var(--ben10-green);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.08);
+        }
+        .specialite-badge {
+            position: absolute;
+            top: 1.2rem; right: 1.2rem;
+            background: rgba(57, 255, 20, 0.15);
+            color: var(--ben10-green);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+        .specialite-card h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
+        .specialite-card ul { list-style: none; margin-top: 0.8rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.88rem; color: #ccc; }
+        .specialite-card ul li::before { content: "▹ "; color: var(--ben10-green); font-weight: bold; }
+        
+        .slam-motivation-box {
+            background: linear-gradient(145deg, #131313, #0d0d0d);
+            border-left: 4px solid var(--ben10-green);
             border-radius: 0 10px 10px 0;
+            padding: 1.6rem;
+            margin-top: 1.8rem;
             border-top: 1px solid var(--border);
             border-right: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
-            margin-bottom: 1.2rem;
-            transition: 0.3s;
-        }
-        .parcours-box:hover {
-            border-color: var(--ben10-green);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        }
-        .parcours-box h4 { font-size: 1.15rem; color: #fff; }
-        .parcours-box p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.3rem; }
-
-        .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-        .tags span {
-            background: rgba(255, 255, 255, 0.04);
-            color: #d0d0d0;
-            padding: 0.25rem 0.65rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            font-family: var(--font-mono);
         }
 
-        /* --- COMPÉTENCES --- */
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
-        .skill-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-        .skill-card:hover {
-            border-color: var(--ben10-green);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-        .skill-icon { font-size: 2rem; color: var(--ben10-green); margin-bottom: 1rem; }
-        .skill-card h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
-        .skill-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; }
-
-        /* --- RÉALISATIONS SLAM --- */
-        .project-filters {
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            margin-bottom: 2.5rem;
-        }
-        .filter-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 0.45rem 1.1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: 0.25s;
-        }
-        .filter-btn:hover, .filter-btn.active {
-            background: rgba(57, 255, 20, 0.12);
+        /* --- PARCOURS --- */
+        .timeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .timeline-column h3 {
             color: var(--ben10-green);
-            border-color: var(--ben10-green);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-        .project-card {
-            background: #111111;
-            border: 1px solid #222222;
-            border-radius: 14px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
-        }
-        .project-card:hover {
-            border-color: var(--ben10-green);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        }
-
-        .card-thumb {
-            height: 140px;
-            background: #181818;
-            border-bottom: 1px solid #222222;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
         }
-        .card-thumb i {
-            font-size: 3.5rem;
+        .timeline-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.4rem;
+            margin-bottom: 1.2rem;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+        .timeline-card:hover { border-color: var(--ben10-green); transform: translateX(3px); }
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
             color: var(--ben10-green);
-            filter: drop-shadow(0 0 10px rgba(57, 255, 20, 0.3));
-        }
-
-        .card-body {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #ffffff;
+            background: rgba(57, 255, 20, 0.08);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
             margin-bottom: 0.4rem;
         }
-        .card-meta {
-            font-size: 0.82rem;
+        .timeline-card h4 { font-size: 1.05rem; margin-bottom: 0.2rem; }
+        .timeline-card .institution { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .timeline-card p { font-size: 0.88rem; color: #bbb; }
+
+        /* --- PROJETS U5 & U6 --- */
+        .tab-controls {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2.2rem;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 0.75rem 1.4rem;
+            font-size: 0.95rem;
+            font-weight: 600;
             color: var(--text-muted);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s;
+        }
+        .tab-btn:hover { color: #fff; }
+        .tab-btn.active { color: var(--ben10-green); }
+        .tab-btn.active::after {
+            content: "";
+            position: absolute;
+            bottom: -1px; left: 0; width: 100%; height: 3px;
+            background: var(--ben10-green);
+            box-shadow: 0 0 10px var(--ben10-green);
+        }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        .project-detail-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .project-header-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            margin-bottom: 1.3rem;
+        }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
+        .project-tags span {
+            background: #181818;
+            color: #ddd;
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            border: 1px solid #282828;
+        }
+        .project-tags span.badge-u {
+            background: rgba(57, 255, 20, 0.15);
+            color: var(--ben10-green);
+            border-color: rgba(57, 255, 20, 0.4);
+            font-weight: 700;
+        }
+
+        .project-questions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        .q-box {
+            background: #0d0d0d;
+            border: 1px solid #1c1c1c;
+            border-radius: 8px;
+            padding: 1.1rem;
+        }
+        .q-box h4 {
+            font-size: 0.92rem;
+            color: var(--ben10-green);
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 6px;
-            margin-bottom: 0.9rem;
-            font-family: var(--font-mono);
         }
+        .q-box p, .q-box ul { font-size: 0.88rem; color: #b8b8b8; }
+        .q-box ul { list-style: none; }
+        .q-box ul li::before { content: "• "; color: var(--ben10-green); }
 
-        .card-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-bottom: 1rem;
-        }
-        .badge-context {
-            background: rgba(57, 255, 20, 0.15) !important;
-            color: var(--ben10-green) !important;
-            font-weight: 600;
-            border-color: rgba(57, 255, 20, 0.4) !important;
-        }
-        .card-tags span {
-            background: #1c1c1c;
-            color: #cccccc;
-            font-size: 0.75rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            border: 1px solid #2a2a2a;
-            font-family: var(--font-mono);
-        }
-
-        .card-desc {
-            color: #a0a0a0;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            flex-grow: 1;
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-details {
-            width: 100%;
-            padding: 0.65rem;
-            background: transparent;
-            border: 1px solid #333333;
+        .project-media-block {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 1.2rem;
+            background: #0d0d0d;
+            border: 1px solid #1c1c1c;
             border-radius: 8px;
-            color: #eeeeee;
+            padding: 1.1rem;
+            margin-bottom: 1.3rem;
+            align-items: center;
+        }
+        .mockup-placeholder {
+            min-height: 160px;
+            background: #141414;
+            border: 1px dashed #333;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
             text-align: center;
-            text-decoration: none;
-            font-size: 0.88rem;
+            padding: 1rem;
+        }
+        .mockup-placeholder i { font-size: 2rem; margin-bottom: 0.4rem; color: var(--ben10-green); }
+
+        .tutorial-box {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 6px;
+            padding: 0.9rem 1.1rem;
+            font-size: 0.85rem;
+            color: #ccc;
+        }
+        .tutorial-box h5 { color: #fff; margin-bottom: 0.4rem; }
+        .tutorial-box ol { padding-left: 1.1rem; }
+        .tutorial-box ol li { margin-bottom: 0.2rem; }
+
+        .project-footer-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .btn-project-link {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
             font-weight: 600;
-            transition: all 0.25s ease;
-            display: block;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #181818;
+            color: #eee;
+            border: 1px solid #2b2b2b;
+            transition: all 0.2s;
         }
-        .btn-details:hover {
-            border-color: var(--ben10-green);
+        .btn-project-link:hover { border-color: var(--ben10-green); color: var(--ben10-green); }
+
+        /* --- VEILLE & CERTIFICATIONS --- */
+        .veille-methodology {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+        }
+        .veille-step {
+            background: #0d0d0d;
+            border: 1px solid #1c1c1c;
+            border-radius: 8px;
+            padding: 1.1rem;
+        }
+        .veille-step h4 { color: var(--ben10-green); font-size: 0.92rem; margin-bottom: 0.4rem; }
+        .veille-step p { font-size: 0.88rem; color: #b0b0b0; }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .grid-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+        .grid-card:hover { border-color: var(--ben10-green); transform: translateY(-3px); }
+        .article-source {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
             color: var(--ben10-green);
-            background: rgba(57, 255, 20, 0.05);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
         }
+        .grid-card h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .grid-card p { font-size: 0.88rem; color: #aaa; margin-bottom: 1.2rem; flex-grow: 1; }
 
         /* --- CONTACT --- */
         .contact-wrapper {
             display: grid;
             grid-template-columns: 1fr 1.3fr;
-            gap: 3rem;
+            gap: 2.5rem;
             background: var(--card-bg);
-            padding: 3rem;
-            border-radius: 16px;
+            padding: 2.5rem;
+            border-radius: 14px;
             border: 1px solid var(--border);
         }
-        .contact-info h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--ben10-green); }
-        .contact-info p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
-        .contact-details { display: flex; flex-direction: column; gap: 1rem; }
-        .contact-item { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; font-size: 0.95rem; }
-        .contact-item i { color: var(--ben10-green); font-size: 1.2rem; width: 25px; }
-
+        .contact-item { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-size: 0.92rem; margin-top: 0.8rem; }
+        .contact-item i { color: var(--ben10-green); width: 20px; }
         .contact-form input, .contact-form textarea {
             width: 100%;
-            padding: 0.9rem 1.1rem;
+            padding: 0.8rem 1rem;
             background: #090909;
             border: 1px solid var(--border);
             color: #fff;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            font-family: var(--font-sans);
-            font-size: 0.95rem;
-            transition: 0.3s;
+            border-radius: 6px;
+            margin-bottom: 0.9rem;
+            font-family: inherit;
+            font-size: 0.9rem;
         }
         .contact-form input:focus, .contact-form textarea:focus {
             outline: none;
             border-color: var(--ben10-green);
-            box-shadow: 0 0 12px var(--ben10-glow);
+            box-shadow: 0 0 10px var(--ben10-glow);
         }
 
         footer {
-            padding: 2.5rem 0;
+            padding: 2rem 0;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
             border-top: 1px solid var(--border);
         }
 
-        @media (max-width: 960px) {
-            .about-grid, .contact-wrapper { grid-template-columns: 1fr; }
+        @media (max-width: 900px) {
+            .bts-comparative, .timeline-grid, .project-questions-grid, .project-media-block, .veille-methodology, .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
             .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- OMNITRIX LAUNCHER -->
-    <div id="omnitrix-launcher">
+    <!-- OMNITRIX LAUNCHER (GESTION AUTOMATIQUE EN CSS SANS RISQUE DE BLOCAGE) -->
+    <div id="omnitrix-launcher" aria-hidden="true">
         <div class="omni-container">
-            <div class="omni-btn" id="omni-core" title="Omnitrix Initialisation">
+            <div class="omni-btn">
                 <div class="omni-face-top"></div>
                 <div class="omni-face-bottom"></div>
             </div>
-            <p style="margin-top: 2rem; color: var(--ben10-green); letter-spacing: 5px; font-size: 0.85rem; font-weight: 700;">INITIALISATION DU SYSTÈME</p>
+            <p style="margin-top: 1.5rem; color: var(--ben10-green); letter-spacing: 4px; font-size: 0.8rem; font-weight: 700;">INITIALISATION DU SYSTÈME</p>
         </div>
     </div>
 
     <!-- NAVIGATION -->
-    <nav>
+    <nav aria-label="Navigation principale">
         <div class="container nav-content">
             <a href="#accueil" class="logo">LOUIS<span>.</span>MONROSE</a>
-            <div class="nav-links">
-                <a href="#accueil">Accueil</a>
-                <a href="#apropos">Mon Profil</a>
-                <a href="#competences">Compétences</a>
-                <a href="#projets">Réalisations SLAM</a>
-                <a href="#contact" class="btn-contact-nav"><i class="fas fa-envelope"></i> Me contacter</a>
-            </div>
+            <ul class="nav-links">
+                <li><a href="#bts-sio">BTS SIO</a></li>
+                <li><a href="#parcours">Parcours</a></li>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="#veille">Veille Tech</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact" class="btn-contact-nav"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
         </div>
     </nav>
 
@@ -485,309 +586,475 @@
         
         <!-- HERO -->
         <section id="accueil" class="hero">
-            <div data-aos="fade-up">
-                <div class="badge-status">
-                    <i class="fas fa-check-circle"></i> BTS SIO SLAM — Développement Web & Logiciel
-                </div>
-                <h1>Louis Monrose<br><span>Développeur Full-Stack</span></h1>
-                <p class="hero-desc">
-                    Étudiant en <strong>BTS SIO option SLAM</strong> à Ynov Campus. Je conçois et développe des solutions logicielles métiers, des applications web complètes et des architectures de bases de données sécurisées.
+            <div class="badge-status">
+                <i class="fas fa-check-circle"></i> BTS SIO Option SLAM — RNCP Niveau 5 (Bac+2)
+            </div>
+            <h1>Louis Monrose<br><span>Développeur Full-Stack & Solutions Métiers</span></h1>
+            <p class="hero-desc">
+                Portfolio professionnel d'épreuves BTS SIO : analyse de la spécialité SLAM, parcours académique et professionnel, projets validés U5 et U6, veille technologique automatisée et certifications.
+            </p>
+            <div class="hero-actions">
+                <a href="#projets" class="btn-primary"><i class="fas fa-folder-open"></i> Projets U5 & U6</a>
+                <a href="chemin/vers/ton-cv.pdf" target="_blank" rel="noopener noreferrer" class="btn-outline"><i class="fas fa-file-pdf"></i> CV (PDF)</a>
+            </div>
+        </section>
+
+        <!-- 1. BTS SIO & SPÉCIALITÉS -->
+        <section id="bts-sio">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Le BTS SIO & Ma Spécialité</h2>
+                <p class="section-subtitle">Objectif du diplôme et distinction entre SISR et SLAM</p>
+            </div>
+
+            <div class="bts-intro-box" data-aos="fade-up">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.6rem; color: #fff;">
+                    <i class="fas fa-graduation-cap" style="color: var(--ben10-green); margin-right: 8px;"></i>
+                    Le Brevet de Technicien Supérieur – Services Informatiques aux Organisations
+                </h3>
+                <p style="color: #bbb; font-size: 0.92rem; margin-bottom: 0.6rem;">
+                    Diplôme d'État de niveau 5 (Bac+2), le BTS SIO forme des techniciens aptes à concevoir, déployer et sécuriser des solutions informatiques adaptées aux processus des organisations.
                 </p>
-                <div class="hero-actions">
-                    <a href="#projets" class="btn-primary"><i class="fas fa-laptop-code"></i> Découvrir mes réalisations</a>
-                    <a href="chemin/vers/ton-cv.pdf" target="_blank" class="btn-outline"><i class="fas fa-file-pdf"></i> Télécharger mon CV</a>
+                <p style="color: #999; font-size: 0.88rem;">
+                    La formation associe un socle commun (cybersécurité, services d'infrastructure, gestion du patrimoine informatique) à une spécialisation métier choisie au semestre 2.
+                </p>
+            </div>
+
+            <div class="bts-comparative">
+                <div class="specialite-card" data-aos="fade-up">
+                    <span class="specialite-badge" style="color: #888; background: #222;">Infrastructure</span>
+                    <h3>Option SISR</h3>
+                    <p style="color: #888; font-size: 0.82rem; font-weight: 500;">Solutions d'Infrastructure, Systèmes et Réseaux</p>
+                    <ul>
+                        <li>Déploiement des équipements réseaux (commutateurs, routeurs, VLANs)</li>
+                        <li>Administration système Linux (Debian) et Windows Server</li>
+                        <li>Services d'annuaires Active Directory, DNS, DHCP et politiques de sécurité</li>
+                        <li>Supervision et maintien en condition opérationnelle (MCO)</li>
+                    </ul>
                 </div>
+
+                <div class="specialite-card highlight" data-aos="fade-up" data-aos-delay="50">
+                    <span class="specialite-badge">Spécialité Choisie</span>
+                    <h3 style="color: var(--ben10-green);">Option SLAM</h3>
+                    <p style="color: #bbb; font-size: 0.82rem; font-weight: 500;">Solutions Logicielles et Applications Métiers</p>
+                    <ul>
+                        <li>Modélisation relationnelle de bases de données (Merise, SQL)</li>
+                        <li>Développement logiciel et architectures modulaires (POO, MVC)</li>
+                        <li>Applications Web Full-Stack dynamiques (PHP / Laravel, JavaScript)</li>
+                        <li>Intégration d'APIs REST et sécurisation du code (OWASP)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="slam-motivation-box" data-aos="fade-up">
+                <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-bullseye" style="color: var(--ben10-green); margin-right: 8px;"></i>
+                    Mon choix pour SLAM & Compétences acquises
+                </h4>
+                <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 0.6rem;">
+                    J'ai choisi l'option SLAM pour concevoir des applications de bout en bout, de la modélisation des entités à l'interface utilisateur.
+                </p>
+                <p style="color: #aaa; font-size: 0.88rem;">
+                    <strong>Compétences clés :</strong> conception Merise (MCD, MLD), écriture de requêtes SQL optimisées sous MariaDB, architecture MVC sécurisée (hachage, prévention des injections SQL et failles XSS) et travail collaboratif sous Git.
+                </p>
             </div>
         </section>
 
-        <!-- MON PROFIL (FORMATION + EXPÉRIENCE DU STAGE) -->
-        <section id="apropos">
-            <div class="section-header" data-aos="fade-right">
-                <h2 class="section-title">Mon Profil</h2>
-                <p class="section-subtitle">Formation académique et immersion professionnelle</p>
+        <!-- 2. PARCOURS -->
+        <section id="parcours">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Mon Parcours</h2>
+                <p class="section-subtitle">Chronologie académique et expérience professionnelle</p>
             </div>
-            <div class="about-grid">
-                <!-- Colonne Formation -->
-                <div data-aos="fade-up">
-                    <h3 style="margin-bottom: 1.2rem; color: var(--ben10-green); font-size: 1.25rem;">
-                        <i class="fas fa-graduation-cap"></i> Formation
-                    </h3>
-                    
-                    <div class="parcours-box">
-                        <h4>BTS SIO Option SLAM</h4>
-                        <p><strong>Ynov Campus Val d'Europe</strong> | 2025 – Présent</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.88rem; color: #bbb;">
-                            Solutions Logicielles et Applications Métiers. Modélisation de données Merise, architectures MVC, développement orienté objet et intégration d'APIs.
+
+            <div class="timeline-grid">
+                <div class="timeline-column" data-aos="fade-up">
+                    <h3><i class="fas fa-university"></i> Parcours Académique</h3>
+
+                    <div class="timeline-card">
+                        <span class="timeline-date">2025 – Présent</span>
+                        <h4>BTS SIO (Option SLAM)</h4>
+                        <div class="institution">Ynov Campus Val d'Europe | Montévrain</div>
+                        <p>
+                            Génie logiciel, modélisation de données, programmation objet, développement Full-Stack et préparation aux épreuves d'examen national U5 et U6.
                         </p>
                     </div>
-                    
-                    <div class="parcours-box">
+
+                    <div class="timeline-card">
+                        <span class="timeline-date">2021 – 2024</span>
                         <h4>Baccalauréat Général</h4>
-                        <p><strong>Lycée Jean Vilar</strong> | 2021 – 2024[cite: 1]</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.88rem; color: #bbb;">
-                            Parcours axé sur les sciences et les technologies numériques, logique et algorithmique.
+                        <div class="institution">Lycée Jean Vilar[cite: 1]</div>
+                        <p>
+                            Enseignements scientifiques et numériques, bases d'algorithmique et logique mathématique.
                         </p>
                     </div>
                 </div>
 
-                <!-- Colonne Expérience Professionnelle (Stage) -->
-                <div data-aos="fade-up" data-aos-delay="150">
-                    <h3 style="margin-bottom: 1.2rem; color: var(--ben10-green); font-size: 1.25rem;">
-                        <i class="fas fa-briefcase"></i> Expérience Professionnelle
-                    </h3>
+                <div class="timeline-column" data-aos="fade-up" data-aos-delay="50">
+                    <h3><i class="fas fa-briefcase"></i> Parcours Professionnel</h3>
 
-                    <div class="parcours-box">
-                        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
-                            <h4>Développeur Web Full-Stack — Stage</h4>
-                            <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--ben10-green); background: rgba(57, 255, 20, 0.1); padding: 0.2rem 0.6rem; border-radius: 4px;">5 semaines</span>
-                        </div>
-                        <p><strong>Club de Tennis</strong> | Juillet – Août 2026</p>
-                        
-                        <ul style="list-style: none; margin-top: 0.8rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                            <li style="position: relative; padding-left: 1.2rem; color: #ccc; font-size: 0.88rem;">
-                                <span style="position: absolute; left: 0; color: var(--ben10-green);">▹</span>
-                                Refonte et modernisation de la plateforme web du club (interface responsive et fluide).
-                            </li>
-                            <li style="position: relative; padding-left: 1.2rem; color: #ccc; font-size: 0.88rem;">
-                                <span style="position: absolute; left: 0; color: var(--ben10-green);">▹</span>
-                                Développement d'un espace back-office pour la gestion des adhérents et redirection vers <strong>Ten'Up</strong> pour les réservations de courts.
-                            </li>
-                            <li style="position: relative; padding-left: 1.2rem; color: #ccc; font-size: 0.88rem;">
-                                <span style="position: absolute; left: 0; color: var(--ben10-green);">▹</span>
-                                Génération et affichage dynamique des tableaux de tournois et des résultats (PHP / SQL).
-                            </li>
+                    <div class="timeline-card">
+                        <span class="timeline-date">07/2026 – 08/2026 (5 semaines)</span>
+                        <h4>Développeur Web Full-Stack — Stage</h4>
+                        <div class="institution">Tennis Club de Saint-Soupplets</div>
+                        <p>Refonte de la plateforme web du club :</p>
+                        <ul style="list-style: none; margin-top: 0.4rem; font-size: 0.85rem; color: #ccc;">
+                            <li>▹ Refonte responsive complète orientée mobile.</li>
+                            <li>▹ Développement d'un back-office PHP/SQL pour la gestion des adhérents et tournois.</li>
+                            <li>▹ Redirection technique vers la passerelle fédérale <strong>Ten'Up</strong>.</li>
                         </ul>
+                    </div>
 
-                        <div class="tags" style="margin-top: 1rem;">
-                            <span>PHP</span><span>SQL</span><span>Ten'Up</span><span>Back-Office</span><span>Responsive</span>
-                        </div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">2025 – 2026</span>
+                        <h4>Projets Applicatifs & Travaux Métiers</h4>
+                        <div class="institution">Ynov Campus</div>
+                        <p>
+                            Simulations d'infrastructures d'assistance, déploiement d'outils d'inventaire GLPI et réalisation de prototypes SaaS en équipe.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- COMPÉTENCES -->
-        <section id="competences">
-            <div class="section-header" data-aos="fade-right">
-                <h2 class="section-title">Compétences Techniques</h2>
-                <p class="section-subtitle">Langages, environnements et outils maîtrisés</p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-card" data-aos="fade-up">
-                    <div class="skill-icon"><i class="fas fa-code"></i></div>
-                    <h3>Développement Web Full-Stack</h3>
-                    <p>PHP (Laravel), JavaScript ES6, HTML5 / CSS3 natif. Implémentation d'architectures MVC et intégration d'APIs REST[cite: 1].</p>
-                </div>
-                <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="skill-icon"><i class="fas fa-database"></i></div>
-                    <h3>Conception & Données</h3>
-                    <p>Modélisation relationnelle Merise (MCD, MLD, MPD) et requêtage SQL sous MariaDB, MySQL et SQLite[cite: 1].</p>
-                </div>
-                <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="skill-icon"><i class="fas fa-terminal"></i></div>
-                    <h3>Scripting & Algorithmique</h3>
-                    <p>Développement de scripts utilitaires en Bash et JavaScript pour le parsing, le traitement de données et l'automatisation[cite: 1].</p>
-                </div>
-                <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
-                    <h3>Gestion & Qualité</h3>
-                    <p>Versionnement Git/GitHub, tests unitaires, validation de formulaires et sécurisation contre les failles courantes (injections SQL, XSS).</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- RÉALISATIONS SLAM -->
+        <!-- 3. PROJETS U5 & U6 -->
         <section id="projets">
-            <div class="section-header" data-aos="fade-right">
-                <h2 class="section-title">Réalisations SLAM</h2>
-                <p class="section-subtitle">Développement d'applications, modélisation de données et solutions logicielles métiers</p>
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Réalisations & Projets</h2>
+                <p class="section-subtitle">Documentation technique structurée selon les exigences des épreuves U5 et U6</p>
             </div>
 
-            <!-- Filtres SLAM -->
-            <div class="project-filters" data-aos="fade-up">
-                <button class="filter-btn active" onclick="filterProjects('all', this)">Toutes les réalisations</button>
-                <button class="filter-btn" onclick="filterProjects('pro', this)">En Entreprise</button>
-                <button class="filter-btn" onclick="filterProjects('web', this)">Web & Full-Stack</button>
-                <button class="filter-btn" onclick="filterProjects('app', this)">Applications & Algorithmique</button>
+            <div class="tab-controls" role="tablist" data-aos="fade-up">
+                <button class="tab-btn active" role="tab" aria-selected="true" id="btn-u5" onclick="switchProjectTab('u5', this)">
+                    <i class="fas fa-layer-group"></i> Projets Épreuve U5
+                </button>
+                <button class="tab-btn" role="tab" aria-selected="false" id="btn-u6" onclick="switchProjectTab('u6', this)">
+                    <i class="fas fa-laptop-code"></i> Projets Épreuve U6
+                </button>
             </div>
 
-            <div class="projects-grid">
+            <!-- PROJETS U5 -->
+            <div id="tab-u5" class="tab-pane active" role="tabpanel">
 
-                <!-- 1. Stage Tennis Club -->
-                <div class="project-card" data-category="pro" data-aos="fade-up">
-                    <div class="card-thumb">
-                        <i class="fas fa-table-tennis-paddle-ball"></i>
+                <!-- Projet U5 #1 -->
+                <div class="project-detail-card" data-aos="fade-up">
+                    <div class="project-header-meta">
+                        <div>
+                            <h3>ShopGen — Vitrine Interactive & Manipulation DOM</h3>
+                            <div class="project-tags">
+                                <span class="badge-u">Épreuve U5</span>
+                                <span>JavaScript ES6</span>
+                                <span>HTML5 / CSS3</span>
+                                <span>Responsive</span>
+                            </div>
+                        </div>
+                        <span style="font-family: var(--font-mono); font-size: 0.82rem; color: #888;">Décembre 2025</span>
                     </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Application Web de Gestion Sportive</h3>
-                        <div class="card-meta">
-                            <i class="far fa-calendar-alt"></i> Période : 07/2026 – 08/2026
+
+                    <div class="project-questions-grid">
+                        <div class="q-box">
+                            <h4><i class="fas fa-question-circle"></i> Quel est le projet ?</h4>
+                            <p>Interface pour une plateforme SaaS e-commerce intégrant des composants dynamiques sans bibliothèque externe.</p>
                         </div>
-                        <div class="card-tags">
-                            <span class="badge-context">Stage</span>
-                            <span>PHP</span>
-                            <span>SQL</span>
-                            <span>Ten'Up API</span>
-                            <span>Back-Office</span>
+                        <div class="q-box">
+                            <h4><i class="fas fa-bullseye"></i> Pourquoi ce projet ?</h4>
+                            <p>Fluidifier la consultation sur mobile et valider les mécaniques d'animation native légères.</p>
                         </div>
-                        <p class="card-desc">
-                            Refonte intégrale de la plateforme du club : espace d'administration pour la gestion des adhérents, génération automatisée des tableaux de tournois et passerelle de réservation vers Ten'Up.
-                        </p>
-                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
+                        <div class="q-box">
+                            <h4><i class="fas fa-lightbulb"></i> Qu'avez-vous appris ?</h4>
+                            <ul>
+                                <li>Manipulation du DOM sans bibliothèque.</li>
+                                <li>Gestion des événements tactiles et clavier.</li>
+                                <li>Contrôle de validation des champs formulaires côté client.</li>
+                            </ul>
+                        </div>
+                        <div class="q-box">
+                            <h4><i class="fas fa-cogs"></i> Comment le mettre en place ?</h4>
+                            <p>Architecture modulaire HTML5/CSS3 Grid, écouteurs d'événements JS et gestion de version via Git.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-media-block">
+                        <div class="mockup-placeholder">
+                            <i class="fas fa-images"></i>
+                            <strong>Schéma de navigation & Carrousel</strong>
+                        </div>
+                        <div class="tutorial-box">
+                            <h5><i class="fas fa-book-open"></i> Tutoriel de déploiement :</h5>
+                            <ol>
+                                <li>Cloner le dépôt : <code>git clone [url-du-repo]</code></li>
+                                <li>Ouvrir le dossier dans VS Code</li>
+                                <li>Lancer avec Live Server ou charger <code>index.html</code></li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="project-footer-actions">
+                        <a href="https://github.com/ton-profil/shopgen" target="_blank" rel="noopener noreferrer" class="btn-project-link">
+                            <i class="fab fa-github"></i> Dépôt GitHub
+                        </a>
                     </div>
                 </div>
 
-                <!-- 2. E-Commerce Cinéma -->
-                <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card-thumb">
-                        <i class="fas fa-film"></i>
+                <!-- Projet U5 #2 -->
+                <div class="project-detail-card" data-aos="fade-up">
+                    <div class="project-header-meta">
+                        <div>
+                            <h3>Scripts de Parsing & Filtrage de Logs Système</h3>
+                            <div class="project-tags">
+                                <span class="badge-u">Épreuve U5</span>
+                                <span>Bash Shell</span>
+                                <span>Awk / Sed</span>
+                                <span>Regex</span>
+                            </div>
+                        </div>
+                        <span style="font-family: var(--font-mono); font-size: 0.82rem; color: #888;">Novembre 2025</span>
                     </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Plateforme E-Commerce Cinéma</h3>
-                        <div class="card-meta">
-                            <i class="far fa-calendar-alt"></i> Période : 05/2026 – En cours
+
+                    <div class="project-questions-grid">
+                        <div class="q-box">
+                            <h4><i class="fas fa-question-circle"></i> Quel est le projet ?</h4>
+                            <p>Outils d'automatisation d'extraction et de traitement sur serveurs Linux pour journaux d'accès web.</p>
                         </div>
-                        <div class="card-tags">
-                            <span class="badge-context">Projet</span>
-                            <span>PHP (Laravel)</span>
-                            <span>MariaDB</span>
-                            <span>Architecture MVC</span>
-                            <span>Auth / Session</span>
+                        <div class="q-box">
+                            <h4><i class="fas fa-bullseye"></i> Pourquoi ce projet ?</h4>
+                            <p>Accélérer le diagnostic d'incidents et isoler les requêtes anormales (codes HTTP 4xx/5xx).</p>
                         </div>
-                        <p class="card-desc">
-                            Boutique en ligne complète : modélisation relationnelle Merise, gestion des sessions, authentification, catalogue avec filtres multicritères et persistance du panier d'achat[cite: 1].
-                        </p>
-                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
+                        <div class="q-box">
+                            <h4><i class="fas fa-lightbulb"></i> Qu'avez-vous appris ?</h4>
+                            <ul>
+                                <li>Expressions régulières (Regex) avancées.</li>
+                                <li>Filtrage en pipeline Unix via <code>grep</code>, <code>awk</code> et <code>sed</code>.</li>
+                                <li>Génération automatisée de synthèses CSV exploitables.</li>
+                            </ul>
+                        </div>
+                        <div class="q-box">
+                            <h4><i class="fas fa-cogs"></i> Comment le mettre en place ?</h4>
+                            <p>Scripts Shell avec gestion des paramètres, redirection des flux et planifications cron.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-footer-actions">
+                        <a href="https://github.com/ton-profil/bash-parsing" target="_blank" rel="noopener noreferrer" class="btn-project-link">
+                            <i class="fab fa-github"></i> Dépôt GitHub
+                        </a>
                     </div>
                 </div>
 
-                <!-- 3. ShopGen -->
-                <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card-thumb">
-                        <i class="fas fa-cart-shopping"></i>
+            </div>
+
+            <!-- PROJETS U6 -->
+            <div id="tab-u6" class="tab-pane" role="tabpanel">
+
+                <!-- Projet U6 #1 -->
+                <div class="project-detail-card" data-aos="fade-up">
+                    <div class="project-header-meta">
+                        <div>
+                            <h3>Application Métier — Tennis Club de Saint-Soupplets</h3>
+                            <div class="project-tags">
+                                <span class="badge-u">Projet Phare U6</span>
+                                <span>PHP / MySQL</span>
+                                <span>API Ten'Up</span>
+                                <span>Back-Office Sécurisé</span>
+                                <span>Stage</span>
+                            </div>
+                        </div>
+                        <span style="font-family: var(--font-mono); font-size: 0.82rem; color: #888;">Juillet – Août 2026</span>
                     </div>
-                    <div class="card-body">
-                        <h3 class="card-title">ShopGen — Interface E-Commerce</h3>
-                        <div class="card-meta">
-                            <i class="far fa-calendar-alt"></i> Période : 12/2025
+
+                    <div class="project-questions-grid">
+                        <div class="q-box">
+                            <h4><i class="fas fa-question-circle"></i> Quel est le projet ?</h4>
+                            <p>Refonte de la plateforme web du club et création d'un outil d'administration interne sécurisé.</p>
                         </div>
-                        <div class="card-tags">
-                            <span class="badge-context">École</span>
-                            <span>JavaScript</span>
-                            <span>DOM</span>
-                            <span>HTML5 / CSS3</span>
-                            <span>Responsive</span>
+                        <div class="q-box">
+                            <h4><i class="fas fa-bullseye"></i> Pourquoi ce projet ?</h4>
+                            <p>Centraliser les inscriptions, automatiser les résultats et rediriger les membres vers Ten'Up pour la réservation.</p>
                         </div>
-                        <p class="card-desc">
-                            Intégration d'une interface utilisateur dynamique : manipulation du DOM, carrousel d'articles interactif et adaptabilité multi-écrans sans framework externe[cite: 1].
-                        </p>
-                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
+                        <div class="q-box">
+                            <h4><i class="fas fa-lightbulb"></i> Qu'avez-vous appris ?</h4>
+                            <ul>
+                                <li>Analyse du besoin utilisateur et cahier des charges.</li>
+                                <li>Modélisation Merise complète (MCD, MLD, MPD en 3NF).</li>
+                                <li>Protection de requêtes PDO et chiffrement des accès (bcrypt).</li>
+                            </ul>
+                        </div>
+                        <div class="q-box">
+                            <h4><i class="fas fa-cogs"></i> Comment le mettre en place ?</h4>
+                            <p>Pattern MVC en PHP natif, base MariaDB normalisée et serveur de test local Apache.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-media-block">
+                        <div class="mockup-placeholder">
+                            <i class="fas fa-sitemap"></i>
+                            <strong>MCD Merise & Interface Back-Office</strong>
+                        </div>
+                        <div class="tutorial-box">
+                            <h5><i class="fas fa-book-open"></i> Déploiement :</h5>
+                            <ol>
+                                <li>Importer <code>schema_tennis.sql</code> dans MariaDB</li>
+                                <li>Renseigner les identifiants dans <code>config/db.php</code></li>
+                                <li>Tester l'authentification sur <code>/admin</code></li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="project-footer-actions">
+                        <a href="https://github.com/ton-profil/tennis-club-project" target="_blank" rel="noopener noreferrer" class="btn-project-link">
+                            <i class="fab fa-github"></i> Dépôt GitHub
+                        </a>
                     </div>
                 </div>
 
-                <!-- 4. Jeu du Memory -->
-                <div class="project-card" data-category="app" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card-thumb">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Application Interactive « Memory »</h3>
-                        <div class="card-meta">
-                            <i class="far fa-calendar-alt"></i> Période : 10/2025
+                <!-- Projet U6 #2 -->
+                <div class="project-detail-card" data-aos="fade-up">
+                    <div class="project-header-meta">
+                        <div>
+                            <h3>Plateforme E-Commerce Multicritères Vidéo</h3>
+                            <div class="project-tags">
+                                <span class="badge-u">Épreuve U6</span>
+                                <span>PHP (Laravel)</span>
+                                <span>MariaDB</span>
+                                <span>MVC</span>
+                                <span>Sécurité OWASP</span>
+                            </div>
                         </div>
-                        <div class="card-tags">
-                            <span class="badge-context">École</span>
-                            <span>JavaScript ES6</span>
-                            <span>Algorithmique</span>
-                            <span>CSS3 3D</span>
-                        </div>
-                        <p class="card-desc">
-                            Implémentation de la logique métier d'un jeu de mémoire : gestion des états de cartes, timer, calcul dynamique du score et animations de retournement 3D[cite: 1].
-                        </p>
-                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
+                        <span style="font-family: var(--font-mono); font-size: 0.82rem; color: #888;">Mai 2026 – En cours</span>
                     </div>
-                </div>
 
-                <!-- 5. To-Do List -->
-                <div class="project-card" data-category="app" data-aos="fade-up" data-aos-delay="400">
-                    <div class="card-thumb">
-                        <i class="fas fa-list-check"></i>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Gestionnaire de Tâches Interactif</h3>
-                        <div class="card-meta">
-                            <i class="far fa-calendar-alt"></i> Période : 11/2025
+                    <div class="project-questions-grid">
+                        <div class="q-box">
+                            <h4><i class="fas fa-question-circle"></i> Quel est le projet ?</h4>
+                            <p>Application de vente de films physiques avec gestion de panier persistant et filtres multicritères.</p>
                         </div>
-                        <div class="card-tags">
-                            <span class="badge-context">Personnel</span>
-                            <span>JavaScript</span>
-                            <span>CRUD</span>
-                            <span>LocalStorage</span>
+                        <div class="q-box">
+                            <h4><i class="fas fa-bullseye"></i> Pourquoi ce projet ?</h4>
+                            <p>Appliquer les bonnes pratiques d'ingénierie : routage REST, sessions sécurisées et principes SOLID.</p>
                         </div>
-                        <p class="card-desc">
-                            Outil de productivité implémentant les opérations CRUD complètes : ajout, filtrage dynamique par statut, suppression et persistance locale des données.
-                        </p>
-                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
+                        <div class="q-box">
+                            <h4><i class="fas fa-lightbulb"></i> Qu'avez-vous appris ?</h4>
+                            <ul>
+                                <li>Gestion du cycle de vie des sessions et tokens CSRF.</li>
+                                <li>Modélisation des paniers et lignes de commande.</li>
+                                <li>Contrôle d'accès et middlewares d'authentification.</li>
+                            </ul>
+                        </div>
+                        <div class="q-box">
+                            <h4><i class="fas fa-cogs"></i> Comment le mettre en place ?</h4>
+                            <p>Framework Laravel, migrations de schéma, seeders et séparation claire des responsabilités.</p>
+                        </div>
                     </div>
-                </div>
 
-                <!-- 6. Scripts de Parsing & Données -->
-                <div class="project-card" data-category="app" data-aos="fade-up" data-aos-delay="500">
-                    <div class="card-thumb">
-                        <i class="fas fa-file-code"></i>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Traitement de Fichiers & Parsing</h3>
-                        <div class="card-meta">
-                            <i class="far fa-calendar-alt"></i> Période : 11/2025
-                        </div>
-                        <div class="card-tags">
-                            <span class="badge-context">École</span>
-                            <span>Bash</span>
-                            <span>Awk / Sed</span>
-                            <span>Regex</span>
-                            <span>Automatisation</span>
-                        </div>
-                        <p class="card-desc">
-                            Développement de scripts de parsing de flux textuels : extraction de métriques, tri multicritère, calcul de moyennes et génération automatique de rapports.
-                        </p>
-                        <a href="#contact" class="btn-details">Détails de la réalisation</a>
+                    <div class="project-footer-actions">
+                        <a href="https://github.com/ton-profil/ecommerce-cinema" target="_blank" rel="noopener noreferrer" class="btn-project-link">
+                            <i class="fab fa-github"></i> Dépôt GitHub
+                        </a>
                     </div>
                 </div>
 
             </div>
         </section>
+
+        <!-- 4. VEILLE TECHNOLOGIQUE -->
+        <section id="veille">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Veille Technologique</h2>
+                <p class="section-subtitle">Surveillance ciblée de l'écosystème du développement logiciel</p>
+            </div>
+
+            <div class="veille-methodology" data-aos="fade-up">
+                <div class="veille-step">
+                    <h4><i class="fas fa-bullseye"></i> Sujet de Veille</h4>
+                    <p>
+                        <strong>« Évolution des architectures logicielles web : transition vers les APIs découplées et sécurisation selon les standards OWASP. »</strong>
+                    </p>
+                </div>
+
+                <div class="veille-step">
+                    <h4><i class="fas fa-rss"></i> Outils d'automatisation</h4>
+                    <ul style="list-style: none; font-size: 0.85rem; color: #ccc;">
+                        <li>▹ <strong>Feedly :</strong> Agrégation de flux RSS (Dev.to, Laravel News, OWASP).</li>
+                        <li>▹ <strong>Google Alerts :</strong> Mots-clés ciblés (PHP security, REST API standards).</li>
+                        <li>▹ <strong>Sources régulières :</strong> ANSSI, publications GitHub Security Lab.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="grid-card" data-aos="fade-up">
+                    <div>
+                        <div class="article-source">
+                            <span><i class="fas fa-rss"></i> Feedly / OWASP</span>
+                            <span>Septembre 2026</span>
+                        </div>
+                        <h4>Protection des APIs REST et prévention BOLA</h4>
+                        <p>Analyse des failles d'autorisation au niveau objet (BOLA) et contrôle des politiques de validation des payloads JSON.</p>
+                    </div>
+                    <a href="https://owasp.org/www-project-api-security/" target="_blank" rel="noopener noreferrer" class="btn-project-link" style="justify-content: center;">
+                        <i class="fas fa-external-link-alt"></i> Consulter
+                    </a>
+                </div>
+
+                <div class="grid-card" data-aos="fade-up" data-aos-delay="50">
+                    <div>
+                        <div class="article-source">
+                            <span><i class="fas fa-rss"></i> Feedly / Laravel News</span>
+                            <span>Juillet 2026</span>
+                        </div>
+                        <h4>PHP 8.x et impact sur la latence serveur</h4>
+                        <p>Optimisation des temps de réponse grâce au JIT et au typage strict dans les architectures MVC lourdes.</p>
+                    </div>
+                    <a href="https://laravel-news.com/" target="_blank" rel="noopener noreferrer" class="btn-project-link" style="justify-content: center;">
+                        <i class="fas fa-external-link-alt"></i> Consulter
+                    </a>
+                </div>
+
+                <div class="grid-card" data-aos="fade-up" data-aos-delay="100">
+                    <div>
+                        <div class="article-source">
+                            <span><i class="fas fa-rss"></i> Feedly / Dev.to</span>
+                            <span>Mai 2026</span>
+                        </div>
+                        <h4>Industrialisation des tests unitaires</h4>
+                        <p>Méthodes d'intégration continue de tests PHPUnit et Jest pour fiabiliser les déploiements logiciels.</p>
+                    </div>
+                    <a href="https://dev.to/" target="_blank" rel="noopener noreferrer" class="btn-project-link" style="justify-content: center;">
+                        <i class="fas fa-external-link-alt"></i> Consulter
+                    </a>
+                </div>
+            </div>
+        </section>
+
+       
 
         <!-- CONTACT -->
         <section id="contact">
-            <div class="section-header" data-aos="fade-right">
-                <h2 class="section-title">Contact Professionnel</h2>
-                <p class="section-subtitle">Disponible pour échanger autour de projets ou d'opportunités techniques</p>
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Contact</h2>
+                <p class="section-subtitle">Échange professionnel autour de mes projets</p>
             </div>
             <div class="contact-wrapper" data-aos="fade-up">
-                <div class="contact-info">
-                    <h3>Discutons de votre projet</h3>
-                    <p>
-                        À l'écoute d'opportunités en développement d'applications ou en ingénierie logicielle. Vous pouvez me joindre directement par e-mail ou via ce formulaire :
+                <div>
+                    <h3 style="font-size: 1.6rem; color: var(--ben10-green); margin-bottom: 0.8rem;">Me contacter</h3>
+                    <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem;">
+                        Disponible pour échanger sur mes réalisations ou répondre à vos questions sur mon parcours.
                     </p>
-                    <div class="contact-details">
-                        <a href="mailto:louis.monrose@ynov.com" class="contact-item">
-                            <i class="fas fa-envelope"></i> louis.monrose@ynov.com
-                        </a>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i> Île-de-France, France
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-graduation-cap"></i> Ynov Campus Val d'Europe
-                        </div>
+                    <a href="mailto:louis.monrose@ynov.com" class="contact-item">
+                        <i class="fas fa-envelope"></i> louis.monrose@ynov.com
+                    </a>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i> Île-de-France, France
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-graduation-cap"></i> Ynov Campus Val d'Europe
                     </div>
                 </div>
                 <form class="contact-form" action="mailto:louis.monrose@ynov.com" method="post" enctype="text/plain">
-                    <input type="text" name="Nom" placeholder="Votre Nom & Organisation" required>
+                    <input type="text" name="Nom" placeholder="Votre Nom & Entreprise" required>
                     <input type="email" name="Email" placeholder="Votre Adresse E-mail" required>
-                    <textarea name="Message" rows="5" placeholder="Votre message..." required></textarea>
-                    <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; cursor: pointer; border: none;">
-                        <i class="fas fa-paper-plane"></i> Envoyer le message
+                    <textarea name="Message" rows="4" placeholder="Votre message..." required></textarea>
+                    <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+                        <i class="fas fa-paper-plane"></i> Envoyer
                     </button>
                 </form>
             </div>
@@ -797,43 +1064,41 @@
 
     <footer>
         <div class="container">
-            <p>© 2026 Louis Monrose — Portfolio BTS SIO SLAM. Conçu avec rigueur et passion.</p>
+            <p>© 2026 Louis Monrose — Portfolio BTS SIO SLAM. Tous droits réservés.</p>
         </div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        function launchPortfolio() {
-            const launcher = document.getElementById('omnitrix-launcher');
-            if (!launcher || launcher.classList.contains('launching')) return;
-
-            launcher.classList.add('launching');
-            setTimeout(() => {
-                launcher.classList.add('fade-out');
-                document.body.style.overflow = 'auto';
-                AOS.init({ duration: 600, once: true });
-            }, 350);
-        }
-
-        // Lancement automatique dès le chargement du DOM avec court flash vert
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(launchPortfolio, 250);
+        // Initialisation des animations AOS
+        window.addEventListener('load', () => {
+            if (typeof AOS !== 'undefined') {
+                AOS.init({ duration: 500, once: true });
+            }
         });
 
-        // Filtrage dynamique sans dépendre de l'objet global 'event'
-        function filterProjects(category, buttonElement) {
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            if (buttonElement) buttonElement.classList.add('active');
+        // Gestionnaire des sous-onglets U5 vs U6
+        function switchProjectTab(tabName, triggerBtn) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            const panes = document.querySelectorAll('.tab-pane');
 
-            const cards = document.querySelectorAll('.project-card');
-            cards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
             });
+            panes.forEach(pane => pane.classList.remove('active'));
+
+            if (triggerBtn) {
+                triggerBtn.classList.add('active');
+                triggerBtn.setAttribute('aria-selected', 'true');
+            }
+
+            const targetPane = document.getElementById('tab-' + tabName);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            }
+
+            if (typeof AOS !== 'undefined') AOS.refresh();
         }
     </script>
 </body>
