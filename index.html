@@ -1,1105 +1,434 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Louis Monrose | Portfolio BTS SIO SLAM</title>
-    <meta name="description" content="Portfolio BTS SIO option SLAM de Louis Monrose - Projets U5 & U6, parcours académique et professionnel, veille technologique et certifications.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio BTS SIO SLAM de Louis Monrose : projets, parcours et travaux pratiques Linux, DNS, Active Directory et GLPI.">
+  <title>Louis Monrose | Portfolio BTS SIO SLAM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #121212;
+      --card-hover: #171717;
+      --border: #292929;
+      --text: #f0f0f0;
+      --muted: #a3a3a3;
+      --green: #39ff14;
+      --glow: rgba(57, 255, 20, .35);
+      --font-mono: 'Fira Code', monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.65; }
+    body.modal-open { overflow: hidden; }
+    a { color: inherit; }
+    button, input, textarea { font: inherit; }
+    .container { width: min(1180px, calc(100% - 40px)); margin: auto; }
+    .green { color: var(--green); }
 
-    <style>
-        :root {
-            --bg: #0a0a0a;
-            --card-bg: #121212;
-            --card-hover: #171717;
-            --border: #222222;
-            --text-main: #f0f0f0;
-            --text-muted: #959595;
-            --ben10-green: #39FF14;
-            --ben10-glow: rgba(57, 255, 20, 0.35);
-            --font-sans: 'Inter', sans-serif;
-            --font-mono: 'Fira Code', monospace;
-        }
+    /* Animation d'accueil inspirée de l'Omnitrix */
+    .omnitrix-intro { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; background: #050505; pointer-events: none; animation: intro-out .5s ease 1.05s forwards; }
+    .omnitrix-logo { position: relative; display: grid; place-items: center; width: 135px; height: 135px; border: 9px solid #3b3b3b; border-radius: 50%; box-shadow: 0 0 50px var(--glow); background: #151515; }
+    .omnitrix-logo::before, .omnitrix-logo::after { content: ''; position: absolute; width: 0; height: 0; border-left: 45px solid transparent; border-right: 45px solid transparent; }
+    .omnitrix-logo::before { border-bottom: 57px solid var(--green); top: 8px; }
+    .omnitrix-logo::after { border-top: 57px solid var(--green); bottom: 8px; }
+    @keyframes intro-out { to { opacity: 0; visibility: hidden; } }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+    /* Navigation */
+    .topbar { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+    .nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -.5px; text-decoration: none; white-space: nowrap; }
+    .logo span { color: var(--green); }
+    .nav-links { display: flex; align-items: center; gap: 20px; list-style: none; margin: 0; padding: 0; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: .87rem; font-weight: 600; transition: color .2s; }
+    .nav-links a:hover { color: var(--green); }
+    .nav-contact { border: 1px solid var(--green); color: var(--green) !important; border-radius: 6px; padding: 8px 13px; }
+    .nav-contact:hover { background: var(--green); color: #000 !important; }
+    .menu-toggle { display: none; color: var(--green); background: transparent; border: 1px solid var(--border); border-radius: 6px; padding: 8px 11px; cursor: pointer; }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: var(--font-sans);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+    /* Présentation */
+    .hero { min-height: 76vh; padding: 100px 0 80px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; background: radial-gradient(circle at 12% 30%, rgba(57,255,20,.09), transparent 54%); }
+    .status { display: inline-flex; align-items: center; gap: 8px; color: var(--green); background: rgba(57,255,20,.09); border: 1px solid rgba(57,255,20,.3); border-radius: 40px; padding: 6px 14px; font-size: .8rem; font-weight: 700; }
+    h1 { margin: 22px 0 12px; font-size: clamp(2.5rem, 6vw, 4.4rem); font-weight: 800; line-height: 1.13; letter-spacing: -2px; }
+    h1 span { color: var(--green); text-shadow: 0 0 24px var(--glow); }
+    .lead { font-size: 1.06rem; color: var(--muted); max-width: 730px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 23px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 10px 17px; border: 1px solid var(--green); border-radius: 6px; color: #000; background: var(--green); text-decoration: none; font-size: .87rem; font-weight: 700; cursor: pointer; transition: .22s; }
+    .button:hover { transform: translateY(-2px); box-shadow: 0 0 19px var(--glow); background: #fff; border-color: #fff; }
+    .button.outline { background: #121212; color: var(--green); }
+    .button.outline:hover { background: var(--green); color: #000; border-color: var(--green); }
 
-        /* --- OMNITRIX LAUNCHER (100% CSS PUR SANS BLOCAGE JS) --- */
-        #omnitrix-launcher {
-            position: fixed;
-            inset: 0;
-            background: #050505;
-            z-index: 9999;
-            display: grid;
-            place-content: center;
-            text-align: center;
-            pointer-events: none;
-            animation: omniFadeOut 0.4s ease-out forwards 0.8s;
-        }
+    /* Sections et cartes */
+    main section { padding: 80px 0; border-bottom: 1px solid var(--border); scroll-margin-top: 78px; }
+    .section-header { margin-bottom: 32px; }
+    .section-title { display: inline-block; position: relative; margin: 0; font-size: clamp(1.65rem, 4vw, 2rem); }
+    .section-title::after { content: ''; position: absolute; bottom: -9px; left: 0; width: 42px; height: 3px; background: var(--green); box-shadow: 0 0 12px var(--green); }
+    .section-subtitle { color: var(--muted); margin-top: 20px; font-size: .91rem; }
+    .card { padding: 24px; background: var(--card); border: 1px solid var(--border); border-radius: 11px; transition: .2s; }
+    .card:hover { border-color: rgba(57,255,20,.6); }
+    .card.highlight { border-color: var(--green); box-shadow: 0 0 20px rgba(57,255,20,.07); }
+    .card h3 { margin: 0 0 10px; font-size: 1.16rem; }
+    .card p { color: #bcbcbc; font-size: .91rem; }
+    .card ul { padding-left: 20px; color: #c4c4c4; font-size: .88rem; }
+    .two-col { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px; }
+    .label { color: var(--green); font: 500 .8rem var(--font-mono); margin: 0 0 10px; }
+    .timeline .card { margin-bottom: 15px; }
+    .timeline h3 { margin-bottom: 16px; color: var(--green); }
+    .date { color: var(--green); font: 500 .78rem var(--font-mono); }
+    .institution { font-size: .86rem; color: var(--muted); }
 
-        .omni-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    /* Travaux pratiques */
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--border); margin-bottom: 25px; }
+    .tab { color: var(--muted); background: none; border: 0; border-bottom: 3px solid transparent; padding: 13px; cursor: pointer; font-weight: 700; }
+    .tab.active, .tab:hover { color: var(--green); border-bottom-color: var(--green); }
+    .tab-panel[hidden] { display: none; }
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 25px; }
+    .skills span { padding: 7px 10px; border-radius: 5px; background: #111; border: 1px solid #303030; color: #c7c7c7; font-size: .78rem; }
+    .skills strong { color: var(--green); }
+    .tp-list { display: flex; flex-direction: column; gap: 12px; }
+    .tp-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 17px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 9px; transition: .2s; }
+    .tp-row:hover { border-color: var(--green); background: var(--card-hover); transform: translateX(3px); }
+    .tp-info { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .tp-num { background: rgba(57,255,20,.09); color: var(--green); border: 1px solid rgba(57,255,20,.24); border-radius: 5px; padding: 3px 8px; font: 600 .8rem var(--font-mono); }
+    .tp-name { font-weight: 700; }
+    .tp-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+    .tp-tags span { background: #0e0e0e; border: 1px solid #303030; color: #aaa; border-radius: 4px; padding: 3px 7px; font: .71rem var(--font-mono); }
+    .tp-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .tp-link { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--green); color: var(--green); background: transparent; border-radius: 6px; padding: 9px 12px; text-decoration: none; font-size: .8rem; font-weight: 700; cursor: pointer; transition: .2s; }
+    .tp-link:hover { color: #000; background: var(--green); box-shadow: 0 0 15px var(--glow); }
+    .tp-link.secondary { border-color: #555; color: #ddd; }
+    .tp-link.secondary:hover { border-color: var(--green); color: var(--green); background: #191919; }
 
-        .omni-btn {
-            width: 170px;
-            height: 170px;
-            background: #151515;
-            border: 8px solid #2d2d2d;
-            border-radius: 50%;
-            position: relative;
-            box-shadow: 0 0 35px rgba(0,0,0,0.9), inset 0 0 20px rgba(57, 255, 20, 0.15);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            animation: flashOmni 0.4s ease forwards 0.4s;
-        }
+    /* Projets, veille, contact */
+    .project { margin-bottom: 18px; }
+    .project h3 { color: #fff; }
+    .project .skills { margin: 12px 0; }
+    .grid-veille { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+    .veille-link { color: var(--green); text-decoration: none; font-weight: 700; font-size: .86rem; }
+    .veille-link:hover { text-decoration: underline; }
+    .contact-box { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    .contact-item { display: block; color: var(--text); text-decoration: none; margin: 12px 0; overflow-wrap: anywhere; }
+    .contact-item i { color: var(--green); width: 24px; }
+    .contact-item:hover { color: var(--green); }
+    .contact-form label { display: block; margin-bottom: 5px; font-size: .86rem; color: #ddd; }
+    .contact-form input, .contact-form textarea { display: block; width: 100%; padding: 11px 14px; margin-bottom: 14px; color: #fff; background: #090909; border: 1px solid var(--border); border-radius: 6px; }
+    .contact-form input:focus, .contact-form textarea:focus { outline: 1px solid var(--green); }
+    footer { padding: 26px 0; color: var(--muted); text-align: center; font-size: .82rem; }
 
-        .omni-face-top, .omni-face-bottom {
-            position: absolute;
-            width: 0; height: 0;
-            border-left: 60px solid transparent;
-            border-right: 60px solid transparent;
-        }
+    /* Fenêtre d'informations sur un TP */
+    .modal-overlay { display: none; position: fixed; inset: 0; z-index: 300; padding: 20px; background: rgba(0,0,0,.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+    .modal-overlay.active { display: flex; }
+    .modal { position: relative; width: min(650px, 100%); max-height: 85vh; overflow-y: auto; background: #121212; border: 1px solid var(--green); border-radius: 12px; box-shadow: 0 0 35px var(--glow); padding: 30px; }
+    .modal-close { position: absolute; top: 12px; right: 17px; border: none; background: none; color: #ccc; cursor: pointer; font-size: 1.7rem; }
+    .modal-close:hover { color: var(--green); }
+    .modal h2 { padding-right: 20px; font-size: 1.35rem; }
+    .modal h3 { margin-bottom: 6px; color: var(--green); font-size: .98rem; }
+    .modal p { color: #bbb; font-size: .91rem; }
+    .modal-section { padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .modal .button { margin-top: 18px; }
 
-        .omni-face-top {
-            border-bottom: 85px solid var(--ben10-green);
-            top: 15px;
-            filter: drop-shadow(0 0 10px var(--ben10-green));
-            animation: openTop 0.4s cubic-bezier(0.7, 0, 0.3, 1) forwards 0.4s;
-        }
-
-        .omni-face-bottom {
-            border-top: 85px solid var(--ben10-green);
-            bottom: 15px;
-            filter: drop-shadow(0 0 10px var(--ben10-green));
-            animation: openBottom 0.4s cubic-bezier(0.7, 0, 0.3, 1) forwards 0.4s;
-        }
-
-        @keyframes openTop {
-            to { transform: translateY(-160px); }
-        }
-        @keyframes openBottom {
-            to { transform: translateY(160px); }
-        }
-        @keyframes flashOmni {
-            to {
-                background: var(--ben10-green);
-                border-color: #fff;
-                box-shadow: 0 0 120px var(--ben10-green);
-            }
-        }
-        @keyframes omniFadeOut {
-            0% { opacity: 1; visibility: visible; }
-            99% { opacity: 0; visibility: visible; }
-            100% { opacity: 0; visibility: hidden; display: none; }
-        }
-
-        /* --- NAVIGATION --- */
-        .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
-
-        nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            background: rgba(10, 10, 10, 0.94);
-            backdrop-filter: blur(12px);
-            z-index: 100;
-            padding: 0.9rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 700; font-size: 1.3rem; letter-spacing: -0.5px; text-decoration: none; color: #fff; }
-        .logo span { color: var(--ben10-green); }
-
-        .nav-links { display: flex; gap: 1.3rem; align-items: center; list-style: none; }
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            transition: color 0.2s ease;
-            font-weight: 500;
-        }
-        .nav-links a:hover { color: var(--ben10-green); }
-
-        .btn-contact-nav {
-            padding: 0.45rem 1rem;
-            border: 1.5px solid var(--ben10-green);
-            color: var(--ben10-green) !important;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.78rem;
-            border-radius: 6px;
-            transition: all 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .btn-contact-nav:hover {
-            background: var(--ben10-green);
-            color: #000 !important;
-            box-shadow: 0 0 16px var(--ben10-glow);
-        }
-
-        /* --- HERO --- */
-        .hero {
-            min-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 5.5rem;
-            background: radial-gradient(circle at 10% 25%, rgba(57, 255, 20, 0.08) 0%, transparent 55%);
-        }
-        .badge-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(57, 255, 20, 0.1);
-            color: var(--ben10-green);
-            border: 1px solid rgba(57, 255, 20, 0.3);
-            padding: 0.35rem 0.9rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1.4rem;
-        }
-        .badge-status i { font-size: 0.65rem; }
-
-        .hero h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 1.1; font-weight: 700; letter-spacing: -1px; }
-        .hero h1 span { color: var(--ben10-green); text-shadow: 0 0 25px var(--ben10-glow); }
-        .hero-desc { font-size: 1.1rem; color: var(--text-muted); margin-top: 1.2rem; max-width: 720px; }
-
-        .hero-actions { margin-top: 1.8rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-        .btn-primary, .btn-outline {
-            padding: 0.7rem 1.6rem;
-            border-radius: 6px;
-            font-size: 0.92rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.25s ease;
-            cursor: pointer;
-        }
-        .btn-primary {
-            background: var(--ben10-green);
-            color: #000;
-            font-weight: 700;
-            border: none;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px var(--ben10-glow);
-            background: #fff;
-        }
-        .btn-outline {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            font-weight: 600;
-        }
-        .btn-outline:hover {
-            border-color: var(--ben10-green);
-            color: var(--ben10-green);
-            transform: translateY(-2px);
-        }
-
-        /* --- SECTIONS --- */
-        section { padding: 85px 0; border-bottom: 1px solid var(--border); }
-        .section-header { margin-bottom: 3rem; }
-        .section-title { font-size: 2rem; font-weight: 700; position: relative; display: inline-block; }
-        .section-title::after {
-            content: "";
-            position: absolute;
-            bottom: -8px; left: 0;
-            width: 40px; height: 3px;
-            background: var(--ben10-green);
-            box-shadow: 0 0 10px var(--ben10-green);
-        }
-        .section-subtitle { color: var(--text-muted); font-size: 0.92rem; margin-top: 0.75rem; }
-
-        /* --- BTS SIO & SPÉCIALITÉS --- */
-        .bts-intro-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.8rem;
-            margin-bottom: 2rem;
-        }
-        .bts-comparative {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.8rem;
-            margin-top: 1.5rem;
-        }
-        .specialite-card {
-            background: #0f0f0f;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.8rem;
-            position: relative;
-        }
-        .specialite-card.highlight {
-            border-color: var(--ben10-green);
-            box-shadow: 0 0 20px rgba(57, 255, 20, 0.08);
-        }
-        .specialite-badge {
-            position: absolute;
-            top: 1.2rem; right: 1.2rem;
-            background: rgba(57, 255, 20, 0.15);
-            color: var(--ben10-green);
-            padding: 0.2rem 0.55rem;
-            border-radius: 4px;
-            font-size: 0.72rem;
-            font-family: var(--font-mono);
-            font-weight: 700;
-        }
-        .specialite-card h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
-        .specialite-card ul { list-style: none; margin-top: 0.8rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.88rem; color: #ccc; }
-        .specialite-card ul li::before { content: "▹ "; color: var(--ben10-green); font-weight: bold; }
-        
-        .slam-motivation-box {
-            background: linear-gradient(145deg, #131313, #0d0d0d);
-            border-left: 4px solid var(--ben10-green);
-            border-radius: 0 10px 10px 0;
-            padding: 1.6rem;
-            margin-top: 1.8rem;
-            border-top: 1px solid var(--border);
-            border-right: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        /* --- PARCOURS --- */
-        .timeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-        .timeline-column h3 {
-            color: var(--ben10-green);
-            font-size: 1.2rem;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .timeline-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.4rem;
-            margin-bottom: 1.2rem;
-            transition: border-color 0.25s, transform 0.25s;
-        }
-        .timeline-card:hover { border-color: var(--ben10-green); transform: translateX(3px); }
-        .timeline-date {
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            color: var(--ben10-green);
-            background: rgba(57, 255, 20, 0.08);
-            padding: 0.15rem 0.5rem;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 0.4rem;
-        }
-        .timeline-card h4 { font-size: 1.05rem; margin-bottom: 0.2rem; }
-        .timeline-card .institution { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-        .timeline-card p { font-size: 0.88rem; color: #bbb; }
-
-        /* --- PROJETS U5 & U6 --- */
-        .tab-controls {
-            display: flex;
-            gap: 1rem;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 2.2rem;
-        }
-        .tab-btn {
-            background: transparent;
-            border: none;
-            padding: 0.75rem 1.4rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            position: relative;
-            transition: color 0.2s;
-        }
-        .tab-btn:hover { color: #fff; }
-        .tab-btn.active { color: var(--ben10-green); }
-        .tab-btn.active::after {
-            content: "";
-            position: absolute;
-            bottom: -1px; left: 0; width: 100%; height: 3px;
-            background: var(--ben10-green);
-            box-shadow: 0 0 10px var(--ben10-green);
-        }
-        .tab-pane { display: none; }
-        .tab-pane.active { display: block; }
-
-        .project-detail-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        .project-header-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 1rem;
-            margin-bottom: 1.3rem;
-        }
-        .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
-        .project-tags span {
-            background: #181818;
-            color: #ddd;
-            font-size: 0.75rem;
-            font-family: var(--font-mono);
-            padding: 0.2rem 0.55rem;
-            border-radius: 4px;
-            border: 1px solid #282828;
-        }
-        .project-tags span.badge-u {
-            background: rgba(57, 255, 20, 0.15);
-            color: var(--ben10-green);
-            border-color: rgba(57, 255, 20, 0.4);
-            font-weight: 700;
-        }
-
-        .project-questions-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-        .q-box {
-            background: #0d0d0d;
-            border: 1px solid #1c1c1c;
-            border-radius: 8px;
-            padding: 1.1rem;
-        }
-        .q-box h4 {
-            font-size: 0.92rem;
-            color: var(--ben10-green);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .q-box p, .q-box ul { font-size: 0.88rem; color: #b8b8b8; }
-        .q-box ul { list-style: none; }
-        .q-box ul li::before { content: "• "; color: var(--ben10-green); }
-
-        .project-media-block {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 1.2rem;
-            background: #0d0d0d;
-            border: 1px solid #1c1c1c;
-            border-radius: 8px;
-            padding: 1.1rem;
-            margin-bottom: 1.3rem;
-            align-items: center;
-        }
-        .mockup-placeholder {
-            min-height: 160px;
-            background: #141414;
-            border: 1px dashed #333;
-            border-radius: 6px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            text-align: center;
-            padding: 1rem;
-        }
-        .mockup-placeholder i { font-size: 2rem; margin-bottom: 0.4rem; color: var(--ben10-green); }
-
-        .tutorial-box {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 6px;
-            padding: 0.9rem 1.1rem;
-            font-size: 0.85rem;
-            color: #ccc;
-        }
-        .tutorial-box h5 { color: #fff; margin-bottom: 0.4rem; }
-        .tutorial-box ol { padding-left: 1.1rem; }
-        .tutorial-box ol li { margin-bottom: 0.2rem; }
-
-        .project-footer-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
-        .btn-project-link {
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #181818;
-            color: #eee;
-            border: 1px solid #2b2b2b;
-            transition: all 0.2s;
-        }
-        .btn-project-link:hover { border-color: var(--ben10-green); color: var(--ben10-green); }
-
-        /* --- VEILLE & CERTIFICATIONS --- */
-        .veille-methodology {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.8rem;
-            margin-bottom: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.8rem;
-        }
-        .veille-step {
-            background: #0d0d0d;
-            border: 1px solid #1c1c1c;
-            border-radius: 8px;
-            padding: 1.1rem;
-        }
-        .veille-step h4 { color: var(--ben10-green); font-size: 0.92rem; margin-bottom: 0.4rem; }
-        .veille-step p { font-size: 0.88rem; color: #b0b0b0; }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        .grid-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.6rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: border-color 0.25s, transform 0.25s;
-        }
-        .grid-card:hover { border-color: var(--ben10-green); transform: translateY(-3px); }
-        .article-source {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--ben10-green);
-            margin-bottom: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-        }
-        .grid-card h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .grid-card p { font-size: 0.88rem; color: #aaa; margin-bottom: 1.2rem; flex-grow: 1; }
-
-        /* --- CONTACT --- */
-        .contact-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1.3fr;
-            gap: 2.5rem;
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 14px;
-            border: 1px solid var(--border);
-        }
-        .contact-item { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-size: 0.92rem; margin-top: 0.8rem; }
-        .contact-item i { color: var(--ben10-green); width: 20px; }
-        .contact-form input, .contact-form textarea {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            background: #090909;
-            border: 1px solid var(--border);
-            color: #fff;
-            border-radius: 6px;
-            margin-bottom: 0.9rem;
-            font-family: inherit;
-            font-size: 0.9rem;
-        }
-        .contact-form input:focus, .contact-form textarea:focus {
-            outline: none;
-            border-color: var(--ben10-green);
-            box-shadow: 0 0 10px var(--ben10-glow);
-        }
-
-        footer {
-            padding: 2rem 0;
-            text-align: center;
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border);
-        }
-
-        @media (max-width: 900px) {
-            .bts-comparative, .timeline-grid, .project-questions-grid, .project-media-block, .veille-methodology, .contact-wrapper {
-                grid-template-columns: 1fr;
-            }
-            .nav-links { display: none; }
-        }
-    </style>
+    @media (max-width: 950px) {
+      .nav-links { gap: 12px; }
+      .grid-veille { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 760px) {
+      .menu-toggle { display: inline-block; }
+      .nav { flex-wrap: wrap; }
+      .nav-links { display: none; flex: 0 0 100%; flex-direction: column; align-items: flex-start; gap: 12px; padding: 0 0 18px; }
+      .nav-links.open { display: flex; }
+      .hero { min-height: 60vh; padding: 65px 0; }
+      .two-col, .grid-veille, .contact-box { grid-template-columns: 1fr; }
+      .tp-row { flex-direction: column; align-items: flex-start; }
+      .tp-actions { width: 100%; }
+      .tp-actions > * { flex: 1; }
+      main section { padding: 58px 0; scroll-margin-top: 80px; }
+      .modal { padding: 22px; }
+    }
+  </style>
 </head>
 <body>
+  <div class="omnitrix-intro" aria-hidden="true"><div class="omnitrix-logo"></div></div>
 
-    <!-- OMNITRIX LAUNCHER (GESTION AUTOMATIQUE EN CSS SANS RISQUE DE BLOCAGE) -->
-    <div id="omnitrix-launcher" aria-hidden="true">
-        <div class="omni-container">
-            <div class="omni-btn">
-                <div class="omni-face-top"></div>
-                <div class="omni-face-bottom"></div>
-            </div>
-            <p style="margin-top: 1.5rem; color: var(--ben10-green); letter-spacing: 4px; font-size: 0.8rem; font-weight: 700;">INITIALISATION DU SYSTÈME</p>
-        </div>
-    </div>
-
-    <!-- NAVIGATION -->
-    <nav aria-label="Navigation principale">
-        <div class="container nav-content">
-            <a href="#accueil" class="logo">LOUIS<span>.</span>MONROSE</a>
-            <ul class="nav-links">
-                <li><a href="#bts-sio">BTS SIO</a></li>
-                <li><a href="#parcours">Parcours</a></li>
-                <li><a href="#projets">Projets</a></li>
-                <li><a href="#veille">Veille Tech</a></li>
-                <li><a href="#certifications">Certifications</a></li>
-                <li><a href="#contact" class="btn-contact-nav"><i class="fas fa-envelope"></i> Contact</a></li>
-            </ul>
-        </div>
+  <header class="topbar">
+    <nav class="container nav" aria-label="Navigation principale">
+      <a class="logo" href="#accueil">LOUIS<span>.</span>MONROSE</a>
+      <button id="menu-toggle" class="menu-toggle" type="button" aria-controls="nav-links" aria-expanded="false" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
+      <ul id="nav-links" class="nav-links">
+        <li><a href="#bts-sio">BTS SIO</a></li>
+        <li><a href="#parcours">Parcours</a></li>
+        <li><a href="#projets">Projets & TP</a></li>
+        <li><a href="#veille">Veille Tech</a></li>
+        <li><a class="nav-contact" href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
     </nav>
+  </header>
 
-    <main class="container">
-        
-        <!-- HERO -->
-        <section id="accueil" class="hero">
-            <div class="badge-status">
-                <i class="fas fa-check-circle"></i> BTS SIO Option SLAM — RNCP Niveau 5 (Bac+2)
-            </div>
-            <h1>Louis Monrose<br><span>Développeur Full-Stack & Solutions Métiers</span></h1>
-            <p class="hero-desc">
-                Portfolio professionnel d'épreuves BTS SIO : analyse de la spécialité SLAM, parcours académique et professionnel, projets validés U5 et U6, veille technologique automatisée et certifications.
-            </p>
-            <div class="hero-actions">
-                <a href="#projets" class="btn-primary"><i class="fas fa-folder-open"></i> Projets U5 & U6</a>
-                <a href="chemin/vers/ton-cv.pdf" target="_blank" rel="noopener noreferrer" class="btn-outline"><i class="fas fa-file-pdf"></i> CV (PDF)</a>
-            </div>
-        </section>
+  <main class="container">
+    <section id="accueil" class="hero">
+      <span class="status"><i class="fas fa-circle-check"></i> BTS SIO — Option SLAM (Bac +2)</span>
+      <h1>Louis Monrose<br><span>Développeur Full-Stack</span></h1>
+      <p class="lead">Bienvenue sur mon portfolio. Je vous présente mon parcours en BTS SIO, mes projets de développement web et mes travaux pratiques en administration système et réseau.</p>
+      <div class="hero-actions">
+        <a class="button" href="#projets"><i class="fas fa-folder-open"></i> Voir mes projets et TP</a>
+        <a class="button outline" href="#contact"><i class="fas fa-envelope"></i> Me contacter</a>
+      </div>
+    </section>
 
-        <!-- 1. BTS SIO & SPÉCIALITÉS -->
-        <section id="bts-sio">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">Le BTS SIO & Ma Spécialité</h2>
-                <p class="section-subtitle">Objectif du diplôme et distinction entre SISR et SLAM</p>
-            </div>
+    <section id="bts-sio">
+      <div class="section-header">
+        <h2 class="section-title">Le BTS SIO & ma spécialité</h2>
+        <p class="section-subtitle">Services Informatiques aux Organisations : deux options complémentaires.</p>
+      </div>
+      <div class="card" style="margin-bottom: 22px;">
+        <h3><i class="fas fa-graduation-cap green"></i> Le BTS SIO</h3>
+        <p>Le BTS SIO prépare aux métiers de l'informatique, avec un socle commun en gestion de services, cybersécurité et développement, puis une spécialisation en SLAM ou SISR.</p>
+      </div>
+      <div class="two-col">
+        <article class="card">
+          <p class="label">OPTION SISR — INFRASTRUCTURE</p>
+          <h3>Solutions d'Infrastructure, Systèmes et Réseaux</h3>
+          <p>Administration des systèmes et réseaux, maintenance, sécurisation et disponibilité des services.</p>
+          <ul><li>Linux et Windows Server</li><li>DNS et Active Directory</li><li>Inventaire et assistance GLPI</li></ul>
+        </article>
+        <article class="card highlight">
+          <p class="label">OPTION SLAM — MA SPÉCIALITÉ</p>
+          <h3>Solutions Logicielles et Applications Métiers</h3>
+          <p>Développement d'applications et de sites web, conception de bases de données et programmation orientée objet.</p>
+          <ul><li>HTML, CSS et JavaScript</li><li>PHP, Laravel et SQL</li><li>Architecture MVC et Git</li></ul>
+        </article>
+      </div>
+    </section>
 
-            <div class="bts-intro-box" data-aos="fade-up">
-                <h3 style="font-size: 1.25rem; margin-bottom: 0.6rem; color: #fff;">
-                    <i class="fas fa-graduation-cap" style="color: var(--ben10-green); margin-right: 8px;"></i>
-                    Le Brevet de Technicien Supérieur – Services Informatiques aux Organisations
-                </h3>
-                <p style="color: #bbb; font-size: 0.92rem; margin-bottom: 0.6rem;">
-                    Diplôme d'État de niveau 5 (Bac+2), le BTS SIO forme des techniciens aptes à concevoir, déployer et sécuriser des solutions informatiques adaptées aux processus des organisations.
-                </p>
-                <p style="color: #999; font-size: 0.88rem;">
-                    La formation associe un socle commun (cybersécurité, services d'infrastructure, gestion du patrimoine informatique) à une spécialisation métier choisie au semestre 2.
-                </p>
-            </div>
-
-            <div class="bts-comparative">
-                <div class="specialite-card" data-aos="fade-up">
-                    <span class="specialite-badge" style="color: #888; background: #222;">Infrastructure</span>
-                    <h3>Option SISR</h3>
-                    <p style="color: #888; font-size: 0.82rem; font-weight: 500;">Solutions d'Infrastructure, Systèmes et Réseaux</p>
-                    <ul>
-                        <li>Déploiement des équipements réseaux (commutateurs, routeurs, VLANs)</li>
-                        <li>Administration système Linux (Debian) et Windows Server</li>
-                        <li>Services d'annuaires Active Directory, DNS, DHCP et politiques de sécurité</li>
-                        <li>Supervision et maintien en condition opérationnelle (MCO)</li>
-                    </ul>
-                </div>
-
-                <div class="specialite-card highlight" data-aos="fade-up" data-aos-delay="50">
-                    <span class="specialite-badge">Spécialité Choisie</span>
-                    <h3 style="color: var(--ben10-green);">Option SLAM</h3>
-                    <p style="color: #bbb; font-size: 0.82rem; font-weight: 500;">Solutions Logicielles et Applications Métiers</p>
-                    <ul>
-                        <li>Modélisation relationnelle de bases de données (Merise, SQL)</li>
-                        <li>Développement logiciel et architectures modulaires (POO, MVC)</li>
-                        <li>Applications Web Full-Stack dynamiques (PHP / Laravel, JavaScript)</li>
-                        <li>Intégration d'APIs REST et sécurisation du code (OWASP)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="slam-motivation-box" data-aos="fade-up">
-                <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem;">
-                    <i class="fas fa-bullseye" style="color: var(--ben10-green); margin-right: 8px;"></i>
-                    Mon choix pour SLAM & Compétences acquises
-                </h4>
-                <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 0.6rem;">
-                    J'ai choisi l'option SLAM pour concevoir des applications de bout en bout, de la modélisation des entités à l'interface utilisateur.
-                </p>
-                <p style="color: #aaa; font-size: 0.88rem;">
-                    <strong>Compétences clés :</strong> conception Merise (MCD, MLD), écriture de requêtes SQL optimisées sous MariaDB, architecture MVC sécurisée (hachage, prévention des injections SQL et failles XSS) et travail collaboratif sous Git.
-                </p>
-            </div>
-        </section>
-
-        <!-- 2. PARCOURS -->
-        <section id="parcours">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">Mon Parcours</h2>
-                <p class="section-subtitle">Chronologie académique et expérience professionnelle</p>
-            </div>
-
-            <div class="timeline-grid">
-                <div class="timeline-column" data-aos="fade-up">
-                    <h3><i class="fas fa-university"></i> Parcours Académique</h3>
-
-                    <div class="timeline-card">
-                        <span class="timeline-date">2025 – Présent</span>
-                        <h4>BTS SIO (Option SLAM)</h4>
-                        <div class="institution">Ynov Campus Val d'Europe | Montévrain</div>
-                        <p>
-                            Génie logiciel, modélisation de données, programmation objet, développement Full-Stack et préparation aux épreuves d'examen national U5 et U6.
-                        </p>
-                    </div>
-
-                    <div class="timeline-card">
-                        <span class="timeline-date">2021 – 2024</span>
-                        <h4>Baccalauréat Général</h4>
-                        <div class="institution">Lycée Jean Vilar[cite: 1]</div>
-                        <p>
-                            Enseignements scientifiques et numériques, bases d'algorithmique et logique mathématique.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="timeline-column" data-aos="fade-up" data-aos-delay="50">
-                    <h3><i class="fas fa-briefcase"></i> Parcours Professionnel</h3>
-
-                    <div class="timeline-card">
-                        <span class="timeline-date">07/2026 – 08/2026 (5 semaines)</span>
-                        <h4>Développeur Web Full-Stack — Stage</h4>
-                        <div class="institution">Tennis Club de Saint-Soupplets</div>
-                        <p>Refonte de la plateforme web du club :</p>
-                        <ul style="list-style: none; margin-top: 0.4rem; font-size: 0.85rem; color: #ccc;">
-                            <li>▹ Refonte responsive complète orientée mobile.</li>
-                            <li>▹ Développement d'un back-office PHP/SQL pour la gestion des adhérents et tournois.</li>
-                            <li>▹ Redirection technique vers la passerelle fédérale <strong>Ten'Up</strong>.</li>
-                        </ul>
-                    </div>
-
-                    <div class="timeline-card">
-                        <span class="timeline-date">2025 – 2026</span>
-                        <h4>Projets Applicatifs & Travaux Métiers</h4>
-                        <div class="institution">Ynov Campus</div>
-                        <p>
-                            Simulations d'infrastructures d'assistance, déploiement d'outils d'inventaire GLPI et réalisation de prototypes SaaS en équipe.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. PROJETS U5 & U6 -->
-        <section id="projets">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">Réalisations & Projets</h2>
-                <p class="section-subtitle">Documentation technique structurée selon les exigences des épreuves U5 et U6</p>
-            </div>
-
-            <div class="tab-controls" role="tablist" data-aos="fade-up">
-                <button class="tab-btn active" role="tab" aria-selected="true" id="btn-u5" onclick="switchProjectTab('u5', this)">
-                    <i class="fas fa-layer-group"></i> Projets Épreuve U5
-                </button>
-                <button class="tab-btn" role="tab" aria-selected="false" id="btn-u6" onclick="switchProjectTab('u6', this)">
-                    <i class="fas fa-laptop-code"></i> Projets Épreuve U6
-                </button>
-            </div>
-
-            <!-- PROJETS U5 -->
-            <div id="tab-u5" class="tab-pane active" role="tabpanel">
-
-                <!-- Projet U5 #1 -->
-                <div class="project-detail-card" data-aos="fade-up">
-                    <div class="project-header-meta">
-                        <div>
-                            <h3>ShopGen — Vitrine Interactive & Manipulation DOM</h3>
-                            <div class="project-tags">
-                                <span class="badge-u">Épreuve U5</span>
-                                <span>JavaScript ES6</span>
-                                <span>HTML5 / CSS3</span>
-                                <span>Responsive</span>
-                            </div>
-                        </div>
-                        <span style="font-family: var(--font-mono); font-size: 0.82rem; color: #888;">Décembre 2025</span>
-                    </div>
-
-                    <div class="project-questions-grid">
-                        <div class="q-box">
-                            <h4><i class="fas fa-question-circle"></i> Quel est le projet ?</h4>
-                            <p>Interface pour une plateforme SaaS e-commerce intégrant des composants dynamiques sans bibliothèque externe.</p>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-bullseye"></i> Pourquoi ce projet ?</h4>
-                            <p>Fluidifier la consultation sur mobile et valider les mécaniques d'animation native légères.</p>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-lightbulb"></i> Qu'avez-vous appris ?</h4>
-                            <ul>
-                                <li>Manipulation du DOM sans bibliothèque.</li>
-                                <li>Gestion des événements tactiles et clavier.</li>
-                                <li>Contrôle de validation des champs formulaires côté client.</li>
-                            </ul>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-cogs"></i> Comment le mettre en place ?</h4>
-                            <p>Architecture modulaire HTML5/CSS3 Grid, écouteurs d'événements JS et gestion de version via Git.</p>
-                        </div>
-                    </div>
-
-                    <div class="project-media-block">
-                        <div class="mockup-placeholder">
-                            <i class="fas fa-images"></i>
-                            <strong>Schéma de navigation & Carrousel</strong>
-                        </div>
-                        <div class="tutorial-box">
-                            <h5><i class="fas fa-book-open"></i> Tutoriel de déploiement :</h5>
-                            <ol>
-                                <li>Cloner le dépôt : <code>git clone [url-du-repo]</code></li>
-                                <li>Ouvrir le dossier dans VS Code</li>
-                                <li>Lancer avec Live Server ou charger <code>index.html</code></li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="project-footer-actions">
-                        <a href="https://github.com/ton-profil/shopgen" target="_blank" rel="noopener noreferrer" class="btn-project-link">
-                            <i class="fab fa-github"></i> Dépôt GitHub
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Projet U5 #2 -->
-                <div class="project-detail-card" data-aos="fade-up">
-                    <div class="project-header-meta">
-                        <div>
-                            <h3>Scripts de Parsing & Filtrage de Logs Système</h3>
-                            <div class="project-tags">
-                                <span class="badge-u">Épreuve U5</span>
-                                <span>Bash Shell</span>
-                                <span>Awk / Sed</span>
-                                <span>Regex</span>
-                            </div>
-                        </div>
-                        <span style="font-family: var(--font-mono); font-size: 0.82rem; color: #888;">Novembre 2025</span>
-                    </div>
-
-                    <div class="project-questions-grid">
-                        <div class="q-box">
-                            <h4><i class="fas fa-question-circle"></i> Quel est le projet ?</h4>
-                            <p>Outils d'automatisation d'extraction et de traitement sur serveurs Linux pour journaux d'accès web.</p>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-bullseye"></i> Pourquoi ce projet ?</h4>
-                            <p>Accélérer le diagnostic d'incidents et isoler les requêtes anormales (codes HTTP 4xx/5xx).</p>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-lightbulb"></i> Qu'avez-vous appris ?</h4>
-                            <ul>
-                                <li>Expressions régulières (Regex) avancées.</li>
-                                <li>Filtrage en pipeline Unix via <code>grep</code>, <code>awk</code> et <code>sed</code>.</li>
-                                <li>Génération automatisée de synthèses CSV exploitables.</li>
-                            </ul>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-cogs"></i> Comment le mettre en place ?</h4>
-                            <p>Scripts Shell avec gestion des paramètres, redirection des flux et planifications cron.</p>
-                        </div>
-                    </div>
-
-                    <div class="project-footer-actions">
-                        <a href="https://github.com/ton-profil/bash-parsing" target="_blank" rel="noopener noreferrer" class="btn-project-link">
-                            <i class="fab fa-github"></i> Dépôt GitHub
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- PROJETS U6 -->
-            <div id="tab-u6" class="tab-pane" role="tabpanel">
-
-                <!-- Projet U6 #1 -->
-                <div class="project-detail-card" data-aos="fade-up">
-                    <div class="project-header-meta">
-                        <div>
-                            <h3>Application Métier — Tennis Club de Saint-Soupplets</h3>
-                            <div class="project-tags">
-                                <span class="badge-u">Projet Phare U6</span>
-                                <span>PHP / MySQL</span>
-                                <span>API Ten'Up</span>
-                                <span>Back-Office Sécurisé</span>
-                                <span>Stage</span>
-                            </div>
-                        </div>
-                        <span style="font-family: var(--font-mono); font-size: 0.82rem; color: #888;">Juillet – Août 2026</span>
-                    </div>
-
-                    <div class="project-questions-grid">
-                        <div class="q-box">
-                            <h4><i class="fas fa-question-circle"></i> Quel est le projet ?</h4>
-                            <p>Refonte de la plateforme web du club et création d'un outil d'administration interne sécurisé.</p>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-bullseye"></i> Pourquoi ce projet ?</h4>
-                            <p>Centraliser les inscriptions, automatiser les résultats et rediriger les membres vers Ten'Up pour la réservation.</p>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-lightbulb"></i> Qu'avez-vous appris ?</h4>
-                            <ul>
-                                <li>Analyse du besoin utilisateur et cahier des charges.</li>
-                                <li>Modélisation Merise complète (MCD, MLD, MPD en 3NF).</li>
-                                <li>Protection de requêtes PDO et chiffrement des accès (bcrypt).</li>
-                            </ul>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-cogs"></i> Comment le mettre en place ?</h4>
-                            <p>Pattern MVC en PHP natif, base MariaDB normalisée et serveur de test local Apache.</p>
-                        </div>
-                    </div>
-
-                    <div class="project-media-block">
-                        <div class="mockup-placeholder">
-                            <i class="fas fa-sitemap"></i>
-                            <strong>MCD Merise & Interface Back-Office</strong>
-                        </div>
-                        <div class="tutorial-box">
-                            <h5><i class="fas fa-book-open"></i> Déploiement :</h5>
-                            <ol>
-                                <li>Importer <code>schema_tennis.sql</code> dans MariaDB</li>
-                                <li>Renseigner les identifiants dans <code>config/db.php</code></li>
-                                <li>Tester l'authentification sur <code>/admin</code></li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="project-footer-actions">
-                        <a href="https://github.com/ton-profil/tennis-club-project" target="_blank" rel="noopener noreferrer" class="btn-project-link">
-                            <i class="fab fa-github"></i> Dépôt GitHub
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Projet U6 #2 -->
-                <div class="project-detail-card" data-aos="fade-up">
-                    <div class="project-header-meta">
-                        <div>
-                            <h3>Plateforme E-Commerce Multicritères Vidéo</h3>
-                            <div class="project-tags">
-                                <span class="badge-u">Épreuve U6</span>
-                                <span>PHP (Laravel)</span>
-                                <span>MariaDB</span>
-                                <span>MVC</span>
-                                <span>Sécurité OWASP</span>
-                            </div>
-                        </div>
-                        <span style="font-family: var(--font-mono); font-size: 0.82rem; color: #888;">Mai 2026 – En cours</span>
-                    </div>
-
-                    <div class="project-questions-grid">
-                        <div class="q-box">
-                            <h4><i class="fas fa-question-circle"></i> Quel est le projet ?</h4>
-                            <p>Application de vente de films physiques avec gestion de panier persistant et filtres multicritères.</p>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-bullseye"></i> Pourquoi ce projet ?</h4>
-                            <p>Appliquer les bonnes pratiques d'ingénierie : routage REST, sessions sécurisées et principes SOLID.</p>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-lightbulb"></i> Qu'avez-vous appris ?</h4>
-                            <ul>
-                                <li>Gestion du cycle de vie des sessions et tokens CSRF.</li>
-                                <li>Modélisation des paniers et lignes de commande.</li>
-                                <li>Contrôle d'accès et middlewares d'authentification.</li>
-                            </ul>
-                        </div>
-                        <div class="q-box">
-                            <h4><i class="fas fa-cogs"></i> Comment le mettre en place ?</h4>
-                            <p>Framework Laravel, migrations de schéma, seeders et séparation claire des responsabilités.</p>
-                        </div>
-                    </div>
-
-                    <div class="project-footer-actions">
-                        <a href="https://github.com/ton-profil/ecommerce-cinema" target="_blank" rel="noopener noreferrer" class="btn-project-link">
-                            <i class="fab fa-github"></i> Dépôt GitHub
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- 4. VEILLE TECHNOLOGIQUE -->
-        <section id="veille">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">Veille Technologique</h2>
-                <p class="section-subtitle">Surveillance ciblée de l'écosystème du développement logiciel</p>
-            </div>
-
-            <div class="veille-methodology" data-aos="fade-up">
-                <div class="veille-step">
-                    <h4><i class="fas fa-bullseye"></i> Sujet de Veille</h4>
-                    <p>
-                        <strong>« Évolution des architectures logicielles web : transition vers les APIs découplées et sécurisation selon les standards OWASP. »</strong>
-                    </p>
-                </div>
-
-                <div class="veille-step">
-                    <h4><i class="fas fa-rss"></i> Outils d'automatisation</h4>
-                    <ul style="list-style: none; font-size: 0.85rem; color: #ccc;">
-                        <li>▹ <strong>Feedly :</strong> Agrégation de flux RSS (Dev.to, Laravel News, OWASP).</li>
-                        <li>▹ <strong>Google Alerts :</strong> Mots-clés ciblés (PHP security, REST API standards).</li>
-                        <li>▹ <strong>Sources régulières :</strong> ANSSI, publications GitHub Security Lab.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="cards-grid">
-                <div class="grid-card" data-aos="fade-up">
-                    <div>
-                        <div class="article-source">
-                            <span><i class="fas fa-rss"></i> Feedly / OWASP</span>
-                            <span>Septembre 2026</span>
-                        </div>
-                        <h4>Protection des APIs REST et prévention BOLA</h4>
-                        <p>Analyse des failles d'autorisation au niveau objet (BOLA) et contrôle des politiques de validation des payloads JSON.</p>
-                    </div>
-                    <a href="https://owasp.org/www-project-api-security/" target="_blank" rel="noopener noreferrer" class="btn-project-link" style="justify-content: center;">
-                        <i class="fas fa-external-link-alt"></i> Consulter
-                    </a>
-                </div>
-
-                <div class="grid-card" data-aos="fade-up" data-aos-delay="50">
-                    <div>
-                        <div class="article-source">
-                            <span><i class="fas fa-rss"></i> Feedly / Laravel News</span>
-                            <span>Juillet 2026</span>
-                        </div>
-                        <h4>PHP 8.x et impact sur la latence serveur</h4>
-                        <p>Optimisation des temps de réponse grâce au JIT et au typage strict dans les architectures MVC lourdes.</p>
-                    </div>
-                    <a href="https://laravel-news.com/" target="_blank" rel="noopener noreferrer" class="btn-project-link" style="justify-content: center;">
-                        <i class="fas fa-external-link-alt"></i> Consulter
-                    </a>
-                </div>
-
-                <div class="grid-card" data-aos="fade-up" data-aos-delay="100">
-                    <div>
-                        <div class="article-source">
-                            <span><i class="fas fa-rss"></i> Feedly / Dev.to</span>
-                            <span>Mai 2026</span>
-                        </div>
-                        <h4>Industrialisation des tests unitaires</h4>
-                        <p>Méthodes d'intégration continue de tests PHPUnit et Jest pour fiabiliser les déploiements logiciels.</p>
-                    </div>
-                    <a href="https://dev.to/" target="_blank" rel="noopener noreferrer" class="btn-project-link" style="justify-content: center;">
-                        <i class="fas fa-external-link-alt"></i> Consulter
-                    </a>
-                </div>
-            </div>
-        </section>
-
-       
-
-        <!-- CONTACT -->
-        <section id="contact">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">Contact</h2>
-                <p class="section-subtitle">Échange professionnel autour de mes projets</p>
-            </div>
-            <div class="contact-wrapper" data-aos="fade-up">
-                <div>
-                    <h3 style="font-size: 1.6rem; color: var(--ben10-green); margin-bottom: 0.8rem;">Me contacter</h3>
-                    <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem;">
-                        Disponible pour échanger sur mes réalisations ou répondre à vos questions sur mon parcours.
-                    </p>
-                    <a href="mailto:louis.monrose@ynov.com" class="contact-item">
-                        <i class="fas fa-envelope"></i> louis.monrose@ynov.com
-                    </a>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i> Île-de-France, France
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-graduation-cap"></i> Ynov Campus Val d'Europe
-                    </div>
-                </div>
-                <form class="contact-form" action="mailto:louis.monrose@ynov.com" method="post" enctype="text/plain">
-                    <input type="text" name="Nom" placeholder="Votre Nom & Entreprise" required>
-                    <input type="email" name="Email" placeholder="Votre Adresse E-mail" required>
-                    <textarea name="Message" rows="4" placeholder="Votre message..." required></textarea>
-                    <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
-                        <i class="fas fa-paper-plane"></i> Envoyer
-                    </button>
-                </form>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Louis Monrose — Portfolio BTS SIO SLAM. Tous droits réservés.</p>
+    <section id="parcours">
+      <div class="section-header">
+        <h2 class="section-title">Mon parcours</h2>
+        <p class="section-subtitle">Formation et expériences présentées dans mon portfolio.</p>
+      </div>
+      <div class="two-col timeline">
+        <div>
+          <h3><i class="fas fa-graduation-cap"></i> Parcours académique</h3>
+          <article class="card">
+            <span class="date">2025 – Aujourd'hui</span>
+            <h3>BTS SIO option SLAM</h3>
+            <p class="institution">Ynov Campus Val d'Europe — Montévrain</p>
+            <p>Développement web, bases de données, programmation et travaux pratiques d'infrastructure.</p>
+          </article>
+          <article class="card">
+            <span class="date">Parcours précédent</span>
+            <h3>Baccalauréat général</h3>
+            <p class="institution">Lycée Jean Vilar</p>
+          </article>
         </div>
-    </footer>
+        <div>
+          <h3><i class="fas fa-briefcase"></i> Réalisations et expériences</h3>
+          <article class="card">
+            <span class="date">2026</span>
+            <h3>Travaux pratiques BTS SIO</h3>
+            <p>Configuration de services Linux et Windows, DNS, serveur web Apache2, Active Directory et gestion de parc avec GLPI.</p>
+          </article>
+          <article class="card">
+            <span class="date">Développement</span>
+            <h3>Projets applicatifs</h3>
+            <p>Développement de sites et d'applications avec PHP, JavaScript et Laravel, notamment GameMatch.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        // Initialisation des animations AOS
-        window.addEventListener('load', () => {
-            if (typeof AOS !== 'undefined') {
-                AOS.init({ duration: 500, once: true });
-            }
-        });
+    <section id="projets">
+      <div class="section-header">
+        <h2 class="section-title">Réalisations & Projets</h2>
+        <p class="section-subtitle">Consultez mes comptes rendus PDF et mes projets de développement.</p>
+      </div>
 
-        // Gestionnaire des sous-onglets U5 vs U6
-        function switchProjectTab(tabName, triggerBtn) {
-            const buttons = document.querySelectorAll('.tab-btn');
-            const panes = document.querySelectorAll('.tab-pane');
+      <div class="tabs" role="tablist" aria-label="Catégories de projets">
+        <button id="tab-tp" type="button" class="tab active" role="tab" aria-selected="true" aria-controls="panel-tp" data-target="panel-tp"><i class="fas fa-layer-group"></i> Travaux pratiques</button>
+        <button id="tab-projets" type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel-projets" data-target="panel-projets"><i class="fas fa-laptop-code"></i> Projets applicatifs</button>
+      </div>
 
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-                btn.setAttribute('aria-selected', 'false');
-            });
-            panes.forEach(pane => pane.classList.remove('active'));
+      <div id="panel-tp" class="tab-panel" role="tabpanel" aria-labelledby="tab-tp">
+        <h3>Compétences du bloc 1</h3>
+        <div class="skills">
+          <span><strong>C1</strong> Gérer le patrimoine</span>
+          <span><strong>C2</strong> Répondre aux incidents</span>
+          <span><strong>C3</strong> Présence en ligne</span>
+          <span><strong>C4</strong> Travailler en mode projet</span>
+          <span><strong>C5</strong> Mettre un service à disposition</span>
+          <span><strong>C6</strong> Développement professionnel</span>
+        </div>
 
-            if (triggerBtn) {
-                triggerBtn.classList.add('active');
-                triggerBtn.setAttribute('aria-selected', 'true');
-            }
+        <!-- Les noms des PDF correspondent exactement au dossier tp -->
+        <div class="tp-list">
+          <article class="tp-row">
+            <div class="tp-info"><span class="tp-num">TP 01</span><span class="tp-name">Administration Linux</span><div class="tp-tags"><span>Linux</span><span>C1</span></div></div>
+            <div class="tp-actions"><button class="tp-link secondary" type="button" data-tp="linux"><i class="fas fa-eye"></i> Détails</button><a class="tp-link" href="tp/Linux.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> Voir le PDF</a></div>
+          </article>
+          <article class="tp-row">
+            <div class="tp-info"><span class="tp-num">TP 02</span><span class="tp-name">Configuration DNS et serveur Web Apache2</span><div class="tp-tags"><span>Bind9</span><span>Apache2</span><span>C5</span></div></div>
+            <div class="tp-actions"><button class="tp-link secondary" type="button" data-tp="dns"><i class="fas fa-eye"></i> Détails</button><a class="tp-link" href="tp/DNS_Web.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> Voir le PDF</a></div>
+          </article>
+          <article class="tp-row">
+            <div class="tp-info"><span class="tp-num">TP 03</span><span class="tp-name">Administration Active Directory</span><div class="tp-tags"><span>Windows Server</span><span>GPO</span><span>C1</span></div></div>
+            <div class="tp-actions"><button class="tp-link secondary" type="button" data-tp="ad"><i class="fas fa-eye"></i> Détails</button><a class="tp-link" href="tp/Active_Dinectory.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> Voir le PDF</a></div>
+          </article>
+          <article class="tp-row">
+            <div class="tp-info"><span class="tp-num">TP 04</span><span class="tp-name">Gestion de parc et assistance GLPI</span><div class="tp-tags"><span>GLPI</span><span>Support</span><span>C2</span></div></div>
+            <div class="tp-actions"><button class="tp-link secondary" type="button" data-tp="glpi"><i class="fas fa-eye"></i> Détails</button><a class="tp-link" href="tp/GLPI.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> Voir le PDF</a></div>
+          </article>
+        </div>
+      </div>
 
-            const targetPane = document.getElementById('tab-' + tabName);
-            if (targetPane) {
-                targetPane.classList.add('active');
-            }
+      <div id="panel-projets" class="tab-panel" role="tabpanel" aria-labelledby="tab-projets" hidden>
+        <article class="card project">
+          <h3><i class="fas fa-gamepad green"></i> GameMatch — Trouver des partenaires de jeu</h3>
+          <div class="skills"><span>Laravel</span><span>PHP</span><span>HTML / CSS</span><span>Base de données</span></div>
+          <p>Projet de plateforme web permettant aux joueurs de créer un profil et de trouver d'autres joueurs. Travail sur la page d'accueil, l'inscription et la connexion.</p>
+        </article>
+        <article class="card project">
+          <h3><i class="fas fa-code green"></i> Projets de développement web</h3>
+          <div class="skills"><span>JavaScript</span><span>PHP</span><span>SQL</span><span>Responsive</span></div>
+          <p>Exercices et réalisations pour progresser en développement front-end et back-end, en structuration des données et en conception d'interfaces.</p>
+        </article>
+      </div>
+    </section>
 
-            if (typeof AOS !== 'undefined') AOS.refresh();
-        }
-    </script>
+    <section id="veille">
+      <div class="section-header">
+        <h2 class="section-title">Veille technologique</h2>
+        <p class="section-subtitle">Ressources sur les technologies web, PHP et la sécurité applicative.</p>
+      </div>
+      <div class="grid-veille">
+        <article class="card"><p class="label">SÉCURITÉ</p><h3>OWASP</h3><p>Bonnes pratiques de sécurisation des applications et des API.</p><a class="veille-link" href="https://owasp.org/www-project-api-security/" target="_blank" rel="noopener noreferrer">Voir la ressource <i class="fas fa-arrow-up-right-from-square"></i></a></article>
+        <article class="card"><p class="label">FRAMEWORK</p><h3>Laravel News</h3><p>Actualités, évolutions et conseils autour de Laravel et de PHP.</p><a class="veille-link" href="https://laravel-news.com/" target="_blank" rel="noopener noreferrer">Voir la ressource <i class="fas fa-arrow-up-right-from-square"></i></a></article>
+        <article class="card"><p class="label">DÉVELOPPEMENT</p><h3>Dev.to</h3><p>Articles et retours d'expérience sur les outils de développement web.</p><a class="veille-link" href="https://dev.to/" target="_blank" rel="noopener noreferrer">Voir la ressource <i class="fas fa-arrow-up-right-from-square"></i></a></article>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-header"><h2 class="section-title">Contact</h2><p class="section-subtitle">Une question sur mes TP ou sur mes projets ?</p></div>
+      <div class="card contact-box">
+        <div>
+          <h3 class="green">Me contacter</h3>
+          <p>Vous pouvez me contacter pour échanger sur mon parcours, mes réalisations ou mes projets informatiques.</p>
+          <a class="contact-item" href="mailto:louis.monrose@ynov.com"><i class="fas fa-envelope"></i> louis.monrose@ynov.com</a>
+          <div class="contact-item"><i class="fas fa-location-dot"></i> Île-de-France, France</div>
+          <div class="contact-item"><i class="fas fa-graduation-cap"></i> Ynov Campus Val d'Europe</div>
+        </div>
+        <form class="contact-form" action="mailto:louis.monrose@ynov.com" method="post" enctype="text/plain">
+          <label for="name">Nom</label><input id="name" name="Nom" placeholder="Votre nom" required>
+          <label for="email">Adresse e-mail</label><input id="email" name="Email" type="email" placeholder="Votre e-mail" required>
+          <label for="message">Message</label><textarea id="message" name="Message" rows="4" placeholder="Votre message" required></textarea>
+          <button class="button" type="submit"><i class="fas fa-paper-plane"></i> Ouvrir mon logiciel de messagerie</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div id="tp-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal">
+      <button id="modal-close" type="button" class="modal-close" aria-label="Fermer">&times;</button>
+      <p class="label">FICHE TRAVAIL PRATIQUE</p>
+      <h2 id="modal-title"></h2>
+      <div class="modal-section"><h3>Objectif</h3><p id="modal-goal"></p></div>
+      <div class="modal-section"><h3>Travail réalisé</h3><p id="modal-work"></p></div>
+      <div class="modal-section"><h3>Résultat / observations</h3><p id="modal-result"></p></div>
+      <a id="modal-pdf" class="button" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> Voir le compte rendu PDF</a>
+    </div>
+  </div>
+
+  <footer><div class="container">© 2026 Louis Monrose — Portfolio BTS SIO SLAM</div></footer>
+
+  <script>
+    // Menu mobile
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+    menuToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }));
+
+    // Onglets Travaux pratiques / Projets applicatifs
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.tab-panel');
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => {
+        const active = t === tab;
+        t.classList.toggle('active', active);
+        t.setAttribute('aria-selected', String(active));
+      });
+      panels.forEach(p => { p.hidden = p.id !== tab.dataset.target; });
+    }));
+
+    // Informations liées à tes quatre comptes rendus
+    const tpData = {
+      linux: {
+        title: 'Administration Linux',
+        goal: 'Se familiariser avec les commandes et la gestion d’un environnement Linux.',
+        work: 'Travaux pratiques d’administration et de manipulation du système Linux.',
+        result: 'Les manipulations et captures sont présentées dans le PDF.',
+        pdf: 'tp/Linux.pdf'
+      },
+      dns: {
+        title: 'Configuration DNS et Apache2',
+        goal: 'Configurer une zone DNS avec Bind9 et héberger une page web avec Apache2.',
+        work: 'Installation des services, création de la zone entreprise.local et tests de résolution. Configuration et consultation du serveur web.',
+        result: 'Apache2 répond par adresse IP. La résolution DNS a rencontré une erreur SERVFAIL, documentée dans le compte rendu.',
+        pdf: 'tp/DNS_Web.pdf'
+      },
+      ad: {
+        title: 'Administration Active Directory',
+        goal: 'Mettre en place un domaine Windows et administrer les utilisateurs, groupes et stratégies de sécurité.',
+        work: 'Installation d’AD DS, création du domaine technova.local, comptes utilisateurs, organisation des ressources et configuration des GPO.',
+        result: 'Le document contient les captures de configuration et les explications associées.',
+        pdf: 'tp/Active_Dinectory.pdf'
+      },
+      glpi: {
+        title: 'Gestion de parc avec GLPI',
+        goal: 'Centraliser la gestion des équipements et les demandes d’assistance.',
+        work: 'Prise en main de GLPI, gestion des utilisateurs, inventaire du parc et suivi des tickets.',
+        result: 'Le PDF détaille les exercices, les vérifications et les captures de GLPI.',
+        pdf: 'tp/GLPI.pdf'
+      }
+    };
+
+    const overlay = document.getElementById('tp-modal');
+    const closeButton = document.getElementById('modal-close');
+    let previousFocus = null;
+    function closeModal() {
+      overlay.classList.remove('active');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+      if (previousFocus) previousFocus.focus();
+    }
+    document.querySelectorAll('[data-tp]').forEach(button => button.addEventListener('click', () => {
+      const data = tpData[button.dataset.tp];
+      if (!data) return;
+      previousFocus = button;
+      document.getElementById('modal-title').textContent = data.title;
+      document.getElementById('modal-goal').textContent = data.goal;
+      document.getElementById('modal-work').textContent = data.work;
+      document.getElementById('modal-result').textContent = data.result;
+      document.getElementById('modal-pdf').href = data.pdf;
+      overlay.classList.add('active');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      closeButton.focus();
+    }));
+    closeButton.addEventListener('click', closeModal);
+    overlay.addEventListener('click', event => { if (event.target === overlay) closeModal(); });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && overlay.classList.contains('active')) closeModal();
+    });
+  </script>
 </body>
 </html>
